@@ -1,8 +1,8 @@
-# Mode22
+# scenario22
 
 Настольное приложение для Windows на WPF, которое управляет сценариями запуска и закрытия программ. Вы собираете набор действий «открыть/закрыть» — например «Игровой режим», — назначаете глобальную горячую клавишу и запускаете их одним нажатием из любого приложения. Интерфейс — на английском по умолчанию, русский включается в настройках.
 
-![Скриншот Mode22](Mode22/Assets/app-preview.png)
+![Скриншот scenario22](scenario22/Assets/app-preview.png)
 
 ## Возможности
 
@@ -23,23 +23,23 @@
 ## Сборка и запуск
 
 ```powershell
-git clone https://github.com/wintence/Mode22.git
-cd Mode22
-dotnet build Mode22\Mode22.csproj
-dotnet run --project Mode22\Mode22.csproj
+git clone https://github.com/wintence/scenario22.git
+cd scenario22
+dotnet build scenario22\scenario22.csproj
+dotnet run --project scenario22\scenario22.csproj
 ```
 
 Публикация переносимой версии:
 
 ```powershell
-dotnet publish Mode22\Mode22.csproj -c Release -r win-x64 --self-contained false
+dotnet publish scenario22\scenario22.csproj -c Release -r win-x64 --self-contained false
 ```
 
 Готовая сборка лежит в `bin\Release\net8.0-windows\win-x64\publish`.
 
 ## Хранение данных
 
-Настройки и сценарии хранятся только на вашем компьютере — в `%APPDATA%\Mode22\settings.json`. Если файл повреждён, программа сохраняет его копию рядом (`settings.json.broken-*`) и создаёт начальное состояние.
+Настройки и сценарии хранятся только на вашем компьютере — в `%APPDATA%\scenario22\settings.json`. Если файл повреждён, программа сохраняет его копию рядом (`settings.json.broken-*`) и создаёт начальное состояние.
 
 ## Безопасность закрытия процессов
 
@@ -48,7 +48,7 @@ dotnet publish Mode22\Mode22.csproj -c Release -r win-x64 --self-contained false
 ## Структура проекта
 
 ```text
-Mode22/
+scenario22/
 ├── App.xaml(.cs)          — точка входа, single-instance mutex, обработка исключений
 ├── MainWindow.xaml(.cs)   — главное окно и основная логика UI
 ├── ToastWindow.xaml(.cs)  — всплывающие уведомления

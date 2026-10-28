@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.Drawing
 
 $root = Split-Path -Parent $PSScriptRoot
-$assets = Join-Path $root "Mode22\Assets"
+$assets = Join-Path $root "scenario22\Assets"
 New-Item -ItemType Directory -Force -Path $assets | Out-Null
 
 function New-RoundedRectPath {

@@ -1,0 +1,7 @@
+namespace Scenario22.Models;
+
+public enum ActionKind
+{
+    Launch,
+    Close
+}
