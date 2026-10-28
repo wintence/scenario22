@@ -1,0 +1,68 @@
+<UserControl x:Class="Mode22.Controls.HotkeyBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Focusable="True"
+             FocusVisualStyle="{x:Null}"
+             Cursor="Hand"
+             MinHeight="44">
+    <Border x:Name="RootBorder"
+            Padding="12,9"
+            Background="{DynamicResource InputBrush}"
+            BorderBrush="{DynamicResource InputBorderBrush}"
+            BorderThickness="1"
+            CornerRadius="10"
+            MouseLeftButtonDown="RootBorder_MouseLeftButtonDown">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid VerticalAlignment="Center">
+                <ItemsControl x:Name="Tokens"
+                              ItemTemplate="{StaticResource HotkeyTokenTemplate}"
+                              VerticalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+                <TextBlock x:Name="PromptText"
+                           FontFamily="{StaticResource AppFontFamily}"
+                           FontSize="12.5"
+                           Foreground="{DynamicResource InputPlaceholderBrush}"
+                           Text="Нажмите, чтобы записать сочетание"
+                           VerticalAlignment="Center" />
+            </Grid>
+
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="8,0,0,0">
+                <TextBlock x:Name="ActionHint"
+                           FontFamily="{StaticResource AppFontFamily}"
+                           FontSize="11"
+                           FontWeight="Medium"
+                           Foreground="{DynamicResource TextTertiaryBrush}"
+                           Text="Записать"
+                           VerticalAlignment="Center"
+                           Margin="0,0,7,0" />
+                <Button x:Name="ClearButton"
+                        Style="{StaticResource SmallIconButton}"
+                        Width="24"
+                        Height="24"
+                        ToolTip="Убрать горячую клавишу"
+                        Click="ClearButton_Click">
+                    <Path Data="{StaticResource IconClose}"
+                          Style="{StaticResource LineIcon}"
+                          Width="11"
+                          Height="11"
+                          Stroke="{DynamicResource TextTertiaryBrush}"
+                          StrokeThickness="1.7" />
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>
