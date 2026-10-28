@@ -89,7 +89,7 @@
                     <Border x:Name="IconTile"
                             Width="40"
                             Height="40"
-                            CornerRadius="11"
+                            CornerRadius="0"
                             Background="{DynamicResource LaunchChipBgBrush}"
                             VerticalAlignment="Center"
                             Margin="0,0,12,0">
@@ -127,7 +127,7 @@
                                     Padding="6,2"
                                     VerticalAlignment="Center"
                                     Background="{DynamicResource LaunchChipBgBrush}"
-                                    CornerRadius="6">
+                                    CornerRadius="0">
                                 <TextBlock x:Name="TypeText"
                                            FontFamily="{StaticResource AppFontFamily}"
                                            FontSize="9.5"
@@ -308,11 +308,11 @@
                     Click="OpenSettings_Click"
                     ToolTip="{DynamicResource L_OpenSettingsTT}">
                 <StackPanel Orientation="Horizontal">
-                    <Ellipse Width="6"
-                             Height="6"
-                             Fill="{Binding HotkeyStatusBrush}"
-                             VerticalAlignment="Center"
-                             Margin="0,0,7,0" />
+                    <Rectangle Width="6"
+                               Height="6"
+                               Fill="{Binding HotkeyStatusBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,7,0" />
                     <TextBlock Text="{Binding HotkeyStatusLabel}"
                                FontFamily="{StaticResource AppFontFamily}"
                                FontSize="11.5"
@@ -387,7 +387,7 @@
 
                                         <Border Width="36"
                                                 Height="36"
-                                                CornerRadius="10"
+                                                CornerRadius="0"
                                                 Background="{Binding AccentSoftBrush}">
                                             <Grid>
                                                 <Path Data="{Binding TileGeometry}"
@@ -504,21 +504,6 @@
             </Border>
 
             <Grid Grid.Column="1" Background="Transparent">
-                <Grid IsHitTestVisible="False" ClipToBounds="True">
-                    <Ellipse Width="460"
-                             Height="390"
-                             Fill="{Binding SelectedScenario.AmbientBrush}"
-                             HorizontalAlignment="Right"
-                             VerticalAlignment="Top"
-                             Margin="0,-190,-110,0" />
-                    <Ellipse Width="380"
-                             Height="340"
-                             Fill="{Binding SelectedScenario.AmbientBrush}"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Bottom"
-                             Margin="-160,0,0,-180" />
-                </Grid>
-
                 <ScrollViewer x:Name="ScenarioScrollViewer"
                               Style="{StaticResource PageScrollViewer}"
                               Visibility="{Binding IsSettingsOpen, Converter={StaticResource BoolToVisibility}, ConverterParameter=invert}">
@@ -530,14 +515,11 @@
                                     Visibility="{Binding SelectedScenario, Converter={StaticResource NullToVisibility}}">
                             <Border Width="76"
                                     Height="76"
-                                    CornerRadius="21"
-                                    HorizontalAlignment="Center">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                        <GradientStop Color="#EAF0FF" Offset="0" />
-                                        <GradientStop Color="#F1EAFE" Offset="1" />
-                                    </LinearGradientBrush>
-                                </Border.Background>
+                                    CornerRadius="0"
+                                    HorizontalAlignment="Center"
+                                    Background="{DynamicResource AccentStaticSoftBrush}"
+                                    BorderBrush="{DynamicResource CardBorderBrush}"
+                                    BorderThickness="1">
                                 <Path Data="{StaticResource IconBolt}"
                                       Width="30"
                                       Height="30"
@@ -592,12 +574,12 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Border Width="66"
                                             Height="66"
-                                            CornerRadius="19"
+                                            CornerRadius="0"
                                             Background="{Binding SelectedScenario.AccentGradient}"
                                             VerticalAlignment="Top">
                                         <Border BorderBrush="#2EFFFFFF"
                                                 BorderThickness="1"
-                                                CornerRadius="19">
+                                                CornerRadius="0">
                                             <Grid>
                                                 <Path Data="{Binding SelectedScenario.TileGeometry}"
                                                       Style="{StaticResource LineIcon}"
@@ -835,7 +817,7 @@
                                         <StackPanel HorizontalAlignment="Center">
                                             <Border Width="50"
                                                     Height="50"
-                                                    CornerRadius="15"
+                                                    CornerRadius="0"
                                                     Background="{Binding SelectedScenario.AccentSoftBrush}"
                                                     HorizontalAlignment="Center">
                                                 <Path Data="{StaticResource IconBolt}"
@@ -1207,14 +1189,10 @@
                                 </Grid.ColumnDefinitions>
                                 <Border Width="46"
                                         Height="46"
-                                        CornerRadius="12">
-                                    <Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <GradientStop Color="#5B8DFF" Offset="0" />
-                                            <GradientStop Color="#7C68F5" Offset="0.55" />
-                                            <GradientStop Color="#8B5CF6" Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Border.Background>
+                                        CornerRadius="0"
+                                        Background="{DynamicResource AccentStaticBrush}"
+                                        BorderBrush="{DynamicResource CardBorderStrongBrush}"
+                                        BorderThickness="1">
                                     <Path Data="{StaticResource IconBolt}"
                                           Fill="White"
                                           Width="22"

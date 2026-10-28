@@ -6,19 +6,12 @@
             Background="{DynamicResource SurfaceBrush}"
             BorderBrush="{DynamicResource CardBorderBrush}"
             BorderThickness="1"
-            CornerRadius="22">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="44"
-                              Direction="270"
-                              Opacity="0.28"
-                              ShadowDepth="12"
-                              Color="#000000" />
-        </Border.Effect>
+            CornerRadius="0">
 
         <StackPanel Margin="26,24,26,22">
             <Border Width="44"
                     Height="44"
-                    CornerRadius="12"
+                    CornerRadius="0"
                     Background="{DynamicResource DangerSoftBrush}"
                     HorizontalAlignment="Left">
                 <Path Data="{StaticResource IconAlert}"

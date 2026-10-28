@@ -10,7 +10,7 @@
             Background="{DynamicResource InputBrush}"
             BorderBrush="{DynamicResource InputBorderBrush}"
             BorderThickness="1"
-            CornerRadius="10"
+            CornerRadius="0"
             MouseLeftButtonDown="RootBorder_MouseLeftButtonDown">
         <Grid>
             <Grid.ColumnDefinitions>

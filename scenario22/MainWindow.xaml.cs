@@ -1078,7 +1078,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                 ref dark,
                 sizeof(int));
 
-            var corner = NativeMethods.DwmWindowCornerRound;
+            var corner = NativeMethods.DwmWindowCornerDoNotRound;
             NativeMethods.DwmSetWindowAttribute(
                 handle,
                 NativeMethods.DwmWindowCornerPreference,

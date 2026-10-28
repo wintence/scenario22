@@ -6,14 +6,7 @@
             Background="{DynamicResource SurfaceBrush}"
             BorderBrush="{DynamicResource CardBorderBrush}"
             BorderThickness="1"
-            CornerRadius="22">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="44"
-                              Direction="270"
-                              Opacity="0.28"
-                              ShadowDepth="12"
-                              Color="#000000" />
-        </Border.Effect>
+            CornerRadius="0">
 
         <StackPanel Margin="26,24,26,22">
             <Grid>
@@ -52,7 +45,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Border Width="32"
                                 Height="32"
-                                CornerRadius="9"
+                                CornerRadius="0"
                                 Background="{DynamicResource LaunchChipBgBrush}">
                             <Path Data="{StaticResource IconArrowUpRight}"
                                   Style="{StaticResource LineIcon}"
@@ -75,7 +68,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Border Width="32"
                                 Height="32"
-                                CornerRadius="9"
+                                CornerRadius="0"
                                 Background="{DynamicResource CloseChipBgBrush}">
                             <Path Data="{StaticResource IconClose}"
                                   Style="{StaticResource LineIcon}"
@@ -196,7 +189,7 @@
                     Margin="0,13,0,0"
                     Padding="11,8"
                     Background="{DynamicResource DangerSoftBrush}"
-                    CornerRadius="9"
+                    CornerRadius="0"
                     Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>

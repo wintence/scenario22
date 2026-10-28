@@ -23,14 +23,7 @@
                 Background="{DynamicResource ToastBackgroundBrush}"
                 BorderBrush="{DynamicResource ToastBorderBrush}"
                 BorderThickness="1"
-                CornerRadius="18">
-            <Border.Effect>
-                <DropShadowEffect BlurRadius="34"
-                                  Direction="270"
-                                  Opacity="0.35"
-                                  ShadowDepth="9"
-                                  Color="#000000" />
-            </Border.Effect>
+                CornerRadius="0">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -48,7 +41,7 @@
                     <Border x:Name="IconTile"
                             Width="44"
                             Height="44"
-                            CornerRadius="13"
+                            CornerRadius="0"
                             Background="{DynamicResource AccentStaticBrush}"
                             VerticalAlignment="Center">
                         <Grid>
@@ -116,7 +109,7 @@
                         <Border x:Name="SuccessIcon"
                                 Width="22"
                                 Height="22"
-                                CornerRadius="11"
+                                CornerRadius="0"
                                 Background="{DynamicResource SuccessBrush}"
                                 Visibility="Collapsed">
                             <Path Data="{StaticResource IconCheck}"
@@ -148,10 +141,10 @@
                         Height="3"
                         Margin="15,0,15,10"
                         Background="{DynamicResource ToastTrackBrush}"
-                        CornerRadius="2">
+                        CornerRadius="0">
                     <Border x:Name="ProgressFill"
                             Background="{DynamicResource AccentStaticBrush}"
-                            CornerRadius="2"
+                            CornerRadius="0"
                             RenderTransformOrigin="0,0.5">
                         <Border.RenderTransform>
                             <ScaleTransform x:Name="ProgressScale" ScaleX="0" />
