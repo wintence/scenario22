@@ -447,7 +447,7 @@
         <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="18" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Padding" Value="22" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
@@ -456,14 +456,14 @@
         <Setter Property="Background" Value="{DynamicResource SurfaceAltBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Padding" Value="16" />
     </Style>
 
     <Style x:Key="SettingIconTile" TargetType="Border">
         <Setter Property="Width" Value="36" />
         <Setter Property="Height" Value="36" />
-        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Background" Value="{DynamicResource SurfaceAltBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -506,7 +506,7 @@
         <Setter Property="Background" Value="{DynamicResource ChipBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ChipBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Padding" Value="9,4" />
     </Style>
 
@@ -525,7 +525,7 @@
         <Setter Property="Background" Value="{DynamicResource KeyboardKeyBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource KeyboardKeyBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="Margin" Value="0,0,4,0" />
     </Style>
 
