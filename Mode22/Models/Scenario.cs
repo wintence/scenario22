@@ -227,7 +227,7 @@ public sealed class Scenario : ObservableObject
     }
 
     [JsonIgnore]
-    public string HotkeyDisplay => Hotkey?.Display ?? "Без клавиши";
+    public string HotkeyDisplay => Hotkey?.Display ?? Strings.T("L_NoHotkey");
 
     [JsonIgnore]
     public IReadOnlyList<string> HotkeyTokens => Hotkey?.Tokens ?? Array.Empty<string>();
@@ -249,15 +249,21 @@ public sealed class Scenario : ObservableObject
             var count = Actions.Count;
             if (count == 0)
             {
-                return "Нет действий";
+                return Strings.T("L_NoActions");
             }
 
-            var mod10 = count % 10;
-            var mod100 = count % 100;
-            var word = mod10 == 1 && mod100 != 11 ? "действие"
-                : mod10 is >= 2 and <= 4 && mod100 is < 12 or > 14 ? "действия"
-                : "действий";
-            return $"{count} {word}";
+            if (LanguageService.IsRu)
+            {
+                var mod10 = count % 10;
+                var mod100 = count % 100;
+                var word = mod10 == 1 && mod100 != 11 ? "действие"
+                    : mod10 is >= 2 and <= 4 && mod100 is < 12 or > 14 ? "действия"
+                    : "действий";
+                return $"{count} {word}";
+            }
+
+            var wordEn = count == 1 ? Strings.T("L_ActionWord1") : Strings.T("L_ActionWordN");
+            return $"{count} {wordEn}";
         }
     }
 
@@ -364,22 +370,23 @@ public sealed class Scenario : ObservableObject
         {
             if (LastRun is null)
             {
-                return "Ещё не запускался";
+                return Strings.T("L_NeverRun");
             }
 
             var local = LastRun.Value.ToLocalTime();
             var today = DateTimeOffset.Now.Date;
+            var culture = LanguageService.Culture;
             if (local.Date == today)
             {
-                return $"Сегодня в {local:HH:mm}";
+                return Strings.T("L_TodayFmt", local.ToString("HH:mm", culture));
             }
 
             if (local.Date == today.AddDays(-1))
             {
-                return $"Вчера в {local:HH:mm}";
+                return Strings.T("L_YesterdayFmt", local.ToString("HH:mm", culture));
             }
 
-            return local.ToString("d MMMM, HH:mm", CultureInfo.GetCultureInfo("ru-RU"));
+            return local.ToString("d MMMM, HH:mm", culture);
         }
     }
 
@@ -396,6 +403,22 @@ public sealed class Scenario : ObservableObject
     public void RefreshCounters()
     {
         OnManyPropertiesChanged(nameof(ActionCount), nameof(ActionsSummary), nameof(HasActions), nameof(HasEnabledActions));
+    }
+
+    /// <summary>
+    /// Re-notifies localized computed labels after the interface language changes.
+    /// </summary>
+    public void RefreshLanguageDependent()
+    {
+        OnPropertyChanged(nameof(HotkeyDisplay));
+        OnPropertyChanged(nameof(LastRunLabel));
+        OnPropertyChanged(nameof(Actions));
+        foreach (var action in Actions)
+        {
+            action.RefreshLanguageDependent();
+        }
+
+        RefreshCounters();
     }
 
     private void AttachActions(ObservableCollection<ScenarioAction> collection)

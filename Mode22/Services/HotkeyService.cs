@@ -50,7 +50,7 @@ public sealed class HotkeyService : IDisposable
             var hotkey = scenario.Hotkey;
             if (!used.Add(hotkey))
             {
-                scenario.HotkeyError = "Сочетание уже используется другим сценарием";
+                scenario.HotkeyError = Strings.T("L_HkDup");
                 failures.Add(scenario);
                 continue;
             }
@@ -69,7 +69,7 @@ public sealed class HotkeyService : IDisposable
             }
             else
             {
-                scenario.HotkeyError = "Сочетание занято другой программой";
+                scenario.HotkeyError = Strings.T("L_HkBusy");
                 failures.Add(scenario);
             }
         }

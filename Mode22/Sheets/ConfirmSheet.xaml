@@ -32,7 +32,7 @@
             <TextBlock x:Name="TitleText"
                        Style="{StaticResource TextSheetTitle}"
                        Margin="0,16,0,0"
-                       Text="Удалить сценарий?" />
+                       Text="{DynamicResource L_ConfirmDeleteScenarioT}" />
             <TextBlock x:Name="MessageText"
                        Style="{StaticResource TextSecondary}"
                        Margin="0,7,0,0"
@@ -49,14 +49,14 @@
                         Style="{StaticResource SecondaryButton}"
                         MinWidth="92"
                         Margin="0,0,8,0"
-                        Content="Отмена"
+                        Content="{DynamicResource L_Cancel}"
                         Click="Cancel_Click" />
                 <Button x:Name="ConfirmButton"
                         Grid.Column="2"
                         Style="{StaticResource DangerButton}"
                         Height="38"
                         MinWidth="108"
-                        Content="Удалить"
+                        Content="{DynamicResource L_Delete}"
                         Click="Confirm_Click" />
             </Grid>
         </StackPanel>

@@ -19,7 +19,7 @@ public static class StartupService
                 var command = BuildCommand();
                 if (string.IsNullOrWhiteSpace(command))
                 {
-                    return (false, "Не удалось определить путь к приложению для автозапуска.");
+                    return (false, Strings.T("L_StartupErr"));
                 }
 
                 key.SetValue(ValueName, command);

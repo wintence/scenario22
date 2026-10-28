@@ -119,7 +119,7 @@ public sealed class ScenarioRunner
         var target = Environment.ExpandEnvironmentVariables(action.Target.Trim().Trim('"'));
         if (string.IsNullOrWhiteSpace(target))
         {
-            throw new InvalidOperationException("Не указан путь к приложению");
+            throw new InvalidOperationException(Strings.T("L_RNoPath"));
         }
 
         var arguments = Environment.ExpandEnvironmentVariables(action.Arguments ?? string.Empty);
@@ -140,13 +140,13 @@ public sealed class ScenarioRunner
         }
         else if (Path.IsPathRooted(target))
         {
-            throw new FileNotFoundException("Файл не найден");
+            throw new FileNotFoundException(Strings.T("L_RFileNotFound"));
         }
 
         var process = Process.Start(info);
         if (process is null)
         {
-            throw new InvalidOperationException("Windows не смог запустить приложение");
+            throw new InvalidOperationException(Strings.T("L_RNoStart"));
         }
 
         process.Dispose();
@@ -157,12 +157,12 @@ public sealed class ScenarioRunner
         var name = ScenarioAction.NormalizeProcessName(action.ProcessName);
         if (string.IsNullOrWhiteSpace(name))
         {
-            throw new InvalidOperationException("Не указано имя процесса");
+            throw new InvalidOperationException(Strings.T("L_RNoProcess"));
         }
 
         if (ProtectedProcesses.Contains(name))
         {
-            throw new InvalidOperationException("Системный процесс защищён");
+            throw new InvalidOperationException(Strings.T("L_RProtected"));
         }
 
         var currentId = Environment.ProcessId;
@@ -173,7 +173,7 @@ public sealed class ScenarioRunner
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException("Не удалось получить список процессов: " + ex.Message, ex);
+            throw new InvalidOperationException(Strings.T("L_RProcListFail") + ex.Message, ex);
         }
 
         processes = processes.Where(p => p.Id != currentId).ToArray();
@@ -214,7 +214,7 @@ public sealed class ScenarioRunner
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Не удалось закрыть {name}: {ex.Message}", ex);
+                throw new InvalidOperationException(Strings.T("L_RCloseFail", name) + ": " + ex.Message, ex);
             }
             finally
             {
@@ -229,12 +229,12 @@ public sealed class ScenarioRunner
     {
         return ex switch
         {
-            FileNotFoundException => "Файл не найден",
-            UnauthorizedAccessException => "Нет доступа. Попробуйте запустить Mode22 от имени администратора",
+            FileNotFoundException => Strings.T("L_RFileNotFound"),
+            UnauthorizedAccessException => Strings.T("L_RNoAccess"),
             System.ComponentModel.Win32Exception win32 => win32.NativeErrorCode switch
             {
-                2 => "Файл не найден",
-                5 => "Нет доступа. Попробуйте запустить Mode22 от имени администратора",
+                2 => Strings.T("L_RFileNotFound"),
+                5 => Strings.T("L_RNoAccess"),
                 _ => win32.Message
             },
             _ => ex.Message

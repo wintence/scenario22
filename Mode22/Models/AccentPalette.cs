@@ -1,12 +1,14 @@
 using System.Windows;
 using System.Windows.Media;
+using Mode22.Services;
 
 namespace Mode22.Models;
 
 public sealed class AccentOption
 {
     public required string Key { get; init; }
-    public required string Name { get; init; }
+    public required string NameKey { get; init; }
+    public string Name => Strings.T(NameKey);
     public required Color Color { get; init; }
     public required Color Color2 { get; init; }
     public required Brush PreviewBrush { get; init; }
@@ -20,12 +22,12 @@ public static class AccentPalette
 
     public static IReadOnlyList<AccentOption> Options { get; } = new List<AccentOption>
     {
-        Create("blue", "Синий", "#4C82FF", "#7968FF"),
-        Create("violet", "Фиолетовый", "#8B5CF6", "#C06CFF"),
-        Create("pink", "Розовый", "#F65C9D", "#FF8560"),
-        Create("orange", "Янтарный", "#F59E0B", "#F97316"),
-        Create("green", "Мятный", "#10B981", "#14B8A6"),
-        Create("graphite", "Графит", "#4B5563", "#767C8A")
+        Create("blue", "L_AccentBlue", "#4C82FF", "#7968FF"),
+        Create("violet", "L_AccentViolet", "#8B5CF6", "#C06CFF"),
+        Create("pink", "L_AccentPink", "#F65C9D", "#FF8560"),
+        Create("orange", "L_AccentAmber", "#F59E0B", "#F97316"),
+        Create("green", "L_AccentMint", "#10B981", "#14B8A6"),
+        Create("graphite", "L_AccentGraphite", "#4B5563", "#767C8A")
     };
 
     public static AccentOption Default => Options[0];
@@ -79,7 +81,7 @@ public static class AccentPalette
     {
         var from = TryParseColor(fromHex, out var parsedFrom) ? parsedFrom : PlaceholderFrom;
         var to = TryParseColor(toHex, out var parsedTo) ? parsedTo : from;
-        return Create(CustomKey, "Свой цвет", from, to);
+        return Create(CustomKey, "L_AccentCustom", from, to);
     }
 
     private static AccentOption Create(string key, string name, string start, string end)
@@ -94,7 +96,7 @@ public static class AccentPalette
         return new AccentOption
         {
             Key = key,
-            Name = name,
+            NameKey = name,
             Color = start,
             Color2 = end,
             PreviewBrush = CreateGradient(start, end)

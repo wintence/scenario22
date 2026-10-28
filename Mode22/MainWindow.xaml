@@ -133,7 +133,7 @@
                                            FontSize="9.5"
                                            FontWeight="SemiBold"
                                            Foreground="{DynamicResource LaunchChipTextBrush}"
-                                           Text="ОТКРЫТЬ" />
+                                           Text="{DynamicResource L_TypeLaunchBadge}" />
                             </Border>
                         </StackPanel>
 
@@ -174,7 +174,7 @@
                         <Button Style="{StaticResource SmallIconButton}"
                                 Width="25"
                                 Height="25"
-                                ToolTip="Переместить выше"
+                                ToolTip="{DynamicResource L_RowUpTT}"
                                 Click="MoveActionUp_Click">
                             <Path Data="{StaticResource IconChevronUp}"
                                   Style="{StaticResource LineIcon}"
@@ -186,7 +186,7 @@
                         <Button Style="{StaticResource SmallIconButton}"
                                 Width="25"
                                 Height="25"
-                                ToolTip="Переместить ниже"
+                                ToolTip="{DynamicResource L_RowDownTT}"
                                 Click="MoveActionDown_Click">
                             <Path Data="{StaticResource IconChevronDown}"
                                   Style="{StaticResource LineIcon}"
@@ -198,11 +198,11 @@
                         <CheckBox Style="{StaticResource Switch}"
                                   Margin="8,0,8,0"
                                   IsChecked="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  ToolTip="Включить или отключить действие" />
+                                  ToolTip="{DynamicResource L_RowSwitchTT}" />
                         <Button Style="{StaticResource DangerIconButton}"
                                 Width="25"
                                 Height="25"
-                                ToolTip="Удалить действие"
+                                ToolTip="{DynamicResource L_RowDelTT}"
                                 Click="DeleteAction_Click">
                             <Path Data="{StaticResource IconTrash}"
                                   Style="{StaticResource LineIcon}"
@@ -219,7 +219,7 @@
                 <DataTrigger Binding="{Binding Kind}" Value="{x:Static models:ActionKind.Close}">
                     <Setter TargetName="TypeChip" Property="Background" Value="{DynamicResource CloseChipBgBrush}" />
                     <Setter TargetName="TypeText" Property="Foreground" Value="{DynamicResource CloseChipTextBrush}" />
-                    <Setter TargetName="TypeText" Property="Text" Value="ЗАКРЫТЬ" />
+                    <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeCloseBadge}" />
                     <Setter TargetName="IconTile" Property="Background" Value="{DynamicResource CloseChipBgBrush}" />
                     <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconClose}" />
                     <Setter TargetName="FallbackIcon" Property="Stroke" Value="{DynamicResource CloseChipTextBrush}" />
@@ -245,7 +245,7 @@
                         Margin="22,0,0,0">
                 <Button Style="{StaticResource TrafficLightButton}"
                         Background="#FF5F57"
-                        ToolTip="Закрыть"
+                        ToolTip="{DynamicResource L_CloseWinTT}"
                         Click="CloseButton_Click">
                     <Path Data="M 1,1 L 7,7 M 7,1 L 1,7"
                           Width="7"
@@ -258,7 +258,7 @@
                 </Button>
                 <Button Style="{StaticResource TrafficLightButton}"
                         Background="#FEBC2E"
-                        ToolTip="Свернуть"
+                        ToolTip="{DynamicResource L_MinWinTT}"
                         Click="MinimizeButton_Click">
                     <Path Data="M 1,4 L 7,4"
                           Width="7"
@@ -271,7 +271,7 @@
                 </Button>
                 <Button Style="{StaticResource TrafficLightButton}"
                         Background="#28C840"
-                        ToolTip="Развернуть"
+                        ToolTip="{DynamicResource L_MaxWinTT}"
                         Click="MaximizeButton_Click">
                     <Path Data="M 1.5,4 L 6.5,4 M 4,1.5 L 4,6.5"
                           Width="7"
@@ -306,7 +306,7 @@
                     VerticalAlignment="Center"
                     Margin="0,0,20,0"
                     Click="OpenSettings_Click"
-                    ToolTip="Открыть настройки">
+                    ToolTip="{DynamicResource L_OpenSettingsTT}">
                 <StackPanel Orientation="Horizontal">
                     <Ellipse Width="6"
                              Height="6"
@@ -344,14 +344,14 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="СЦЕНАРИИ"
+                        <TextBlock Text="{DynamicResource L_ScenariosHdr}"
                                    Style="{StaticResource TextSectionLabel}"
                                    VerticalAlignment="Center" />
                         <Button Grid.Column="1"
                                 Style="{StaticResource SmallIconButton}"
                                 Width="27"
                                 Height="27"
-                                ToolTip="Новый сценарий"
+                                ToolTip="{DynamicResource L_NewScenario}"
                                 Click="NewScenario_Click">
                             <Path Data="{StaticResource IconPlus}"
                                   Style="{StaticResource LineIcon}"
@@ -453,7 +453,7 @@
                                       Stroke="{DynamicResource TextTertiaryBrush}"
                                       StrokeThickness="1.8"
                                       Margin="0,0,7,0" />
-                                <TextBlock Text="Новый сценарий"
+                                <TextBlock Text="{DynamicResource L_NewScenario}"
                                            FontFamily="{StaticResource AppFontFamily}"
                                            FontSize="12"
                                            Foreground="{DynamicResource TextSecondaryBrush}" />
@@ -477,7 +477,7 @@
                                       Height="15"
                                       Margin="0,0,9,0" />
                                 <TextBlock Grid.Column="1"
-                                           Text="Настройки"
+                                           Text="{DynamicResource L_SettingsNav}"
                                            FontFamily="{StaticResource AppFontFamily}"
                                            FontSize="12.5"
                                            FontWeight="Medium"
@@ -546,11 +546,11 @@
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center" />
                             </Border>
-                            <TextBlock Text="Создайте первый сценарий"
+                            <TextBlock Text="{DynamicResource L_EmptyTitle}"
                                        Style="{StaticResource TextPageTitle}"
                                        HorizontalAlignment="Center"
                                        Margin="0,22,0,0" />
-                            <TextBlock Text="Соберите нужные приложения в один сценарий и запускайте его одной горячей клавишей."
+                            <TextBlock Text="{DynamicResource L_EmptyText}"
                                        Style="{StaticResource TextSecondary}"
                                        MaxWidth="380"
                                        TextAlignment="Center"
@@ -571,7 +571,7 @@
                                           Width="14"
                                           Height="14"
                                           Margin="0,0,7,0" />
-                                    <TextBlock Text="Новый сценарий"
+                                    <TextBlock Text="{DynamicResource L_NewScenario}"
                                                FontFamily="{StaticResource AppFontFamily}"
                                                FontSize="13"
                                                FontWeight="SemiBold"
@@ -639,7 +639,7 @@
                                             Height="46"
                                             Padding="0"
                                             Margin="0,0,9,0"
-                                            ToolTip="Настроить сценарий"
+                                            ToolTip="{DynamicResource L_EditScenarioTT}"
                                             Click="EditScenario_Click">
                                         <Path Data="{StaticResource IconPencil}"
                                               Style="{StaticResource LineIcon}"
@@ -671,7 +671,7 @@
                                                       Width="14"
                                                       Height="14"
                                                       Margin="0,1,8,0" />
-                                                <TextBlock Text="Запустить"
+                                                <TextBlock Text="{DynamicResource L_Run}"
                                                            FontFamily="{StaticResource AppFontFamily}"
                                                            FontSize="13.5"
                                                            FontWeight="SemiBold"
@@ -689,7 +689,7 @@
                                                         </Style.Triggers>
                                                     </Style>
                                                 </StackPanel.Style>
-                                                <TextBlock Text="Выполняется…"
+                                                <TextBlock Text="{DynamicResource L_Running}"
                                                            FontFamily="{StaticResource AppFontFamily}"
                                                            FontSize="13.5"
                                                            FontWeight="SemiBold"
@@ -707,7 +707,7 @@
                                         Padding="9,0"
                                         Margin="0,0,8,8"
                                         Click="EditScenario_Click"
-                                        ToolTip="Изменить горячую клавишу">
+                                        ToolTip="{DynamicResource L_ChangeKeyTT}">
                                     <StackPanel Orientation="Horizontal">
                                         <Path Data="{StaticResource IconKeyboard}"
                                               Style="{StaticResource FillIcon}"
@@ -724,7 +724,7 @@
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                         </ItemsControl>
-                                        <TextBlock Text="Назначить клавишу"
+                                        <TextBlock Text="{DynamicResource L_AssignKey}"
                                                    FontFamily="{StaticResource AppFontFamily}"
                                                    FontSize="11.5"
                                                    Foreground="{DynamicResource TextTertiaryBrush}"
@@ -772,13 +772,13 @@
                                         Padding="10,0"
                                         Margin="0,0,8,8">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Сценарий активен"
+                                        <TextBlock Text="{DynamicResource L_ScenarioActive}"
                                                    Style="{StaticResource ChipText}"
                                                    VerticalAlignment="Center"
                                                    Margin="0,0,8,0" />
                                         <CheckBox Style="{StaticResource Switch}"
                                                   IsChecked="{Binding SelectedScenario.IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                  ToolTip="Выключенный сценарий не реагирует на горячую клавишу" />
+                                                  ToolTip="{DynamicResource L_ScenarioActiveTT}" />
                                     </StackPanel>
                                 </Border>
                             </WrapPanel>
@@ -793,7 +793,7 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                            <TextBlock Text="Действия"
+                                            <TextBlock Text="{DynamicResource L_ActionsTitle}"
                                                        Style="{StaticResource TextSectionTitle}" />
                                             <Border Style="{StaticResource Chip}"
                                                     Margin="9,0,0,0"
@@ -817,7 +817,7 @@
                                                       Height="12"
                                                       Margin="0,0,6,0"
                                                       StrokeThickness="1.8" />
-                                                <TextBlock Text="Добавить действие"
+                                                <TextBlock Text="{DynamicResource L_AddAction}"
                                                            FontFamily="{StaticResource AppFontFamily}"
                                                            FontSize="11.5"
                                                            FontWeight="Medium" />
@@ -846,11 +846,11 @@
                                                       HorizontalAlignment="Center"
                                                       VerticalAlignment="Center" />
                                             </Border>
-                                            <TextBlock Text="Пока ни одного действия"
+                                            <TextBlock Text="{DynamicResource L_NoActionsTitle}"
                                                        Style="{StaticResource TextCardTitle}"
                                                        HorizontalAlignment="Center"
                                                        Margin="0,14,0,0" />
-                                            <TextBlock Text="Добавьте приложения, которые нужно открыть или закрыть. Они выполнятся по порядку."
+                                            <TextBlock Text="{DynamicResource L_NoActionsText}"
                                                        Style="{StaticResource TextSecondary}"
                                                        MaxWidth="360"
                                                        TextAlignment="Center"
@@ -869,7 +869,7 @@
                                                           Height="12"
                                                           Margin="0,0,6,0"
                                                           StrokeThickness="1.8" />
-                                                    <TextBlock Text="Добавить первое действие"
+                                                    <TextBlock Text="{DynamicResource L_AddFirstAction}"
                                                                FontFamily="{StaticResource AppFontFamily}"
                                                                FontSize="12"
                                                                FontWeight="Medium" />
@@ -913,7 +913,7 @@
                                                        Foreground="{DynamicResource TextTertiaryBrush}" />
                                         </StackPanel>
                                         <TextBlock Grid.Column="1"
-                                                   Text="Сценарий выполняется сверху вниз"
+                                                   Text="{DynamicResource L_RunTopToBottom}"
                                                    FontFamily="{StaticResource AppFontFamily}"
                                                    FontSize="10.5"
                                                    Foreground="{DynamicResource TextTertiaryBrush}" />
@@ -939,7 +939,7 @@
                                       Width="12"
                                       Height="12"
                                       Margin="0,0,5,0" />
-                                <TextBlock Text="К сценариям"
+                                <TextBlock Text="{DynamicResource L_BackToScenarios}"
                                            FontFamily="{StaticResource AppFontFamily}"
                                            FontSize="12"
                                            FontWeight="Medium"
@@ -947,14 +947,14 @@
                             </StackPanel>
                         </Button>
 
-                        <TextBlock Text="Настройки"
+                        <TextBlock Text="{DynamicResource L_SettingsTitle}"
                                    Style="{StaticResource TextPageTitle}"
                                    Margin="0,8,0,0" />
-                        <TextBlock Text="Mode22 живёт в трее и готов запускать сценарии в любой момент."
+                        <TextBlock Text="{DynamicResource L_SettingsSub}"
                                    Style="{StaticResource TextSecondary}"
                                    Margin="0,4,0,0" />
 
-                        <TextBlock Text="ОБЩИЕ"
+                        <TextBlock Text="{DynamicResource L_SectGeneral}"
                                    Style="{StaticResource TextSectionLabel}"
                                    Margin="2,26,0,9" />
                         <Border Style="{StaticResource Card}" Padding="0">
@@ -974,8 +974,8 @@
                                               HorizontalAlignment="Center" />
                                     </Border>
                                     <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Запускать при входе в Windows" Style="{StaticResource TextValue}" />
-                                        <TextBlock Text="Mode22 будет ждать в трее после включения компьютера."
+                                        <TextBlock Text="{DynamicResource L_SetStartTitle}" Style="{StaticResource TextValue}" />
+                                        <TextBlock Text="{DynamicResource L_SetStartDesc}"
                                                    Style="{StaticResource TextCaption}"
                                                    Margin="0,3,0,0" />
                                     </StackPanel>
@@ -983,7 +983,7 @@
                                               Style="{StaticResource Switch}"
                                               VerticalAlignment="Center"
                                               IsChecked="{Binding Preferences.StartWithWindows, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ToolTip="Автозапуск при входе в Windows" />
+                                              ToolTip="{DynamicResource L_SetStartTT}" />
                                 </Grid>
 
                                 <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="66,0,18,0" />
@@ -1003,8 +1003,8 @@
                                               HorizontalAlignment="Center" />
                                     </Border>
                                     <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Скрывать в трей при закрытии" Style="{StaticResource TextValue}" />
-                                        <TextBlock Text="Закрытие окна не остановит работу сценариев."
+                                        <TextBlock Text="{DynamicResource L_SetTrayTitle}" Style="{StaticResource TextValue}" />
+                                        <TextBlock Text="{DynamicResource L_SetTrayDesc}"
                                                    Style="{StaticResource TextCaption}"
                                                    Margin="0,3,0,0" />
                                     </StackPanel>
@@ -1012,7 +1012,7 @@
                                               Style="{StaticResource Switch}"
                                               VerticalAlignment="Center"
                                               IsChecked="{Binding Preferences.MinimizeToTray, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ToolTip="Сворачивать в трей при закрытии окна" />
+                                              ToolTip="{DynamicResource L_SetTrayTT}" />
                                 </Grid>
 
                                 <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="66,0,18,0" />
@@ -1032,8 +1032,8 @@
                                               HorizontalAlignment="Center" />
                                     </Border>
                                     <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Показывать уведомления" Style="{StaticResource TextValue}" />
-                                        <TextBlock Text="Короткое подтверждение после запуска сценария."
+                                        <TextBlock Text="{DynamicResource L_SetNotifyTitle}" Style="{StaticResource TextValue}" />
+                                        <TextBlock Text="{DynamicResource L_SetNotifyDesc}"
                                                    Style="{StaticResource TextCaption}"
                                                    Margin="0,3,0,0" />
                                     </StackPanel>
@@ -1041,7 +1041,7 @@
                                               Style="{StaticResource Switch}"
                                               VerticalAlignment="Center"
                                               IsChecked="{Binding Preferences.ShowNotifications, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ToolTip="Показывать уведомления о запуске" />
+                                              ToolTip="{DynamicResource L_SetNotifyTT}" />
                                 </Grid>
 
                                 <Border Height="1" Background="{DynamicResource DividerBrush}" Margin="66,0,18,0" />
@@ -1062,8 +1062,8 @@
                                               HorizontalAlignment="Center" />
                                     </Border>
                                     <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
-                                        <TextBlock Text="Глобальные горячие клавиши" Style="{StaticResource TextValue}" />
-                                        <TextBlock Text="Реагировать на сочетания, даже когда окно свёрнуто."
+                                        <TextBlock Text="{DynamicResource L_SetHotkeysTitle}" Style="{StaticResource TextValue}" />
+                                        <TextBlock Text="{DynamicResource L_SetHotkeysDesc}"
                                                    Style="{StaticResource TextCaption}"
                                                    Margin="0,3,0,0" />
                                     </StackPanel>
@@ -1071,12 +1071,12 @@
                                               Style="{StaticResource Switch}"
                                               VerticalAlignment="Center"
                                               IsChecked="{Binding Preferences.HotkeysEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ToolTip="Включить глобальные горячие клавиши" />
+                                              ToolTip="{DynamicResource L_SetHotkeysTT}" />
                                 </Grid>
                             </StackPanel>
                         </Border>
 
-                        <TextBlock Text="ОФОРМЛЕНИЕ"
+                        <TextBlock Text="{DynamicResource L_SectAppearance}"
                                    Style="{StaticResource TextSectionLabel}"
                                    Margin="2,22,0,9" />
                         <Border Style="{StaticResource Card}" Padding="0">
@@ -1095,8 +1095,8 @@
                                           HorizontalAlignment="Center" />
                                 </Border>
                                 <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
-                                    <TextBlock Text="Тёмное оформление" Style="{StaticResource TextValue}" />
-                                    <TextBlock Text="Мягкий тёмный интерфейс для вечерней работы."
+                                    <TextBlock Text="{DynamicResource L_SetDarkTitle}" Style="{StaticResource TextValue}" />
+                                    <TextBlock Text="{DynamicResource L_SetDarkDesc}"
                                                Style="{StaticResource TextCaption}"
                                                Margin="0,3,0,0" />
                                 </StackPanel>
@@ -1104,11 +1104,52 @@
                                           Style="{StaticResource Switch}"
                                           VerticalAlignment="Center"
                                           IsChecked="{Binding Preferences.UseDarkTheme, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          ToolTip="Тёмная тема" />
+                                          ToolTip="{DynamicResource L_SetDarkTT}" />
                             </Grid>
                         </Border>
 
-                        <TextBlock Text="ДАННЫЕ"
+                        <TextBlock Text="{DynamicResource L_SectLanguage}"
+                                   Style="{StaticResource TextSectionLabel}"
+                                   Margin="2,22,0,9" />
+                        <Border Style="{StaticResource Card}" Padding="0">
+                            <Grid Margin="18,13">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border Style="{StaticResource SettingIconTile}">
+                                    <Path Data="{StaticResource IconExternal}"
+                                          Style="{StaticResource LineIcon}"
+                                          Width="16"
+                                          Height="16"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Center" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{DynamicResource L_SetLangTitle}" Style="{StaticResource TextValue}" />
+                                    <TextBlock Text="{DynamicResource L_SetLangDesc}"
+                                               Style="{StaticResource TextCaption}"
+                                               Margin="0,3,0,0" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <RadioButton x:Name="LanguageEnChoice"
+                                                 GroupName="InterfaceLanguage"
+                                                 Style="{StaticResource ChoiceCard}"
+                                                 Content="{DynamicResource L_LangEn}"
+                                                 Margin="0,0,5,0"
+                                                 Checked="LanguageChoice_Checked" />
+                                    <RadioButton x:Name="LanguageRuChoice"
+                                                 GroupName="InterfaceLanguage"
+                                                 Style="{StaticResource ChoiceCard}"
+                                                 Content="{DynamicResource L_LangRu}"
+                                                 Margin="5,0,0,0"
+                                                 Checked="LanguageChoice_Checked" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Text="{DynamicResource L_SectData}"
                                    Style="{StaticResource TextSectionLabel}"
                                    Margin="2,22,0,9" />
                         <Border Style="{StaticResource Card}" Padding="0">
@@ -1127,7 +1168,7 @@
                                           HorizontalAlignment="Center" />
                                 </Border>
                                 <StackPanel Grid.Column="1" Margin="12,0,20,0" VerticalAlignment="Center">
-                                    <TextBlock Text="Папка настроек" Style="{StaticResource TextValue}" />
+                                    <TextBlock Text="{DynamicResource L_SetDataTitle}" Style="{StaticResource TextValue}" />
                                     <TextBlock x:Name="DataFolderPath"
                                                Style="{StaticResource TextCaption}"
                                                Margin="0,3,0,0"
@@ -1146,7 +1187,7 @@
                                               Height="12"
                                               Margin="0,0,6,0"
                                               StrokeThickness="1.7" />
-                                        <TextBlock Text="Открыть"
+                                        <TextBlock Text="{DynamicResource L_DataOpen}"
                                                    FontFamily="{StaticResource AppFontFamily}"
                                                    FontSize="11.5"
                                                    FontWeight="Medium" />
@@ -1155,7 +1196,7 @@
                             </Grid>
                         </Border>
 
-                        <TextBlock Text="О ПРОГРАММЕ"
+                        <TextBlock Text="{DynamicResource L_SectAbout}"
                                    Style="{StaticResource TextSectionLabel}"
                                    Margin="2,22,0,9" />
                         <Border Style="{StaticResource Card}">
@@ -1184,10 +1225,10 @@
                                 </Border>
                                 <StackPanel Grid.Column="1" Margin="13,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="Mode22" Style="{StaticResource TextValue}" FontSize="14" />
-                                    <TextBlock Text="Версия 1.0 · Сценарии одним нажатием"
+                                    <TextBlock Text="{DynamicResource L_AboutLine}"
                                                Style="{StaticResource TextCaption}"
                                                Margin="0,3,0,0" />
-                                    <TextBlock Text="Настройки хранятся только на этом компьютере."
+                                    <TextBlock Text="{DynamicResource L_AboutLocal}"
                                                Style="{StaticResource TextCaption}"
                                                Margin="0,2,0,0"
                                                Foreground="{DynamicResource TextTertiaryBrush}" />

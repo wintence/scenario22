@@ -139,13 +139,13 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         {
             if (!Preferences.HotkeysEnabled)
             {
-                return "Клавиши на паузе";
+                return Strings.T("L_HsPaused");
             }
 
             var failing = Scenarios.Count(x => x.HasHotkeyError);
             if (failing > 0)
             {
-                return failing == 1 ? "Есть конфликт клавиш" : $"Конфликтов: {failing}";
+                return failing == 1 ? Strings.T("L_HsConflict1") : Strings.T("L_HsConflictFmt", failing);
             }
 
             var active = Scenarios.Count(x =>
@@ -153,12 +153,18 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
             if (active == 0)
             {
-                return "Клавиши не назначены";
+                return Strings.T("L_HsNone");
             }
 
-            var scenarioWord = Plural(active, "сценарий", "сценария", "сценариев");
-            var readyWord = Plural(active, "готов", "готовы", "готовы");
-            return $"{active} {scenarioWord} {readyWord}";
+            if (LanguageService.IsRu)
+            {
+                var scenarioWord = Plural(active, "сценарий", "сценария", "сценариев");
+                var readyWord = Plural(active, "готов", "готовы", "готовы");
+                return $"{active} {scenarioWord} {readyWord}";
+            }
+
+            var scenarioNoun = Strings.T(active == 1 ? "L_HsScenario1" : "L_HsScenarioN");
+            return $"{active} {scenarioNoun} {Strings.T("L_HsReady")}";
         }
     }
 
@@ -198,6 +204,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         DataFolderPath.Text = _settings.DataDirectory;
         DataFolderPath.ToolTip = _settings.SettingsPath;
+        LanguageEnChoice.IsChecked = !LanguageService.IsRu;
+        LanguageRuChoice.IsChecked = LanguageService.IsRu;
         UpdateHotkeyStatus();
         UpdateTray();
         ShowPendingWarning();
@@ -386,8 +394,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
 
         ShowConfirm(
-            "Удалить действие?",
-            $"Действие «{action.DisplayName}» будет удалено из сценария «{scenario.Name}». Это нельзя отменить.",
+            Strings.T("L_ConfirmDeleteActionT"),
+            Strings.T("L_ConfirmDeleteActionM", action.DisplayName, scenario.Name),
             () => scenario.Actions.Remove(action));
     }
 
@@ -486,6 +494,21 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         IsSettingsOpen = false;
     }
 
+    private void LanguageChoice_Checked(object sender, RoutedEventArgs e)
+    {
+        SetLanguage(ReferenceEquals(sender, LanguageRuChoice) ? "ru" : "en");
+    }
+
+    private void SetLanguage(string language)
+    {
+        if (string.Equals(Preferences.Language, language, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        Preferences.Language = language;
+    }
+
     private void OpenDataFolder_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -495,7 +518,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         catch (Exception ex)
         {
             _toasts.ShowInfo(
-                "Не удалось открыть папку",
+                Strings.T("L_TFolderFailed"),
                 ex.Message,
                 "📁",
                 null,
@@ -514,8 +537,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         if (enabledCount == 0)
         {
             _toasts.ShowInfo(
-                "Нечего выполнять",
-                "В этом сценарии нет включённых действий.",
+                Strings.T("L_TNothingToRun"),
+                Strings.T("L_TNothingToRunText"),
                 string.IsNullOrWhiteSpace(scenario.Emoji) ? "⚡" : scenario.Emoji,
                 scenario.AccentBrush,
                 isError: true);
@@ -552,7 +575,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             if (notify)
             {
                 _toasts.ShowInfo(
-                    "Не удалось выполнить",
+                    Strings.T("L_TRunFailed"),
                     ex.Message,
                     "⚠️",
                     scenario.AccentBrush,
@@ -591,8 +614,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             if (existing is not null)
             {
                 ShowConfirm(
-                    "Удалить сценарий?",
-                    $"Сценарий «{existing.Name}» будет удалён вместе со всеми действиями. Это нельзя отменить.",
+                    Strings.T("L_ConfirmDeleteScenarioT"),
+                    Strings.T("L_ConfirmDeleteScenarioM", existing.Name),
                     () => DeleteScenario(existing));
             }
         };
@@ -875,6 +898,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                 ApplyWindowAppearance();
                 OnPropertyChanged(nameof(HotkeyStatusBrush));
                 break;
+            case nameof(AppPreferences.Language):
+                LanguageService.Apply(Preferences.Language);
+                UpdateHotkeyStatus();
+                UpdateTray();
+                RefreshLanguageDependent();
+                break;
             case nameof(AppPreferences.StartWithWindows):
                 var (success, error) = StartupService.SetEnabled(Preferences.StartWithWindows);
                 if (!success)
@@ -890,9 +919,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
                     }
 
                     _toasts.ShowInfo(
-                        "Автозапуск",
+                        Strings.T("L_TAutorun"),
                         string.IsNullOrWhiteSpace(error)
-                            ? "Не удалось изменить параметр автозапуска."
+                            ? Strings.T("L_TAutorunFail")
                             : error,
                         "⚠️",
                         null,
@@ -924,6 +953,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     {
         OnPropertyChanged(nameof(HotkeyStatusLabel));
         OnPropertyChanged(nameof(HotkeyStatusBrush));
+    }
+
+    private void RefreshLanguageDependent()
+    {
+        foreach (var scenario in Scenarios)
+        {
+            scenario.RefreshLanguageDependent();
+        }
     }
 
     private void UpdateTray()
@@ -966,8 +1003,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         Preferences.TrayHintShown = true;
         _tray.ShowTrayTip(
-            "Mode22 работает в трее",
-            "Сценарии остаются доступными. Дважды нажмите на значок, чтобы открыть окно.");
+            Strings.T("L_TrTipTitle"),
+            Strings.T("L_TrTipText"));
     }
 
     private void ShowMainWindow()
@@ -1063,8 +1100,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         _pendingWarning = null;
         _toasts.ShowInfo(
-            "Настройки восстановлены",
-            "Файл настроек не удалось прочитать. Созданы стандартные сценарии, копия старого файла сохранена рядом.",
+            Strings.T("L_TSettingsRestored"),
+            Strings.T("L_TSettingsRestoredText"),
             "⚠️",
             null,
             isError: true);

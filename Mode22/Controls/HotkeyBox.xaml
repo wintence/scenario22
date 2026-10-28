@@ -33,7 +33,7 @@
                            FontFamily="{StaticResource AppFontFamily}"
                            FontSize="12.5"
                            Foreground="{DynamicResource InputPlaceholderBrush}"
-                           Text="Нажмите, чтобы записать сочетание"
+                           Text="{DynamicResource L_HbPromptPick}"
                            VerticalAlignment="Center" />
             </Grid>
 
@@ -46,14 +46,14 @@
                            FontSize="11"
                            FontWeight="Medium"
                            Foreground="{DynamicResource TextTertiaryBrush}"
-                           Text="Записать"
+                           Text="{DynamicResource L_HbHintRecord}"
                            VerticalAlignment="Center"
                            Margin="0,0,7,0" />
                 <Button x:Name="ClearButton"
                         Style="{StaticResource SmallIconButton}"
                         Width="24"
                         Height="24"
-                        ToolTip="Убрать горячую клавишу"
+                        ToolTip="{DynamicResource L_HbClearTT}"
                         Click="ClearButton_Click">
                     <Path Data="{StaticResource IconClose}"
                           Style="{StaticResource LineIcon}"

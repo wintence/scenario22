@@ -1,0 +1,249 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Window / sidebar / scenario page -->
+    <sys:String x:Key="L_ScenariosHdr">СЦЕНАРИИ</sys:String>
+    <sys:String x:Key="L_SettingsNav">Настройки</sys:String>
+    <sys:String x:Key="L_NewScenario">Новый сценарий</sys:String>
+    <sys:String x:Key="L_OpenSettingsTT">Открыть настройки</sys:String>
+    <sys:String x:Key="L_CloseWinTT">Закрыть</sys:String>
+    <sys:String x:Key="L_MinWinTT">Свернуть</sys:String>
+    <sys:String x:Key="L_MaxWinTT">Развернуть</sys:String>
+
+    <sys:String x:Key="L_EmptyTitle">Создайте первый сценарий</sys:String>
+    <sys:String x:Key="L_EmptyText">Соберите нужные приложения в один сценарий и запускайте его одной горячей клавишей.</sys:String>
+
+    <sys:String x:Key="L_Run">Запустить</sys:String>
+    <sys:String x:Key="L_Running">Выполняется…</sys:String>
+    <sys:String x:Key="L_EditScenarioTT">Настроить сценарий</sys:String>
+    <sys:String x:Key="L_AssignKey">Назначить клавишу</sys:String>
+    <sys:String x:Key="L_ChangeKeyTT">Изменить горячую клавишу</sys:String>
+    <sys:String x:Key="L_ScenarioActive">Сценарий активен</sys:String>
+    <sys:String x:Key="L_ScenarioActiveTT">Выключенный сценарий не реагирует на горячую клавишу</sys:String>
+
+    <sys:String x:Key="L_ActionsTitle">Действия</sys:String>
+    <sys:String x:Key="L_AddAction">Добавить действие</sys:String>
+    <sys:String x:Key="L_NoActionsTitle">Пока ни одного действия</sys:String>
+    <sys:String x:Key="L_NoActionsText">Добавьте приложения, которые нужно открыть или закрыть. Они выполнятся по порядку.</sys:String>
+    <sys:String x:Key="L_AddFirstAction">Добавить первое действие</sys:String>
+    <sys:String x:Key="L_RunTopToBottom">Сценарий выполняется сверху вниз</sys:String>
+
+    <sys:String x:Key="L_TypeLaunchBadge">ОТКРЫТЬ</sys:String>
+    <sys:String x:Key="L_TypeCloseBadge">ЗАКРЫТЬ</sys:String>
+    <sys:String x:Key="L_RowUpTT">Переместить выше</sys:String>
+    <sys:String x:Key="L_RowDownTT">Переместить ниже</sys:String>
+    <sys:String x:Key="L_RowDelTT">Удалить действие</sys:String>
+    <sys:String x:Key="L_RowSwitchTT">Включить или отключить действие</sys:String>
+
+    <!-- Settings page -->
+    <sys:String x:Key="L_SettingsTitle">Настройки</sys:String>
+    <sys:String x:Key="L_SettingsSub">Mode22 живёт в трее и готов запускать сценарии в любой момент.</sys:String>
+    <sys:String x:Key="L_BackToScenarios">К сценариям</sys:String>
+
+    <sys:String x:Key="L_SectGeneral">ОБЩИЕ</sys:String>
+    <sys:String x:Key="L_SetStartTitle">Запускать при входе в Windows</sys:String>
+    <sys:String x:Key="L_SetStartDesc">Mode22 будет ждать в трее после включения компьютера.</sys:String>
+    <sys:String x:Key="L_SetStartTT">Автозапуск при входе в Windows</sys:String>
+    <sys:String x:Key="L_StartupErr">Не удалось определить путь к приложению для автозапуска.</sys:String>
+    <sys:String x:Key="L_SetTrayTitle">Скрывать в трей при закрытии</sys:String>
+    <sys:String x:Key="L_SetTrayDesc">Закрытие окна не остановит работу сценариев.</sys:String>
+    <sys:String x:Key="L_SetTrayTT">Сворачивать в трей при закрытии окна</sys:String>
+    <sys:String x:Key="L_SetNotifyTitle">Показывать уведомления</sys:String>
+    <sys:String x:Key="L_SetNotifyDesc">Короткое подтверждение после запуска сценария.</sys:String>
+    <sys:String x:Key="L_SetNotifyTT">Показывать уведомления о запуске</sys:String>
+    <sys:String x:Key="L_SetHotkeysTitle">Глобальные горячие клавиши</sys:String>
+    <sys:String x:Key="L_SetHotkeysDesc">Реагировать на сочетания, даже когда окно свёрнуто.</sys:String>
+    <sys:String x:Key="L_SetHotkeysTT">Включить глобальные горячие клавиши</sys:String>
+
+    <sys:String x:Key="L_SectAppearance">ОФОРМЛЕНИЕ</sys:String>
+    <sys:String x:Key="L_SetDarkTitle">Тёмное оформление</sys:String>
+    <sys:String x:Key="L_SetDarkDesc">Мягкий тёмный интерфейс для вечерней работы.</sys:String>
+    <sys:String x:Key="L_SetDarkTT">Тёмная тема</sys:String>
+
+    <sys:String x:Key="L_SectLanguage">ЯЗЫК</sys:String>
+    <sys:String x:Key="L_SetLangTitle">Язык интерфейса</sys:String>
+    <sys:String x:Key="L_SetLangDesc">По умолчанию — английский. Доступен русский.</sys:String>
+    <sys:String x:Key="L_LangEn">English</sys:String>
+    <sys:String x:Key="L_LangRu">Русский</sys:String>
+
+    <sys:String x:Key="L_SectData">ДАННЫЕ</sys:String>
+    <sys:String x:Key="L_SetDataTitle">Папка настроек</sys:String>
+    <sys:String x:Key="L_DataOpen">Открыть</sys:String>
+
+    <sys:String x:Key="L_SectAbout">О ПРОГРАММЕ</sys:String>
+    <sys:String x:Key="L_AboutLine">Версия 1.0 · Сценарии одним нажатием</sys:String>
+    <sys:String x:Key="L_AboutLocal">Настройки хранятся только на этом компьютере.</sys:String>
+
+    <!-- Scenario sheet -->
+    <sys:String x:Key="L_EditScenarioTitle">Изменить сценарий</sys:String>
+    <sys:String x:Key="L_SheetSubtitle">Название, настроение и горячая клавиша</sys:String>
+    <sys:String x:Key="L_Name">Название</sys:String>
+    <sys:String x:Key="L_NamePh">Например, «Игровой режим»</sys:String>
+    <sys:String x:Key="L_Description">Описание</sys:String>
+    <sys:String x:Key="L_DescPh">Что делает этот сценарий?</sys:String>
+    <sys:String x:Key="L_Icon">Иконка</sys:String>
+    <sys:String x:Key="L_CustomImage">Своё изображение…</sys:String>
+    <sys:String x:Key="L_CustomImageTT">Выбрать своё изображение (png, ico, exe)</sys:String>
+    <sys:String x:Key="L_Color">Цвет сценария</sys:String>
+    <sys:String x:Key="L_CustomColor">Свой цвет…</sys:String>
+    <sys:String x:Key="L_CustomColorTT">Задать первый и второй цвет своего градиента</sys:String>
+    <sys:String x:Key="L_HotkeyLabel">Горячая клавиша</sys:String>
+    <sys:String x:Key="L_HotkeyHint">Работает в любом приложении, даже если Mode22 свёрнут в трей.</sys:String>
+    <sys:String x:Key="L_Cancel">Отмена</sys:String>
+    <sys:String x:Key="L_Save">Сохранить</sys:String>
+    <sys:String x:Key="L_Delete">Удалить</sys:String>
+    <sys:String x:Key="L_ErrName">Дайте сценарию название.</sys:String>
+    <sys:String x:Key="L_ErrHotkeyFmt">Сценарий «{0}» уже использует это сочетание. Выберите другое.</sys:String>
+    <sys:String x:Key="L_ErrImage">Не удалось открыть изображение. Попробуйте png, jpg, ico, exe или lnk.</sys:String>
+
+    <sys:String x:Key="L_IconDialogTitle">Выберите иконку сценария</sys:String>
+    <sys:String x:Key="L_FilterImages">Изображения (*.png;*.jpg;*.jpeg;*.bmp;*.gif)</sys:String>
+    <sys:String x:Key="L_FilterIcons">Иконки и приложения (*.ico;*.exe;*.dll;*.lnk)</sys:String>
+    <sys:String x:Key="L_FilterAll">Все файлы (*.*)</sys:String>
+
+    <sys:String x:Key="L_SubLaunch">Запустить приложение, файл или ссылку</sys:String>
+    <sys:String x:Key="L_SubClose">Завершить все процессы с указанным именем</sys:String>
+
+    <!-- Accent palette names -->
+    <sys:String x:Key="L_AccentBlue">Синий</sys:String>
+    <sys:String x:Key="L_AccentViolet">Фиолетовый</sys:String>
+    <sys:String x:Key="L_AccentPink">Розовый</sys:String>
+    <sys:String x:Key="L_AccentAmber">Янтарный</sys:String>
+    <sys:String x:Key="L_AccentMint">Мятный</sys:String>
+    <sys:String x:Key="L_AccentGraphite">Графит</sys:String>
+    <sys:String x:Key="L_AccentCustom">Свой цвет</sys:String>
+
+    <!-- Built-in icon names -->
+    <sys:String x:Key="L_IconStar">Звезда</sys:String>
+    <sys:String x:Key="L_IconBolt">Молния</sys:String>
+    <sys:String x:Key="L_IconStart">Старт</sys:String>
+    <sys:String x:Key="L_IconGame">Игра</sys:String>
+    <sys:String x:Key="L_IconWork">Работа</sys:String>
+    <sys:String x:Key="L_IconNight">Ночь</sys:String>
+    <sys:String x:Key="L_IconWindow">Окно</sys:String>
+    <sys:String x:Key="L_IconFiles">Файлы</sys:String>
+    <sys:String x:Key="L_IconSystem">Система</sys:String>
+    <sys:String x:Key="L_IconKeys">Клавиатура</sys:String>
+    <sys:String x:Key="L_IconBell">Звонок</sys:String>
+    <sys:String x:Key="L_IconTimer">Таймер</sys:String>
+    <sys:String x:Key="L_IconPower">Питание</sys:String>
+    <sys:String x:Key="L_IconLinks">Ссылки</sys:String>
+
+    <!-- Action sheet -->
+    <sys:String x:Key="L_NewActionTitle">Новое действие</sys:String>
+    <sys:String x:Key="L_EditActionTitle">Изменить действие</sys:String>
+    <sys:String x:Key="L_ActionSubtitle">Открыть приложение или закрыть процесс</sys:String>
+    <sys:String x:Key="L_KindLaunchT">Открыть</sys:String>
+    <sys:String x:Key="L_KindLaunchS">Запустить приложение</sys:String>
+    <sys:String x:Key="L_KindCloseT">Закрыть</sys:String>
+    <sys:String x:Key="L_KindCloseS">Завершить процесс</sys:String>
+    <sys:String x:Key="L_NamePhSteam">Например, Steam</sys:String>
+    <sys:String x:Key="L_NamePhChrome">Например, Chrome</sys:String>
+    <sys:String x:Key="L_TargetLabel">Приложение или файл</sys:String>
+    <sys:String x:Key="L_TargetPh">C:\Program Files\Steam\steam.exe</sys:String>
+    <sys:String x:Key="L_Browse">Обзор</sys:String>
+    <sys:String x:Key="L_TargetHint">Поддерживаются .exe, ярлыки, документы и ссылки вроде steam://run/440.</sys:String>
+    <sys:String x:Key="L_ArgumentsLabel">Аргументы запуска</sys:String>
+    <sys:String x:Key="L_ArgPh">Необязательно</sys:String>
+    <sys:String x:Key="L_ProcessLabel">Имя процесса</sys:String>
+    <sys:String x:Key="L_ProcessPh">Например, chrome</sys:String>
+    <sys:String x:Key="L_ProcessPick">Выбрать</sys:String>
+    <sys:String x:Key="L_ProcessHint">Будут закрыты все процессы с этим именем. Можно выбрать .exe — имя определится автоматически.</sys:String>
+    <sys:String x:Key="L_DelayLabel">Задержка перед действием</sys:String>
+    <sys:String x:Key="L_DelayHint">Полезно, если приложению нужно время</sys:String>
+    <sys:String x:Key="L_Sec">сек</sys:String>
+    <sys:String x:Key="L_Add">Добавить</sys:String>
+    <sys:String x:Key="L_FileDialogTarget">Выберите приложение или файл</sys:String>
+    <sys:String x:Key="L_FileDialogProcess">Выберите приложение, процесс которого нужно закрыть</sys:String>
+    <sys:String x:Key="L_FilterApps">Приложения (*.exe;*.bat;*.cmd;*.lnk)|*.exe;*.bat;*.cmd;*.lnk|Все файлы (*.*)|*.*</sys:String>
+    <sys:String x:Key="L_FilterProcess">Приложения (*.exe)|*.exe|Все файлы (*.*)|*.*</sys:String>
+    <sys:String x:Key="L_ErrDelayInt">Задержка должна быть целым числом секунд.</sys:String>
+    <sys:String x:Key="L_ErrDelayRange">Задержка может быть от 0 до 600 секунд.</sys:String>
+    <sys:String x:Key="L_ErrProcess">Укажите имя процесса, который нужно закрыть.</sys:String>
+    <sys:String x:Key="L_ErrTarget">Выберите приложение или укажите путь.</sys:String>
+
+    <!-- Hotkey box -->
+    <sys:String x:Key="L_HbPromptPick">Нажмите, чтобы записать сочетание</sys:String>
+    <sys:String x:Key="L_HbHintRecord">Записать</sys:String>
+    <sys:String x:Key="L_HbHintEdit">Изменить</sys:String>
+    <sys:String x:Key="L_HbClearTT">Убрать горячую клавишу</sys:String>
+    <sys:String x:Key="L_HbEscHint">Esc — отмена</sys:String>
+    <sys:String x:Key="L_HbPress">Нажмите сочетание…</sys:String>
+    <sys:String x:Key="L_HbNeedMod">Добавьте Ctrl, Alt, Shift или Win</sys:String>
+
+    <!-- Hotkey status -->
+    <sys:String x:Key="L_HsPaused">Клавиши на паузе</sys:String>
+    <sys:String x:Key="L_HsConflict1">Есть конфликт клавиш</sys:String>
+    <sys:String x:Key="L_HsConflictFmt">Конфликтов: {0}</sys:String>
+    <sys:String x:Key="L_HsNone">Клавиши не назначены</sys:String>
+    <sys:String x:Key="L_HsReady">готовы</sys:String>
+    <sys:String x:Key="L_HsScenario1">сценарий</sys:String>
+    <sys:String x:Key="L_HsScenarioN">сценария</sys:String>
+    <sys:String x:Key="L_HkDup">Сочетание уже используется другим сценарием</sys:String>
+    <sys:String x:Key="L_HkBusy">Сочетание занято другой программой</sys:String>
+    <sys:String x:Key="L_NoHotkey">Без клавиши</sys:String>
+    <sys:String x:Key="L_HbUnknownKey">Клавиша</sys:String>
+    <sys:String x:Key="L_FallbackScenarioName">Сценарий</sys:String>
+
+    <!-- Model labels -->
+    <sys:String x:Key="L_NoActions">Нет действий</sys:String>
+    <sys:String x:Key="L_ActionWord1">действие</sys:String>
+    <sys:String x:Key="L_ActionWordN">действия</sys:String>
+    <sys:String x:Key="L_NeverRun">Ещё не запускался</sys:String>
+    <sys:String x:Key="L_TodayFmt">Сегодня в {0}</sys:String>
+    <sys:String x:Key="L_YesterdayFmt">Вчера в {0}</sys:String>
+    <sys:String x:Key="L_Unnamed">Без названия</sys:String>
+    <sys:String x:Key="L_NoProcessNamed">Имя процесса не указано</sys:String>
+    <sys:String x:Key="L_ProcessFmt">Процесс: {0}</sys:String>
+    <sys:String x:Key="L_NoTarget">Путь не указан</sys:String>
+    <sys:String x:Key="L_DelayNow">Сразу</sys:String>
+    <sys:String x:Key="L_DelayInFmt">Через {0} с</sys:String>
+    <sys:String x:Key="L_TypeLaunch">Открыть</sys:String>
+    <sys:String x:Key="L_TypeClose">Закрыть</sys:String>
+
+    <!-- Runner -->
+    <sys:String x:Key="L_RNoPath">Не указан путь к приложению</sys:String>
+    <sys:String x:Key="L_RFileNotFound">Файл не найден</sys:String>
+    <sys:String x:Key="L_RNoAccess">Нет доступа. Попробуйте запустить Mode22 от имени администратора</sys:String>
+    <sys:String x:Key="L_RNoStart">Windows не смог запустить приложение</sys:String>
+    <sys:String x:Key="L_RNoProcess">Не указано имя процесса</sys:String>
+    <sys:String x:Key="L_RProtected">Системный процесс защищён</sys:String>
+    <sys:String x:Key="L_RProcListFail">Не удалось получить список процессов: </sys:String>
+    <sys:String x:Key="L_RCloseFail">Не удалось закрыть {0}</sys:String>
+
+    <!-- Toasts -->
+    <sys:String x:Key="L_ToastAction1">Выполняю действие…</sys:String>
+    <sys:String x:Key="L_ToastActionsN">Выполняю сценарий…</sys:String>
+    <sys:String x:Key="L_ToastDone">Готово · {0}</sys:String>
+    <sys:String x:Key="L_ToastProgressFmt">Выполняю: {0}</sys:String>
+    <sys:String x:Key="L_ToastLessSecond">меньше секунды</sys:String>
+    <sys:String x:Key="L_DurSecFmt">{0} с</sys:String>
+    <sys:String x:Key="L_ToastNoActions">В сценарии нет действий</sys:String>
+    <sys:String x:Key="L_ToastPartial">Не всё получилось</sys:String>
+
+    <!-- Confirm / dialogs / misc -->
+    <sys:String x:Key="L_ConfirmDeleteActionT">Удалить действие?</sys:String>
+    <sys:String x:Key="L_ConfirmDeleteActionM">Действие «{0}» будет удалено из сценария «{1}». Это нельзя отменить.</sys:String>
+    <sys:String x:Key="L_ConfirmDeleteScenarioT">Удалить сценарий?</sys:String>
+    <sys:String x:Key="L_ConfirmDeleteScenarioM">Сценарий «{0}» будет удалён вместе со всеми действиями. Это нельзя отменить.</sys:String>
+    <sys:String x:Key="L_TNothingToRun">Нечего выполнять</sys:String>
+    <sys:String x:Key="L_TNothingToRunText">В этом сценарии нет включённых действий.</sys:String>
+    <sys:String x:Key="L_TRunFailed">Не удалось выполнить</sys:String>
+    <sys:String x:Key="L_TFolderFailed">Не удалось открыть папку</sys:String>
+    <sys:String x:Key="L_TSettingsRestored">Настройки восстановлены</sys:String>
+    <sys:String x:Key="L_TSettingsRestoredText">Файл настроек не удалось прочитать. Копия старого файла сохранена рядом.</sys:String>
+    <sys:String x:Key="L_TAutorun">Автозапуск</sys:String>
+    <sys:String x:Key="L_TAutorunFail">Не удалось изменить параметр автозапуска.</sys:String>
+    <sys:String x:Key="L_CrashText">Произошла непредвиденная ошибка. Подробности сохранены в папке данных Mode22.</sys:String>
+
+    <!-- Tray -->
+    <sys:String x:Key="L_TrCaption">Mode22 — сценарии одним нажатием</sys:String>
+    <sys:String x:Key="L_TrCaptionPaused">Mode22 — горячие клавиши на паузе</sys:String>
+    <sys:String x:Key="L_TrOpen">Открыть Mode22</sys:String>
+    <sys:String x:Key="L_TrNoScenarios">Нет сценариев</sys:String>
+    <sys:String x:Key="L_TrSettings">Настройки</sys:String>
+    <sys:String x:Key="L_TrExit">Выход</sys:String>
+    <sys:String x:Key="L_TrTipTitle">Mode22 работает в трее</sys:String>
+    <sys:String x:Key="L_TrTipText">Сценарии остаются доступными. Дважды нажмите на значок, чтобы открыть окно.</sys:String>
+</ResourceDictionary>

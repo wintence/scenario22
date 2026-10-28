@@ -28,7 +28,7 @@ public sealed class TrayService : IDisposable
         _notifyIcon = new System.Windows.Forms.NotifyIcon
         {
             Icon = _icon ?? SystemIcons.Application,
-            Text = "Mode22 — сценарии одним нажатием",
+            Text = Strings.T("L_TrCaption"),
             Visible = true,
             ContextMenuStrip = _menu
         };
@@ -48,8 +48,8 @@ public sealed class TrayService : IDisposable
         _scenarios = scenarios;
         _hotkeysEnabled = hotkeysEnabled;
         _notifyIcon.Text = hotkeysEnabled
-            ? "Mode22 — сценарии одним нажатием"
-            : "Mode22 — горячие клавиши на паузе";
+            ? Strings.T("L_TrCaption")
+            : Strings.T("L_TrCaptionPaused");
     }
 
     public void ShowTrayTip(string title, string message)
@@ -71,7 +71,7 @@ public sealed class TrayService : IDisposable
     {
         _menu.Items.Clear();
 
-        var open = CreateItem("Открыть Mode22", bold: true);
+        var open = CreateItem(Strings.T("L_TrOpen"), bold: true);
         open.Click += (_, _) => ShowRequested?.Invoke();
         _menu.Items.Add(open);
         _menu.Items.Add(new System.Windows.Forms.ToolStripSeparator());
@@ -87,16 +87,16 @@ public sealed class TrayService : IDisposable
 
         if (_scenarios.Count == 0)
         {
-            var empty = CreateItem("  Нет сценариев");
+            var empty = CreateItem("  " + Strings.T("L_TrNoScenarios"));
             empty.Enabled = false;
             _menu.Items.Add(empty);
         }
 
         _menu.Items.Add(new System.Windows.Forms.ToolStripSeparator());
-        var settings = CreateItem("Настройки");
+        var settings = CreateItem(Strings.T("L_TrSettings"));
         settings.Click += (_, _) => SettingsRequested?.Invoke();
         _menu.Items.Add(settings);
-        var exit = CreateItem("Выход");
+        var exit = CreateItem(Strings.T("L_TrExit"));
         exit.Click += (_, _) => ExitRequested?.Invoke();
         _menu.Items.Add(exit);
     }

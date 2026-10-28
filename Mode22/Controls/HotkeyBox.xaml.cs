@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Mode22.Models;
+using Mode22.Services;
 
 namespace Mode22.Controls;
 
@@ -58,8 +59,8 @@ public partial class HotkeyBox : UserControl
     private void BeginRecording()
     {
         _isRecording = true;
-        ActionHint.Text = "Esc — отмена";
-        PromptText.Text = "Нажмите сочетание…";
+        ActionHint.Text = Strings.T("L_HbEscHint");
+        PromptText.Text = Strings.T("L_HbPress");
         PromptText.Foreground = (Brush)FindResource("TextSecondaryBrush");
         PromptText.Visibility = Visibility.Visible;
         Tokens.Visibility = Visibility.Collapsed;
@@ -120,7 +121,7 @@ public partial class HotkeyBox : UserControl
             if (mods.HasFlag(ModifierKeys.Windows)) parts.Add("Win");
             PromptText.Text = parts.Count > 0
                 ? string.Join(" + ", parts) + " + …"
-                : "Нажмите сочетание…";
+                : Strings.T("L_HbPress");
             return;
         }
 
@@ -143,7 +144,7 @@ public partial class HotkeyBox : UserControl
         var isFunctionKey = key is >= Key.F1 and <= Key.F24;
         if (!hasModifier && !isFunctionKey)
         {
-            PromptText.Text = "Добавьте Ctrl, Alt, Shift или Win";
+            PromptText.Text = Strings.T("L_HbNeedMod");
             PromptText.Foreground = (Brush)FindResource("DangerBrush");
             return;
         }
@@ -191,9 +192,9 @@ public partial class HotkeyBox : UserControl
         Tokens.ItemsSource = hasValue ? Value!.Tokens : null;
         Tokens.Visibility = hasValue ? Visibility.Visible : Visibility.Collapsed;
         PromptText.Visibility = hasValue ? Visibility.Collapsed : Visibility.Visible;
-        PromptText.Text = "Нажмите, чтобы записать сочетание";
+        PromptText.Text = Strings.T("L_HbPromptPick");
         ClearButton.Visibility = hasValue ? Visibility.Visible : Visibility.Collapsed;
-        ActionHint.Text = hasValue ? "Изменить" : "Записать";
+        ActionHint.Text = Strings.T(hasValue ? "L_HbHintEdit" : "L_HbHintRecord");
     }
 
     private static T? FindAncestor<T>(DependencyObject? current) where T : DependencyObject

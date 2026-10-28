@@ -49,15 +49,15 @@
                 <StackPanel Grid.Column="1" Margin="14,0,12,0" VerticalAlignment="Center">
                     <TextBlock x:Name="TitleText"
                                Style="{StaticResource TextSheetTitle}"
-                               Text="Новый сценарий" />
+                               Text="{DynamicResource L_NewScenario}" />
                     <TextBlock Style="{StaticResource TextSecondary}"
                                Margin="0,3,0,0"
-                               Text="Название, настроение и горячая клавиша" />
+                               Text="{DynamicResource L_SheetSubtitle}" />
                 </StackPanel>
 
                 <Button Grid.Column="2"
                         Style="{StaticResource IconButton}"
-                        ToolTip="Закрыть"
+                        ToolTip="{DynamicResource L_Cancel}"
                         Click="Cancel_Click"
                         VerticalAlignment="Top">
                     <Path Data="{StaticResource IconClose}"
@@ -67,26 +67,26 @@
                 </Button>
             </Grid>
 
-            <TextBlock Style="{StaticResource FormLabel}" Margin="0,18,0,7" Text="Название" />
+            <TextBlock Style="{StaticResource FormLabel}" Margin="0,18,0,7" Text="{DynamicResource L_Name}" />
             <TextBox x:Name="NameBox"
                      Style="{StaticResource InputTextBox}"
                      MaxLength="42"
-                     Tag="Например, «Игровой режим»" />
+                     Tag="{DynamicResource L_NamePh}" />
 
-            <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="Описание" />
+            <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="{DynamicResource L_Description}" />
             <TextBox x:Name="DescriptionBox"
                      Style="{StaticResource InputTextBox}"
                      MaxLength="90"
-                     Tag="Что делает этот сценарий?" />
+                     Tag="{DynamicResource L_DescPh}" />
 
             <Grid Margin="0,13,0,7">
-                <TextBlock Style="{StaticResource FormLabel}" Text="Иконка" />
+                <TextBlock Style="{StaticResource FormLabel}" Text="{DynamicResource L_Icon}" />
                 <Button Style="{StaticResource GhostButton}"
                         HorizontalAlignment="Right"
                         Margin="0,-6,0,0"
                         Padding="10,0"
                         Height="26"
-                        ToolTip="Выбрать своё изображение (png, ico, exe)"
+                        ToolTip="{DynamicResource L_CustomImageTT}"
                         Click="CustomIcon_Click">
                     <StackPanel Orientation="Horizontal">
                         <Path Data="{StaticResource IconFolder}"
@@ -97,7 +97,7 @@
                         <TextBlock FontFamily="{StaticResource AppFontFamily}"
                                    FontSize="11.5"
                                    FontWeight="Medium"
-                                   Text="Своё изображение…" />
+                                   Text="{DynamicResource L_CustomImage}" />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -156,18 +156,18 @@
             </ListBox>
 
             <Grid Margin="0,13,0,7">
-                <TextBlock Style="{StaticResource FormLabel}" Text="Цвет сценария" />
+                <TextBlock Style="{StaticResource FormLabel}" Text="{DynamicResource L_Color}" />
                 <Button Style="{StaticResource GhostButton}"
                         HorizontalAlignment="Right"
                         Margin="0,-6,0,0"
                         Padding="10,0"
                         Height="26"
-                        ToolTip="Задать первый и второй цвет своего градиента"
+                        ToolTip="{DynamicResource L_CustomColorTT}"
                         Click="CustomColor_Click">
                     <TextBlock FontFamily="{StaticResource AppFontFamily}"
                                FontSize="11.5"
                                FontWeight="Medium"
-                               Text="Свой цвет…" />
+                               Text="{DynamicResource L_CustomColor}" />
                 </Button>
             </Grid>
             <ListBox x:Name="AccentListBox"
@@ -218,10 +218,10 @@
                 </ListBox.ItemContainerStyle>
             </ListBox>
 
-            <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="Горячая клавиша" />
+            <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="{DynamicResource L_HotkeyLabel}" />
             <controls:HotkeyBox x:Name="HotkeyInput" />
             <TextBlock Style="{StaticResource FormHint}"
-                       Text="Работает в любом приложении, даже если Mode22 свёрнут в трей." />
+                       Text="{DynamicResource L_HotkeyHint}" />
 
             <Border x:Name="ErrorBanner"
                     Margin="0,12,0,0"
@@ -273,7 +273,7 @@
                                    FontSize="12.5"
                                    FontWeight="Medium"
                                    Foreground="{DynamicResource DangerBrush}"
-                                   Text="Удалить" />
+                                   Text="{DynamicResource L_Delete}" />
                     </StackPanel>
                 </Button>
 
@@ -281,14 +281,14 @@
                         Style="{StaticResource SecondaryButton}"
                         MinWidth="92"
                         Margin="0,0,8,0"
-                        Content="Отмена"
+                        Content="{DynamicResource L_Cancel}"
                         Click="Cancel_Click" />
                 <Button x:Name="SaveButton"
                         Grid.Column="2"
                         Style="{StaticResource PrimaryButton}"
                         Height="38"
                         MinWidth="112"
-                        Content="Сохранить"
+                        Content="{DynamicResource L_Save}"
                         Click="Save_Click" />
             </Grid>
         </StackPanel>

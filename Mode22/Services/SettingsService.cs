@@ -40,6 +40,7 @@ public sealed class SettingsService
             var json = File.ReadAllText(SettingsPath);
             var state = JsonSerializer.Deserialize<AppState>(json, JsonOptions) ?? new AppState();
             Normalize(state);
+            NormalizeLanguage(state);
             return state;
         }
         catch (Exception ex)
@@ -81,6 +82,22 @@ public sealed class SettingsService
         return new AppState();
     }
 
+    /// <summary>
+    /// Restricts the saved interface language to the supported values, then applies
+    /// it eagerly so localized strings resolve correctly during normalization.
+    /// </summary>
+    private static void NormalizeLanguage(AppState state)
+    {
+        var language = (state.Preferences.Language ?? "en").Trim().ToLowerInvariant();
+        if (language is not ("ru" or "en"))
+        {
+            language = "en";
+        }
+
+        state.Preferences.Language = language;
+        LanguageService.Apply(language);
+    }
+
     private static void Normalize(AppState state)
     {
         state.SchemaVersion = Math.Max(1, state.SchemaVersion);
@@ -96,7 +113,7 @@ public sealed class SettingsService
                 seenIds.Add(scenario.Id);
             }
 
-            scenario.Name = string.IsNullOrWhiteSpace(scenario.Name) ? "Сценарий" : scenario.Name.Trim();
+            scenario.Name = string.IsNullOrWhiteSpace(scenario.Name) ? Strings.T("L_FallbackScenarioName") : scenario.Name.Trim();
             scenario.Description ??= string.Empty;
             scenario.Emoji = string.IsNullOrWhiteSpace(scenario.Emoji) ? "✨" : scenario.Emoji;
             scenario.AccentKey = AccentPalette.Get(scenario.AccentKey).Key;

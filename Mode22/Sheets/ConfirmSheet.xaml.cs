@@ -2,17 +2,18 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Mode22.Services;
 
 namespace Mode22.Sheets;
 
 public partial class ConfirmSheet : UserControl
 {
-    public ConfirmSheet(string title, string message, string confirmText = "Удалить")
+    public ConfirmSheet(string title, string message, string? confirmText = null)
     {
         InitializeComponent();
         TitleText.Text = title;
         MessageText.Text = message;
-        ConfirmButton.Content = confirmText;
+        ConfirmButton.Content = confirmText ?? Strings.T("L_Delete");
 
         Loaded += (_, _) => Dispatcher.BeginInvoke(new Action(() =>
         {

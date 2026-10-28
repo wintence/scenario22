@@ -52,7 +52,7 @@ public partial class App : Application
     {
         TryLogCrash(e.Exception);
         System.Windows.MessageBox.Show(
-            "Произошла непредвиденная ошибка. Подробности сохранены в папке данных Mode22.\n\n" + e.Exception.Message,
+            Strings.T("L_CrashText") + "\n\n" + e.Exception.Message,
             "Mode22",
             MessageBoxButton.OK,
             MessageBoxImage.Error);

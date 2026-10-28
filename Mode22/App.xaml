@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="Themes/Light.xaml" />
                 <ResourceDictionary Source="Themes/Icons.xaml" />
                 <ResourceDictionary Source="Themes/Styles.xaml" />
+                <ResourceDictionary Source="Themes/Strings.En.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <utility:BoolToVisibilityConverter x:Key="BoolToVisibility" />

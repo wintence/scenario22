@@ -18,6 +18,7 @@ public sealed class AppPreferences : ObservableObject
     private bool _hotkeysEnabled = true;
     private bool _useDarkTheme;
     private bool _trayHintShown;
+    private string _language = "en";
 
     public bool StartWithWindows
     {
@@ -53,5 +54,14 @@ public sealed class AppPreferences : ObservableObject
     {
         get => _trayHintShown;
         set => SetProperty(ref _trayHintShown, value);
+    }
+
+    /// <summary>
+    /// Interface language: "en" (default) or "ru".
+    /// </summary>
+    public string Language
+    {
+        get => _language;
+        set => SetProperty(ref _language, value);
     }
 }

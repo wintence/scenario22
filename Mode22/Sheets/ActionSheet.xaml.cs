@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using Mode22.Models;
+using Mode22.Services;
 
 namespace Mode22.Sheets;
 
@@ -30,8 +31,8 @@ public partial class ActionSheet : UserControl
         _existing = existing;
         _closeIconPath = existing?.Target ?? string.Empty;
 
-        TitleText.Text = existing is null ? "Новое действие" : "Изменить действие";
-        SaveButton.Content = existing is null ? "Добавить" : "Сохранить";
+        TitleText.Text = existing is null ? Strings.T("L_NewActionTitle") : Strings.T("L_EditActionTitle");
+        SaveButton.Content = existing is null ? Strings.T("L_Add") : Strings.T("L_Save");
         NameBox.Text = existing?.Name ?? string.Empty;
         TargetBox.Text = existing?.Target ?? string.Empty;
         ArgumentsBox.Text = existing?.Arguments ?? string.Empty;
@@ -95,17 +96,17 @@ public partial class ActionSheet : UserControl
         LaunchPanel.Visibility = isClose ? Visibility.Collapsed : Visibility.Visible;
         ClosePanel.Visibility = isClose ? Visibility.Visible : Visibility.Collapsed;
         SubtitleText.Text = isClose
-            ? "Завершить все процессы с указанным именем"
-            : "Запустить приложение, файл или ссылку";
-        NameBox.Tag = isClose ? "Например, Chrome" : "Например, Steam";
+            ? Strings.T("L_SubClose")
+            : Strings.T("L_SubLaunch");
+        NameBox.Tag = isClose ? Strings.T("L_NamePhChrome") : Strings.T("L_NamePhSteam");
     }
 
     private void BrowseTarget_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFileDialog
         {
-            Title = "Выберите приложение или файл",
-            Filter = "Приложения (*.exe;*.bat;*.cmd;*.lnk)|*.exe;*.bat;*.cmd;*.lnk|Все файлы (*.*)|*.*",
+            Title = Strings.T("L_FileDialogTarget"),
+            Filter = Strings.T("L_FilterApps"),
             CheckFileExists = true
         };
 
@@ -125,8 +126,8 @@ public partial class ActionSheet : UserControl
     {
         var dialog = new OpenFileDialog
         {
-            Title = "Выберите приложение, процесс которого нужно закрыть",
-            Filter = "Приложения (*.exe)|*.exe|Все файлы (*.*)|*.*",
+            Title = Strings.T("L_FileDialogProcess"),
+            Filter = Strings.T("L_FilterProcess"),
             CheckFileExists = true
         };
 
@@ -156,7 +157,7 @@ public partial class ActionSheet : UserControl
         var delayText = DelayBox.Text.Trim();
         if (!string.IsNullOrEmpty(delayText) && !int.TryParse(delayText, out _))
         {
-            ShowError("Задержка должна быть целым числом секунд.");
+            ShowError(Strings.T("L_ErrDelayInt"));
             DelayBox.Focus();
             return;
         }
@@ -164,7 +165,7 @@ public partial class ActionSheet : UserControl
         var delay = string.IsNullOrEmpty(delayText) ? 0 : int.Parse(delayText);
         if (delay is < 0 or > 600)
         {
-            ShowError("Задержка может быть от 0 до 600 секунд.");
+            ShowError(Strings.T("L_ErrDelayRange"));
             DelayBox.Focus();
             return;
         }
@@ -174,7 +175,7 @@ public partial class ActionSheet : UserControl
             var process = ScenarioAction.NormalizeProcessName(ProcessBox.Text);
             if (string.IsNullOrWhiteSpace(process))
             {
-                ShowError("Укажите имя процесса, который нужно закрыть.");
+                ShowError(Strings.T("L_ErrProcess"));
                 ProcessBox.Focus();
                 return;
             }
@@ -211,7 +212,7 @@ public partial class ActionSheet : UserControl
             var target = TargetBox.Text.Trim();
             if (string.IsNullOrWhiteSpace(target))
             {
-                ShowError("Выберите приложение или укажите путь.");
+                ShowError(Strings.T("L_ErrTarget"));
                 TargetBox.Focus();
                 return;
             }

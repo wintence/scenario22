@@ -82,7 +82,7 @@
                                    FontSize="13.5"
                                    FontWeight="SemiBold"
                                    Foreground="{DynamicResource ToastPrimaryTextBrush}"
-                                   Text="Игровой режим"
+                                   Text="{DynamicResource L_NamePh}"
                                    TextTrimming="CharacterEllipsis"
                                    TextOptions.TextFormattingMode="Display" />
                         <TextBlock x:Name="SubtitleText"
@@ -90,7 +90,7 @@
                                    FontFamily="{StaticResource AppFontFamily}"
                                    FontSize="11.5"
                                    Foreground="{DynamicResource ToastSecondaryTextBrush}"
-                                   Text="Выполняю сценарий…"
+                                   Text="{DynamicResource L_ToastActionsN}"
                                    TextTrimming="CharacterEllipsis"
                                    TextOptions.TextFormattingMode="Display" />
                     </StackPanel>

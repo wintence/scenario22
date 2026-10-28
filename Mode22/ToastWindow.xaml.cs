@@ -47,7 +47,7 @@ public partial class ToastWindow : Window
         _hideTimer.Stop();
         SetScenarioIcon(scenario);
         TitleText.Text = scenario.Name;
-        SubtitleText.Text = totalActions == 1 ? "Выполняю действие…" : "Выполняю сценарий…";
+        SubtitleText.Text = totalActions == 1 ? Strings.T("L_ToastAction1") : Strings.T("L_ToastActionsN");
         IconTile.Background = scenario.AccentGradient;
         Spinner.Stroke = scenario.AccentBrush;
         ProgressFill.Background = scenario.AccentGradient;
@@ -60,7 +60,7 @@ public partial class ToastWindow : Window
     public void UpdateProgress(ScenarioRunProgress progress)
     {
         var percent = Math.Clamp(progress.Percent, 0, 100);
-        SubtitleText.Text = $"Выполняю: {progress.CurrentAction}";
+        SubtitleText.Text = Strings.T("L_ToastProgressFmt", progress.CurrentAction);
         var animation = new DoubleAnimation(
             ProgressScale.ScaleX,
             percent / 100d,
@@ -82,10 +82,12 @@ public partial class ToastWindow : Window
         {
             TitleText.Text = result.Scenario.Name;
             var seconds = result.Duration.TotalSeconds;
-            var duration = seconds < 1 ? "меньше секунды" : $"{seconds:0.0} с";
+            var duration = seconds < 1
+                ? Strings.T("L_ToastLessSecond")
+                : Strings.T("L_DurSecFmt", seconds.ToString("0.0", LanguageService.Culture));
             SubtitleText.Text = result.TotalActions == 0
-                ? "В сценарии нет действий"
-                : $"Готово · {duration}";
+                ? Strings.T("L_ToastNoActions")
+                : Strings.T("L_ToastDone", duration);
             ProgressFill.Background = ResolveBrush("SuccessBrush", Brushes.MediumSeaGreen);
             SetState(ToastState.Success);
             AnimateProgressTo(1);
@@ -93,7 +95,7 @@ public partial class ToastWindow : Window
         }
         else
         {
-            TitleText.Text = "Не всё получилось";
+            TitleText.Text = Strings.T("L_ToastPartial");
             var first = result.Errors[0];
             SubtitleText.Text = $"{first.ActionName}: {first.Message}";
             ProgressFill.Background = ResolveBrush("WarningBrush", Brushes.Orange);

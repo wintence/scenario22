@@ -41,7 +41,7 @@ public partial class ScenarioSheet : UserControl
         _allScenarios = allScenarios;
         _scenarioId = existing?.Id ?? Guid.NewGuid();
 
-        TitleText.Text = existing is null ? "Новый сценарий" : "Изменить сценарий";
+        TitleText.Text = existing is null ? Strings.T("L_NewScenario") : Strings.T("L_EditScenarioTitle");
         DeleteButton.Visibility = existing is null ? Visibility.Collapsed : Visibility.Visible;
 
         var hasCustomAccent = existing is { IsCustomAccent: true };
@@ -61,7 +61,7 @@ public partial class ScenarioSheet : UserControl
             ? ScenarioIcons.Get(existing?.IconKey)
             : null;
 
-        NameBox.Text = existing?.Name ?? "Новый сценарий";
+        NameBox.Text = existing?.Name ?? Strings.T("L_NewScenario");
         DescriptionBox.Text = existing?.Description ?? string.Empty;
         HotkeyInput.Value = existing?.Hotkey ?? FindFreeHotkey();
 
@@ -240,10 +240,12 @@ public partial class ScenarioSheet : UserControl
     {
         var dialog = new OpenFileDialog
         {
-            Title = "Выберите иконку сценария",
-            Filter = "Изображения (*.png;*.jpg;*.jpeg;*.bmp;*.gif)|*.png;*.jpg;*.jpeg;*.bmp;*.gif"
-                     + "|Иконки и приложения (*.ico;*.exe;*.dll;*.lnk)|*.ico;*.exe;*.dll;*.lnk"
-                     + "|Все файлы (*.*)|*.*",
+            Title = Strings.T("L_IconDialogTitle"),
+            Filter = Strings.T("L_FilterImages")
+                     + "|*.png;*.jpg;*.jpeg;*.bmp;*.gif"
+                     + "|" + Strings.T("L_FilterIcons")
+                     + "|*.ico;*.exe;*.dll;*.lnk"
+                     + "|" + Strings.T("L_FilterAll"),
             CheckFileExists = true
         };
 
@@ -255,7 +257,7 @@ public partial class ScenarioSheet : UserControl
         var image = IconService.GetCustomIcon(dialog.FileName);
         if (image is null)
         {
-            ShowError("Не удалось открыть изображение. Попробуйте png, jpg, ico, exe или lnk.");
+            ShowError(Strings.T("L_ErrImage"));
             return;
         }
 
@@ -306,7 +308,7 @@ public partial class ScenarioSheet : UserControl
         var name = NameBox.Text.Trim();
         if (string.IsNullOrWhiteSpace(name))
         {
-            ShowError("Дайте сценарию название.");
+            ShowError(Strings.T("L_ErrName"));
             NameBox.Focus();
             return;
         }
@@ -319,7 +321,7 @@ public partial class ScenarioSheet : UserControl
 
             if (duplicate is not null)
             {
-                ShowError($"Это сочетание уже использует сценарий «{duplicate.Name}». Выберите другое.");
+                ShowError(Strings.T("L_ErrHotkeyFmt", duplicate.Name));
                 HotkeyInput.Focus();
                 return;
             }

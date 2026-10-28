@@ -131,7 +131,7 @@ public sealed class ScenarioAction : ObservableObject
                 }
             }
 
-            return "Без названия";
+            return Strings.T("L_Unnamed");
         }
     }
 
@@ -143,13 +143,13 @@ public sealed class ScenarioAction : ObservableObject
             if (Kind == ActionKind.Close)
             {
                 return string.IsNullOrWhiteSpace(ProcessName)
-                    ? "Имя процесса не указано"
-                    : $"Процесс: {NormalizeProcessName(ProcessName)}";
+                    ? Strings.T("L_NoProcessNamed")
+                    : Strings.T("L_ProcessFmt", NormalizeProcessName(ProcessName));
             }
 
             if (string.IsNullOrWhiteSpace(Target))
             {
-                return "Путь не указан";
+                return Strings.T("L_NoTarget");
             }
 
             var target = Target.Trim();
@@ -163,10 +163,10 @@ public sealed class ScenarioAction : ObservableObject
     }
 
     [JsonIgnore]
-    public string DelayLabel => DelaySeconds <= 0 ? "Сразу" : $"Через {DelaySeconds} с";
+    public string DelayLabel => DelaySeconds <= 0 ? Strings.T("L_DelayNow") : Strings.T("L_DelayInFmt", DelaySeconds);
 
     [JsonIgnore]
-    public string TypeLabel => Kind == ActionKind.Launch ? "Открыть" : "Закрыть";
+    public string TypeLabel => Strings.T(Kind == ActionKind.Launch ? "L_TypeLaunch" : "L_TypeClose");
 
     [JsonIgnore]
     public ImageSource? IconSource
@@ -183,6 +183,14 @@ public sealed class ScenarioAction : ObservableObject
 
     [JsonIgnore]
     public bool HasIcon => IconSource is not null;
+
+    /// <summary>
+    /// Re-notifies localized computed labels after the interface language changes.
+    /// </summary>
+    public void RefreshLanguageDependent()
+    {
+        OnManyPropertiesChanged(nameof(DisplayName), nameof(Subtitle), nameof(DelayLabel), nameof(TypeLabel));
+    }
 
     public void RefreshIcon()
     {

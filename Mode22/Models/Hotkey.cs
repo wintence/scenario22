@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using System.Windows.Input;
+using Mode22.Services;
 
 namespace Mode22.Models;
 
@@ -21,7 +22,7 @@ public sealed class Hotkey : IEquatable<Hotkey>
         {
             if (IsEmpty)
             {
-                return "Без клавиши";
+                return Strings.T("L_NoHotkey");
             }
 
             var parts = new List<string>(5);
@@ -156,7 +157,7 @@ public sealed class Hotkey : IEquatable<Hotkey>
             0xDC => "\\",
             0xDD => "]",
             0xDE => "'",
-            _ => "Клавиша"
+            _ => Strings.T("L_HbUnknownKey")
         };
     }
 }

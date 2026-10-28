@@ -24,15 +24,15 @@
                 <StackPanel>
                     <TextBlock x:Name="TitleText"
                                Style="{StaticResource TextSheetTitle}"
-                               Text="Новое действие" />
+                               Text="{DynamicResource L_NewActionTitle}" />
                     <TextBlock x:Name="SubtitleText"
                                Style="{StaticResource TextSecondary}"
                                Margin="0,3,0,0"
-                               Text="Открыть приложение или закрыть процесс" />
+                               Text="{DynamicResource L_ActionSubtitle}" />
                 </StackPanel>
                 <Button Grid.Column="1"
                         Style="{StaticResource IconButton}"
-                        ToolTip="Закрыть"
+                        ToolTip="{DynamicResource L_Cancel}"
                         Click="Cancel_Click"
                         VerticalAlignment="Top">
                     <Path Data="{StaticResource IconClose}"
@@ -61,8 +61,8 @@
                                   Stroke="{DynamicResource LaunchChipTextBrush}" />
                         </Border>
                         <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Style="{StaticResource TextValue}" Text="Открыть" />
-                            <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="Запустить приложение" />
+                            <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_KindLaunchT}" />
+                            <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_KindLaunchS}" />
                         </StackPanel>
                     </StackPanel>
                 </RadioButton>
@@ -84,21 +84,21 @@
                                   Stroke="{DynamicResource CloseChipTextBrush}" />
                         </Border>
                         <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Style="{StaticResource TextValue}" Text="Закрыть" />
-                            <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="Завершить процесс" />
+                            <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_KindCloseT}" />
+                            <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_KindCloseS}" />
                         </StackPanel>
                     </StackPanel>
                 </RadioButton>
             </UniformGrid>
 
-            <TextBlock Style="{StaticResource FormLabel}" Margin="0,16,0,7" Text="Название" />
+            <TextBlock Style="{StaticResource FormLabel}" Margin="0,16,0,7" Text="{DynamicResource L_Name}" />
             <TextBox x:Name="NameBox"
                      Style="{StaticResource InputTextBox}"
                      MaxLength="60"
-                     Tag="Например, Steam" />
+                     Tag="{DynamicResource L_NamePhSteam}" />
 
             <StackPanel x:Name="LaunchPanel" Margin="0,13,0,0">
-                <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="Приложение или файл" />
+                <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_TargetLabel}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -106,7 +106,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="TargetBox"
                              Style="{StaticResource InputTextBox}"
-                             Tag="C:\Program Files\Steam\steam.exe" />
+                             Tag="{DynamicResource L_TargetPh}" />
                     <Button Grid.Column="1"
                             Style="{StaticResource SecondaryButton}"
                             Height="40"
@@ -122,21 +122,21 @@
                             <TextBlock FontFamily="{StaticResource AppFontFamily}"
                                        FontSize="12"
                                        FontWeight="Medium"
-                                       Text="Обзор" />
+                                       Text="{DynamicResource L_Browse}" />
                         </StackPanel>
                     </Button>
                 </Grid>
                 <TextBlock Style="{StaticResource FormHint}"
-                           Text="Поддерживаются .exe, ярлыки, документы и ссылки вроде steam://run/440." />
+                           Text="{DynamicResource L_TargetHint}" />
 
-                <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="Аргументы запуска" />
+                <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="{DynamicResource L_ArgumentsLabel}" />
                 <TextBox x:Name="ArgumentsBox"
                          Style="{StaticResource InputTextBox}"
-                         Tag="Необязательно" />
+                         Tag="{DynamicResource L_ArgPh}" />
             </StackPanel>
 
             <StackPanel x:Name="ClosePanel" Margin="0,13,0,0" Visibility="Collapsed">
-                <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="Имя процесса" />
+                <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_ProcessLabel}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -144,7 +144,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="ProcessBox"
                              Style="{StaticResource InputTextBox}"
-                             Tag="Например, chrome" />
+                             Tag="{DynamicResource L_ProcessPh}" />
                     <Button Grid.Column="1"
                             Style="{StaticResource SecondaryButton}"
                             Height="40"
@@ -160,12 +160,12 @@
                             <TextBlock FontFamily="{StaticResource AppFontFamily}"
                                        FontSize="12"
                                        FontWeight="Medium"
-                                       Text="Выбрать" />
+                                       Text="{DynamicResource L_ProcessPick}" />
                         </StackPanel>
                     </Button>
                 </Grid>
                 <TextBlock Style="{StaticResource FormHint}"
-                           Text="Будут закрыты все процессы с этим именем. Можно выбрать .exe — имя определится автоматически." />
+                           Text="{DynamicResource L_ProcessHint}" />
             </StackPanel>
 
             <Grid Margin="0,15,0,0">
@@ -174,8 +174,8 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Style="{StaticResource TextValue}" Text="Задержка перед действием" />
-                    <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="Полезно, если приложению нужно время" />
+                    <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_DelayLabel}" />
+                    <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_DelayHint}" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBox x:Name="DelayBox"
@@ -187,7 +187,7 @@
                              PreviewTextInput="DelayBox_PreviewTextInput" />
                     <TextBlock Style="{StaticResource TextSecondary}"
                                Margin="7,0,0,0"
-                               Text="сек"
+                               Text="{DynamicResource L_Sec}"
                                VerticalAlignment="Center" />
                 </StackPanel>
             </Grid>
@@ -229,14 +229,14 @@
                         Style="{StaticResource SecondaryButton}"
                         MinWidth="92"
                         Margin="0,0,8,0"
-                        Content="Отмена"
+                        Content="{DynamicResource L_Cancel}"
                         Click="Cancel_Click" />
                 <Button x:Name="SaveButton"
                         Grid.Column="2"
                         Style="{StaticResource PrimaryButton}"
                         Height="38"
                         MinWidth="118"
-                        Content="Добавить"
+                        Content="{DynamicResource L_Add}"
                         Click="Save_Click" />
             </Grid>
         </StackPanel>
