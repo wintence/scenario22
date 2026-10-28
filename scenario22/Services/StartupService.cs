@@ -68,10 +68,8 @@ public static class StartupService
 
     private static string BuildCommand()
     {
-        var processPath = Environment.ProcessPath
-                          ?? System.Reflection.Assembly.GetEntryAssembly()?.Location
-                          ?? string.Empty;
-
+        // Environment.ProcessPath works for single-file publishes and normal builds alike.
+        var processPath = Environment.ProcessPath;
         if (string.IsNullOrWhiteSpace(processPath))
         {
             return string.Empty;
@@ -79,7 +77,14 @@ public static class StartupService
 
         if (Path.GetFileName(processPath).Equals("dotnet.exe", StringComparison.OrdinalIgnoreCase))
         {
-            var dll = System.Reflection.Assembly.GetEntryAssembly()?.Location;
+            // Running under `dotnet run`: point the launcher at the built dll next to the host.
+            var name = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Name;
+            if (string.IsNullOrEmpty(name))
+            {
+                return string.Empty;
+            }
+
+            var dll = Path.Combine(AppContext.BaseDirectory, name + ".dll");
             return $"\"{processPath}\" \"{dll}\" --tray";
         }
 

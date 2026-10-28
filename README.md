@@ -1,26 +1,26 @@
 # scenario22
 
-Настольное приложение для Windows на WPF, которое управляет сценариями запуска и закрытия программ. Вы собираете набор действий «открыть/закрыть» — например «Игровой режим», — назначаете глобальную горячую клавишу и запускаете их одним нажатием из любого приложения. Интерфейс — на английском по умолчанию, русский включается в настройках.
+A Windows WPF desktop app that manages app launch and shutdown scenarios. You build a set of "open/close" actions — for example a "Gaming mode" — assign a global hotkey, and trigger them with a single press from any application. The interface is English by default; Russian can be enabled in Settings.
 
-![Скриншот scenario22](scenario22/Assets/app-preview.png)
+![scenario22 screenshot](scenario22/Assets/app-preview.png)
 
-## Возможности
+## Features
 
-- **Сценарии** — набор действий, выполняемых по порядку: запуск приложений, ярлыков, документов и ссылок (в т.ч. `steam://…`), закрытие процессов по имени.
-- **Глобальные горячие клавиши** — работают, даже когда окно свёрнуто в трей; индикатор готовности и подсказка о конфликтах сочетаний.
-- **Своя иконка сценария** — белые векторные иконки из палитры или собственное изображение (png/jpg/ico/exe/lnk).
-- **Свой цвет** — 6 готовых палитр плюс любой собственный градиент.
-- **Задержки** — у каждого действия пауза 0–600 секунд.
-- **Трей** — меню с быстрым запуском сценариев, настройками и выходом; закрытие окна сворачивает в трей.
-- **Темы** — светлая и тёмная, с мягкой подсветкой страницы активного сценария.
-- **Тосты** — прогресс выполнения и результат с отчётом об ошибках.
+- **Scenarios** — a set of actions executed in order: launching apps, shortcuts, documents and URLs (including `steam://…`), closing processes by name.
+- **Global hotkeys** — work even when the window is minimized to tray; readiness indicator and hints about conflicting combinations.
+- **Custom scenario icons** — white vector icons from the built-in palette, or your own image (png/jpg/ico/exe/lnk).
+- **Custom colors** — 6 ready-made palettes plus any custom gradient.
+- **Delays** — each action can pause for 0–600 seconds.
+- **Tray** — a menu with quick scenario launching, settings and exit; closing the window minimizes to tray.
+- **Themes** — light and dark, with a soft glow behind the active scenario page.
+- **Toasts** — run progress and a result report with error details.
 
-## Требования
+## Requirements
 
-- Windows 10 1709+ (квадратные углы — на Windows 11)
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) — только для сборки
+- Windows 10 1709+ (square corners on Windows 11)
+- [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0) — only needed for the framework-dependent build
 
-## Сборка и запуск
+## Build and run
 
 ```powershell
 git clone https://github.com/wintence/scenario22.git
@@ -29,36 +29,36 @@ dotnet build scenario22\scenario22.csproj
 dotnet run --project scenario22\scenario22.csproj
 ```
 
-Публикация переносимой версии:
+Publishing a portable single-file build:
 
 ```powershell
-dotnet publish scenario22\scenario22.csproj -c Release -r win-x64 --self-contained false
+dotnet publish scenario22\scenario22.csproj -c Release -r win-x64 -p:PublishSingleFile=true -p:SelfContained=true -p:IncludeNativeLibrariesForSelfExtract=true
 ```
 
-Готовая сборка лежит в `bin\Release\net8.0-windows\win-x64\publish`.
+Ready-made builds are available on the [Releases](https://github.com/wintence/scenario22/releases) page.
 
-## Хранение данных
+## Data storage
 
-Настройки и сценарии хранятся только на вашем компьютере — в `%APPDATA%\scenario22\settings.json`. Если файл повреждён, программа сохраняет его копию рядом (`settings.json.broken-*`) и создаёт начальное состояние.
+Settings and scenarios are stored only on your computer — in `%APPDATA%\scenario22\settings.json`. If the file gets corrupted, the app keeps a backup next to it (`settings.json.broken-*`) and starts fresh.
 
-## Безопасность закрытия процессов
+## Process-killing safety
 
-Ряд системных процессов (`explorer`, `csrss`, `lsass`, `svchost`, `dwm` и др.) защита не позволяет закрывать сценариями — эту защиту не ослабляйте и не отключайте.
+A number of system processes (`explorer`, `csrss`, `lsass`, `svchost`, `dwm`, etc.) are protected and cannot be closed by scenarios — do not weaken or disable this protection.
 
-## Структура проекта
+## Project structure
 
 ```text
 scenario22/
-├── App.xaml(.cs)          — точка входа, single-instance mutex, обработка исключений
-├── MainWindow.xaml(.cs)   — главное окно и основная логика UI
-├── ToastWindow.xaml(.cs)  — всплывающие уведомления
-├── Models/                — Scenario, ScenarioAction, Hotkey, AppState, палитра
-├── Services/              — запуск сценариев, настройки, хоткеи, трей, темы
-├── Sheets/                — диалоги действий и сценариев
-├── Controls/HotkeyBox     — ввод сочетания клавиш
+├── App.xaml(.cs)          — entry point, single-instance mutex, exception handling
+├── MainWindow.xaml(.cs)   — main window and core UI logic
+├── ToastWindow.xaml(.cs)  — toast notifications
+├── Models/                — Scenario, ScenarioAction, Hotkey, AppState, palettes
+├── Services/              — scenario runner, settings, hotkeys, tray, themes
+├── Sheets/                — action and scenario dialogs
+├── Controls/HotkeyBox     — hotkey combination input
 └── Themes/                — Dark.xaml, Light.xaml, Styles.xaml, Icons.xaml
 ```
 
-## Лицензия
+## License
 
-MIT — см. [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE).
