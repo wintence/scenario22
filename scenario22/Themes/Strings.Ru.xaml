@@ -71,9 +71,7 @@
     <sys:String x:Key="L_SetDataTitle">Папка настроек</sys:String>
     <sys:String x:Key="L_DataOpen">Открыть</sys:String>
 
-    <sys:String x:Key="L_SectAbout">О ПРОГРАММЕ</sys:String>
-    <sys:String x:Key="L_AboutLine">Версия 1.0 · Сценарии одним нажатием</sys:String>
-    <sys:String x:Key="L_AboutLocal">Настройки хранятся только на этом компьютере.</sys:String>
+    <sys:String x:Key="L_SectLinks">LINKS</sys:String>
 
     <!-- Scenario sheet -->
     <sys:String x:Key="L_EditScenarioTitle">Изменить сценарий</sys:String>

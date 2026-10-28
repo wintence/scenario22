@@ -200,8 +200,47 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    /// Opens an external link (GitHub / Telegram) from the settings LINKS card.
+    /// </summary>
+    private void OpenLink_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is System.Windows.Controls.Button { Tag: string url } && !string.IsNullOrWhiteSpace(url))
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                });
+            }
+            catch
+            {
+                // Opening the browser is best-effort.
+            }
+        }
+    }
+
+    /// <summary>
+    /// Formats the assembly version for the sidebar footer: 1.5.0.0 prints as "1.5".
+    /// </summary>
+    private static string FormatDisplayVersion()
+    {
+        var version = System.Reflection.Assembly.GetEntryAssembly()?.GetName().Version;
+        if (version is null)
+        {
+            return string.Empty;
+        }
+
+        return version.Build == 0
+            ? $"{version.Major}.{version.Minor}"
+            : $"{version.Major}.{version.Minor}.{version.Build}";
+    }
+
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        VersionText.Text = "scenario22 · " + FormatDisplayVersion();
         DataFolderPath.Text = _settings.DataDirectory;
         DataFolderPath.ToolTip = _settings.SettingsPath;
         LanguageEnChoice.IsChecked = !LanguageService.IsRu;
