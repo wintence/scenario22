@@ -252,8 +252,8 @@
                           Height="7"
                           Stroke="#72000000"
                           StrokeThickness="1.25"
-                          StrokeStartLineCap="Round"
-                          StrokeEndLineCap="Round"
+                          StrokeStartLineCap="Flat"
+                          StrokeEndLineCap="Flat"
                           Stretch="Uniform" />
                 </Button>
                 <Button Style="{StaticResource TrafficLightButton}"
@@ -265,8 +265,8 @@
                           Height="7"
                           Stroke="#72000000"
                           StrokeThickness="1.25"
-                          StrokeStartLineCap="Round"
-                          StrokeEndLineCap="Round"
+                          StrokeStartLineCap="Flat"
+                          StrokeEndLineCap="Flat"
                           Stretch="Uniform" />
                 </Button>
                 <Button Style="{StaticResource TrafficLightButton}"
@@ -278,8 +278,8 @@
                           Height="7"
                           Stroke="#72000000"
                           StrokeThickness="1.25"
-                          StrokeStartLineCap="Round"
-                          StrokeEndLineCap="Round"
+                          StrokeStartLineCap="Flat"
+                          StrokeEndLineCap="Flat"
                           Stretch="Uniform" />
                 </Button>
             </StackPanel>

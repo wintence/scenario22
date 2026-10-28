@@ -1,6 +1,8 @@
 using System.IO;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using Scenario22.Services;
 
@@ -27,6 +29,12 @@ public partial class App : Application
 
         DispatcherUnhandledException += OnDispatcherUnhandledException;
 
+        // Windows 11 rounds popup windows (tooltips) by default; keep them square.
+        EventManager.RegisterClassHandler(
+            typeof(ToolTip),
+            FrameworkElement.LoadedEvent,
+            new RoutedEventHandler(KeepTooltipSquare));
+
         var settingsService = new SettingsService();
         var state = settingsService.Load();
         StartupService.CleanupLegacy();
@@ -47,6 +55,30 @@ public partial class App : Application
         }
 
         window.Show();
+    }
+
+    /// <summary>
+    /// Removes the Windows 11 rounded corners from tooltip popup windows.
+    /// </summary>
+    private static void KeepTooltipSquare(object sender, RoutedEventArgs e)
+    {
+        if (sender is ToolTip tooltip
+            && PresentationSource.FromVisual(tooltip) is HwndSource source)
+        {
+            try
+            {
+                var corner = NativeMethods.DwmWindowCornerDoNotRound;
+                NativeMethods.DwmSetWindowAttribute(
+                    source.Handle,
+                    NativeMethods.DwmWindowCornerPreference,
+                    ref corner,
+                    sizeof(int));
+            }
+            catch
+            {
+                // DWM attributes are best-effort.
+            }
+        }
     }
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

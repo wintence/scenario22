@@ -98,7 +98,7 @@
                               Height="21"
                               Stroke="{DynamicResource ToastPrimaryTextBrush}"
                               StrokeThickness="2.2"
-                              StrokeStartLineCap="Round"
+                              StrokeStartLineCap="Flat"
                               Stretch="Uniform"
                               RenderTransformOrigin="0.5,0.5">
                             <Path.RenderTransform>
@@ -117,9 +117,9 @@
                                   Height="12"
                                   Stroke="White"
                                   StrokeThickness="2"
-                                  StrokeStartLineCap="Round"
-                                  StrokeEndLineCap="Round"
-                                  StrokeLineJoin="Round"
+                                  StrokeStartLineCap="Flat"
+                                  StrokeEndLineCap="Flat"
+                                  StrokeLineJoin="Miter"
                                   Stretch="Uniform" />
                         </Border>
 
@@ -129,9 +129,9 @@
                               Height="22"
                               Stroke="{DynamicResource WarningBrush}"
                               StrokeThickness="1.9"
-                              StrokeStartLineCap="Round"
-                              StrokeEndLineCap="Round"
-                              StrokeLineJoin="Round"
+                              StrokeStartLineCap="Flat"
+                              StrokeEndLineCap="Flat"
+                              StrokeLineJoin="Miter"
                               Stretch="Uniform"
                               Visibility="Collapsed" />
                     </Grid>

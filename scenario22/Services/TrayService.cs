@@ -17,9 +17,10 @@ public sealed class TrayService : IDisposable
         {
             Renderer = new TrayMenuRenderer(),
             ShowImageMargin = false,
+            DropShadowEnabled = false,
             BackColor = Color.FromArgb(32, 32, 37),
             ForeColor = Color.White,
-            Font = new Font("Segoe UI", 9.5f),
+            Font = new Font("Consolas", 9.5f),
             Padding = new System.Windows.Forms.Padding(6)
         };
         _menu.Opening += (_, _) => RebuildMenu();
@@ -107,7 +108,7 @@ public sealed class TrayService : IDisposable
         {
             ForeColor = Color.FromArgb(242, 242, 247),
             Font = new Font(
-                "Segoe UI",
+                "Consolas",
                 9.5f,
                 bold ? System.Drawing.FontStyle.Bold : System.Drawing.FontStyle.Regular),
             Padding = new System.Windows.Forms.Padding(8, 5, 8, 5)
@@ -160,7 +161,7 @@ public sealed class TrayService : IDisposable
     {
         public TrayMenuRenderer() : base(new TrayColorTable())
         {
-            RoundedEdges = true;
+            RoundedEdges = false;
         }
 
         protected override void OnRenderItemText(System.Windows.Forms.ToolStripItemTextRenderEventArgs e)
