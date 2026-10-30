@@ -23,6 +23,13 @@ internal static class NativeMethods
     public const int SwpNoActivate = 0x0010;
     public const int SwpShowWindow = 0x0040;
 
+    public const int WmSettingChange = 0x001A;
+    public const uint SpiSetDeskWallpaper = 0x0014;
+    public const uint SpifUpdateIniFile = 0x01;
+    public const uint SpifSendChange = 0x02;
+    public const uint SmtoAbortIfHung = 0x0002;
+    public static readonly IntPtr HwndBroadcast = new(0xffff);
+
     [StructLayout(LayoutKind.Sequential)]
     public struct Rect
     {
@@ -94,4 +101,17 @@ internal static class NativeMethods
 
     [DllImport("user32.dll")]
     public static extern int SetWindowLong(IntPtr hWnd, int index, int newStyle);
+
+    [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
+
+    [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    public static extern IntPtr SendMessageTimeout(
+        IntPtr hWnd,
+        uint msg,
+        IntPtr wParam,
+        string lParam,
+        uint flags,
+        uint timeout,
+        out IntPtr result);
 }

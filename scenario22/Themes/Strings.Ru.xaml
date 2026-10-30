@@ -31,6 +31,10 @@
 
     <sys:String x:Key="L_TypeLaunchBadge">ОТКРЫТЬ</sys:String>
     <sys:String x:Key="L_TypeCloseBadge">ЗАКРЫТЬ</sys:String>
+    <sys:String x:Key="L_TypeMusicBadge">МУЗЫКА</sys:String>
+    <sys:String x:Key="L_TypeYouTubeBadge">YOUTUBE</sys:String>
+    <sys:String x:Key="L_TypeWallpaperBadge">ОБОИ</sys:String>
+    <sys:String x:Key="L_TypeThemeBadge">ТЕМА</sys:String>
     <sys:String x:Key="L_RowUpTT">Переместить выше</sys:String>
     <sys:String x:Key="L_RowDownTT">Переместить ниже</sys:String>
     <sys:String x:Key="L_RowDelTT">Удалить действие</sys:String>
@@ -102,6 +106,10 @@
 
     <sys:String x:Key="L_SubLaunch">Запустить приложение, файл или ссылку</sys:String>
     <sys:String x:Key="L_SubClose">Завершить все процессы с указанным именем</sys:String>
+    <sys:String x:Key="L_SubMusic">Включить музыку в любимом сервисе</sys:String>
+    <sys:String x:Key="L_SubYouTube">Открыть видео или поиск на YouTube</sys:String>
+    <sys:String x:Key="L_SubWallpaper">Сменить обои рабочего стола Windows</sys:String>
+    <sys:String x:Key="L_SubTheme">Переключить Windows между светлой и тёмной темой</sys:String>
 
     <!-- Accent palette names -->
     <sys:String x:Key="L_AccentBlue">Синий</sys:String>
@@ -136,11 +144,26 @@
     <sys:String x:Key="L_KindLaunchS">Запустить приложение</sys:String>
     <sys:String x:Key="L_KindCloseT">Закрыть</sys:String>
     <sys:String x:Key="L_KindCloseS">Завершить процесс</sys:String>
+    <sys:String x:Key="L_KindMusicT">Музыка</sys:String>
+    <sys:String x:Key="L_KindMusicS">Включить трек или плейлист</sys:String>
+    <sys:String x:Key="L_KindYouTubeT">YouTube</sys:String>
+    <sys:String x:Key="L_KindYouTubeS">Открыть видео или поиск</sys:String>
+    <sys:String x:Key="L_KindWallpaperT">Обои</sys:String>
+    <sys:String x:Key="L_KindWallpaperS">Сменить фон рабочего стола</sys:String>
+    <sys:String x:Key="L_KindThemeT">Тема</sys:String>
+    <sys:String x:Key="L_KindThemeS">Светлая или тёмная тема Windows</sys:String>
     <sys:String x:Key="L_NamePhSteam">Например, Steam</sys:String>
     <sys:String x:Key="L_NamePhChrome">Например, Chrome</sys:String>
+    <sys:String x:Key="L_NamePhMusic">Например, Nirvana</sys:String>
+    <sys:String x:Key="L_NamePhYouTube">Например, Lofi mix</sys:String>
+    <sys:String x:Key="L_NamePhWallpaper">Например, Закат</sys:String>
+    <sys:String x:Key="L_NamePhTheme">Например, Ночной режим</sys:String>
     <sys:String x:Key="L_TargetLabel">Приложение или файл</sys:String>
     <sys:String x:Key="L_TargetPh">C:\Program Files\Steam\steam.exe</sys:String>
     <sys:String x:Key="L_Browse">Обзор</sys:String>
+    <sys:String x:Key="L_PickRunning">Запущенные</sys:String>
+    <sys:String x:Key="L_RunningHint">Выбрать из запущенных процессов</sys:String>
+    <sys:String x:Key="L_File">Файл</sys:String>
     <sys:String x:Key="L_TargetHint">Поддерживаются .exe, ярлыки, документы и ссылки вроде steam://run/440.</sys:String>
     <sys:String x:Key="L_ArgumentsLabel">Аргументы запуска</sys:String>
     <sys:String x:Key="L_ArgPh">Необязательно</sys:String>
@@ -160,6 +183,45 @@
     <sys:String x:Key="L_ErrDelayRange">Задержка может быть от 0 до 600 секунд.</sys:String>
     <sys:String x:Key="L_ErrProcess">Укажите имя процесса, который нужно закрыть.</sys:String>
     <sys:String x:Key="L_ErrTarget">Выберите приложение или укажите путь.</sys:String>
+    <sys:String x:Key="L_ErrProtected">Это защищённый системный процесс. Выберите другой.</sys:String>
+    <sys:String x:Key="L_ErrMusicTarget">Укажите ссылку на трек или поисковый запрос.</sys:String>
+    <sys:String x:Key="L_ErrYouTube">Укажите ссылку на YouTube или поисковый запрос.</sys:String>
+    <sys:String x:Key="L_ErrWallpaper">Выберите существующее изображение PNG, JPG или BMP.</sys:String>
+    <sys:String x:Key="L_ErrWallpaperFormat">Поддерживаются обои PNG, JPG и BMP.</sys:String>
+
+    <!-- Music / YouTube / wallpaper / theme actions -->
+    <sys:String x:Key="L_MusicServiceLabel">Сервис</sys:String>
+    <sys:String x:Key="L_MusicSpotify">Spotify</sys:String>
+    <sys:String x:Key="L_MusicYandex">Яндекс Музыка</sys:String>
+    <sys:String x:Key="L_MusicSoundCloud">SoundCloud</sys:String>
+    <sys:String x:Key="L_MusicYouTube">YouTube Music</sys:String>
+    <sys:String x:Key="L_MusicTargetLabel">Трек, плейлист или запрос</sys:String>
+    <sys:String x:Key="L_MusicTargetPh">Вставьте ссылку или введите название песни</sys:String>
+    <sys:String x:Key="L_MusicHint">Ссылки на треки и плейлисты включают воспроизведение. Текстовый запрос открывает поиск сервиса.</sys:String>
+    <sys:String x:Key="L_YouTubeLabel">Ссылка на видео или поиск</sys:String>
+    <sys:String x:Key="L_YouTubePh">https://youtube.com/watch?v=… или поисковый запрос</sys:String>
+    <sys:String x:Key="L_YouTubeHint">Ссылка откроется в браузере. Обычный текст станет поиском на YouTube.</sys:String>
+    <sys:String x:Key="L_WallpaperLabel">Файл изображения</sys:String>
+    <sys:String x:Key="L_WallpaperPh">C:\Pictures\wallpaper.jpg</sys:String>
+    <sys:String x:Key="L_WallpaperHint">PNG, JPG или BMP. Windows сделает изображение фоном рабочего стола.</sys:String>
+    <sys:String x:Key="L_FileDialogWallpaper">Выберите обои</sys:String>
+    <sys:String x:Key="L_FilterWallpaper">Изображения (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp</sys:String>
+    <sys:String x:Key="L_ThemeLabel">Тема Windows</sys:String>
+    <sys:String x:Key="L_ThemeLight">Светлая</sys:String>
+    <sys:String x:Key="L_ThemeDark">Тёмная</sys:String>
+    <sys:String x:Key="L_ThemeHint">Меняет оформление приложений и системы Windows. Некоторые окна обновятся после повторного открытия.</sys:String>
+
+    <!-- Running process picker -->
+    <sys:String x:Key="L_ProcPickerTitle">Выберите запущенный процесс</sys:String>
+    <sys:String x:Key="L_ProcPickerSub">Выберите приложение из списка — не нужно вводить имя или путь.</sys:String>
+    <sys:String x:Key="L_ProcSearchPh">Поиск по имени, пути или заголовку окна</sys:String>
+    <sys:String x:Key="L_ProcRefreshTT">Обновить список</sys:String>
+    <sys:String x:Key="L_ProcLoading">Загружаю процессы…</sys:String>
+    <sys:String x:Key="L_ProcEmpty">Ничего не найдено</sys:String>
+    <sys:String x:Key="L_ProcProtectedChip">СИСТЕМА</sys:String>
+    <sys:String x:Key="L_ProcBrowse">Выбрать .exe…</sys:String>
+    <sys:String x:Key="L_ProcSelect">Выбрать</sys:String>
+    <sys:String x:Key="L_ProcCountFmt">{0} процессов</sys:String>
 
     <!-- Hotkey box -->
     <sys:String x:Key="L_HbPromptPick">Нажмите, чтобы записать сочетание</sys:String>
@@ -199,6 +261,13 @@
     <sys:String x:Key="L_DelayInFmt">Через {0} с</sys:String>
     <sys:String x:Key="L_TypeLaunch">Открыть</sys:String>
     <sys:String x:Key="L_TypeClose">Закрыть</sys:String>
+    <sys:String x:Key="L_TypeMusic">Музыка</sys:String>
+    <sys:String x:Key="L_TypeYoutube">YouTube</sys:String>
+    <sys:String x:Key="L_TypeWallpaper">Обои</sys:String>
+    <sys:String x:Key="L_TypeTheme">Тема</sys:String>
+    <sys:String x:Key="L_NoTrack">Трек или ссылка не указаны</sys:String>
+    <sys:String x:Key="L_NoQuery">Ссылка или запрос не указаны</sys:String>
+    <sys:String x:Key="L_NoWallpaper">Изображение не указано</sys:String>
 
     <!-- Runner -->
     <sys:String x:Key="L_RNoPath">Не указан путь к приложению</sys:String>
@@ -209,6 +278,14 @@
     <sys:String x:Key="L_RProtected">Системный процесс защищён</sys:String>
     <sys:String x:Key="L_RProcListFail">Не удалось получить список процессов: </sys:String>
     <sys:String x:Key="L_RCloseFail">Не удалось закрыть {0}</sys:String>
+    <sys:String x:Key="L_RNoMusic">Не указан трек или ссылка</sys:String>
+    <sys:String x:Key="L_RNoYouTube">Не указана ссылка или поисковый запрос</sys:String>
+    <sys:String x:Key="L_RWallpaperMissing">Файл обоев не найден</sys:String>
+    <sys:String x:Key="L_RWallpaperFormat">Поддерживаются обои PNG, JPG и BMP</sys:String>
+    <sys:String x:Key="L_RWallpaperFail">Windows не смогла сменить обои</sys:String>
+    <sys:String x:Key="L_RThemeFail">Windows не смогла изменить тему</sys:String>
+    <sys:String x:Key="L_RNoHandler">Нет приложения для открытия этой ссылки</sys:String>
+    <sys:String x:Key="L_RUnknownAction">Неизвестный тип действия</sys:String>
 
     <!-- Toasts -->
     <sys:String x:Key="L_ToastAction1">Выполняю действие…</sys:String>

@@ -8,230 +8,546 @@
             BorderThickness="1"
             CornerRadius="0">
 
-        <StackPanel Margin="26,24,26,22">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <TextBlock x:Name="TitleText"
-                               Style="{StaticResource TextSheetTitle}"
-                               Text="{DynamicResource L_NewActionTitle}" />
-                    <TextBlock x:Name="SubtitleText"
-                               Style="{StaticResource TextSecondary}"
-                               Margin="0,3,0,0"
-                               Text="{DynamicResource L_ActionSubtitle}" />
-                </StackPanel>
-                <Button Grid.Column="1"
-                        Style="{StaticResource IconButton}"
-                        ToolTip="{DynamicResource L_Cancel}"
-                        Click="Cancel_Click"
-                        VerticalAlignment="Top">
-                    <Path Data="{StaticResource IconClose}"
-                          Style="{StaticResource LineIcon}"
-                          Width="15"
-                          Height="15" />
-                </Button>
-            </Grid>
-
-            <UniformGrid Columns="2" Margin="0,18,0,0">
-                <RadioButton x:Name="LaunchChoice"
-                             GroupName="ActionKind"
-                             Style="{StaticResource ChoiceCard}"
-                             Margin="0,0,5,0"
-                             IsChecked="True"
-                             Checked="ActionKind_Checked">
-                    <StackPanel Orientation="Horizontal">
-                        <Border Width="32"
-                                Height="32"
-                                CornerRadius="0"
-                                Background="{DynamicResource LaunchChipBgBrush}">
-                            <Path Data="{StaticResource IconArrowUpRight}"
-                                  Style="{StaticResource LineIcon}"
-                                  Width="15"
-                                  Height="15"
-                                  Stroke="{DynamicResource LaunchChipTextBrush}" />
-                        </Border>
-                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_KindLaunchT}" />
-                            <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_KindLaunchS}" />
-                        </StackPanel>
-                    </StackPanel>
-                </RadioButton>
-
-                <RadioButton x:Name="CloseChoice"
-                             GroupName="ActionKind"
-                             Style="{StaticResource ChoiceCard}"
-                             Margin="5,0,0,0"
-                             Checked="ActionKind_Checked">
-                    <StackPanel Orientation="Horizontal">
-                        <Border Width="32"
-                                Height="32"
-                                CornerRadius="0"
-                                Background="{DynamicResource CloseChipBgBrush}">
-                            <Path Data="{StaticResource IconClose}"
-                                  Style="{StaticResource LineIcon}"
-                                  Width="14"
-                                  Height="14"
-                                  Stroke="{DynamicResource CloseChipTextBrush}" />
-                        </Border>
-                        <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_KindCloseT}" />
-                            <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_KindCloseS}" />
-                        </StackPanel>
-                    </StackPanel>
-                </RadioButton>
-            </UniformGrid>
-
-            <TextBlock Style="{StaticResource FormLabel}" Margin="0,16,0,7" Text="{DynamicResource L_Name}" />
-            <TextBox x:Name="NameBox"
-                     Style="{StaticResource InputTextBox}"
-                     MaxLength="60"
-                     Tag="{DynamicResource L_NamePhSteam}" />
-
-            <StackPanel x:Name="LaunchPanel" Margin="0,13,0,0">
-                <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_TargetLabel}" />
+        <ScrollViewer MaxHeight="660"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Focusable="False">
+            <StackPanel Margin="26,24,26,22">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="TargetBox"
-                             Style="{StaticResource InputTextBox}"
-                             Tag="{DynamicResource L_TargetPh}" />
+                    <StackPanel>
+                        <TextBlock x:Name="TitleText"
+                                   Style="{StaticResource TextSheetTitle}"
+                                   Text="{DynamicResource L_NewActionTitle}" />
+                        <TextBlock x:Name="SubtitleText"
+                                   Style="{StaticResource TextSecondary}"
+                                   Margin="0,3,0,0"
+                                   Text="{DynamicResource L_ActionSubtitle}" />
+                    </StackPanel>
                     <Button Grid.Column="1"
-                            Style="{StaticResource SecondaryButton}"
-                            Height="40"
-                            MinWidth="86"
-                            Margin="8,0,0,0"
-                            Click="BrowseTarget_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource IconFolder}"
-                                  Style="{StaticResource LineIcon}"
-                                  Width="14"
-                                  Height="14"
-                                  Margin="0,0,6,0" />
-                            <TextBlock FontFamily="{StaticResource AppFontFamily}"
-                                       FontSize="12"
-                                       FontWeight="Medium"
-                                       Text="{DynamicResource L_Browse}" />
-                        </StackPanel>
+                            Style="{StaticResource IconButton}"
+                            ToolTip="{DynamicResource L_Cancel}"
+                            Click="Cancel_Click"
+                            VerticalAlignment="Top">
+                        <Path Data="{StaticResource IconClose}"
+                              Style="{StaticResource LineIcon}"
+                              Width="15"
+                              Height="15" />
                     </Button>
                 </Grid>
-                <TextBlock Style="{StaticResource FormHint}"
-                           Text="{DynamicResource L_TargetHint}" />
 
-                <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="{DynamicResource L_ArgumentsLabel}" />
-                <TextBox x:Name="ArgumentsBox"
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <RadioButton x:Name="LaunchChoice"
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="0,0,4,4"
+                                 IsChecked="True"
+                                 ToolTip="{DynamicResource L_KindLaunchS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource LaunchChipBgBrush}">
+                                <Path Data="{StaticResource IconArrowUpRight}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="13"
+                                      Height="13"
+                                      Stroke="{DynamicResource LaunchChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindLaunchT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="CloseChoice"
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="2,0,4,4"
+                                 ToolTip="{DynamicResource L_KindCloseS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource CloseChipBgBrush}">
+                                <Path Data="{StaticResource IconClose}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="12"
+                                      Height="12"
+                                      Stroke="{DynamicResource CloseChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindCloseT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MusicChoice"
+                                 Grid.Row="0"
+                                 Grid.Column="2"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="4,0,0,4"
+                                 ToolTip="{DynamicResource L_KindMusicS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource LaunchChipBgBrush}">
+                                <Path Data="{StaticResource IconMusic}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="13"
+                                      Height="13"
+                                      Stroke="{DynamicResource LaunchChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindMusicT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="YouTubeChoice"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="0,4,4,0"
+                                 ToolTip="{DynamicResource L_KindYouTubeS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource LaunchChipBgBrush}">
+                                <Path Data="{StaticResource IconYouTube}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="14"
+                                      Height="14"
+                                      Stroke="{DynamicResource LaunchChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindYouTubeT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="WallpaperChoice"
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="2,4,4,0"
+                                 ToolTip="{DynamicResource L_KindWallpaperS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource LaunchChipBgBrush}">
+                                <Path Data="{StaticResource IconImage}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="13"
+                                      Height="13"
+                                      Stroke="{DynamicResource LaunchChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindWallpaperT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="ThemeChoice"
+                                 Grid.Row="1"
+                                 Grid.Column="2"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="4,4,0,0"
+                                 ToolTip="{DynamicResource L_KindThemeS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource LaunchChipBgBrush}">
+                                <Path Data="{StaticResource IconMoon}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="13"
+                                      Height="13"
+                                      Stroke="{DynamicResource LaunchChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindThemeT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+                </Grid>
+
+                <TextBlock Style="{StaticResource FormLabel}" Margin="0,16,0,7" Text="{DynamicResource L_Name}" />
+                <TextBox x:Name="NameBox"
                          Style="{StaticResource InputTextBox}"
-                         Tag="{DynamicResource L_ArgPh}" />
-            </StackPanel>
+                         MaxLength="60"
+                         Tag="{DynamicResource L_NamePhSteam}" />
 
-            <StackPanel x:Name="ClosePanel" Margin="0,13,0,0" Visibility="Collapsed">
-                <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_ProcessLabel}" />
-                <Grid>
+                <StackPanel x:Name="LaunchPanel" Margin="0,13,0,0">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_TargetLabel}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="TargetBox"
+                                 Style="{StaticResource InputTextBox}"
+                                 Tag="{DynamicResource L_TargetPh}" />
+                        <Button Grid.Column="1"
+                                Style="{StaticResource SecondaryButton}"
+                                Height="40"
+                                MinWidth="78"
+                                Margin="8,0,0,0"
+                                Click="BrowseTarget_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconFolder}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="14"
+                                      Height="14"
+                                      Margin="0,0,6,0" />
+                                <TextBlock FontFamily="{StaticResource AppFontFamily}"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           Text="{DynamicResource L_Browse}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="2"
+                                Style="{StaticResource SecondaryButton}"
+                                Height="40"
+                                MinWidth="78"
+                                Margin="8,0,0,0"
+                                ToolTip="{DynamicResource L_RunningHint}"
+                                Click="BrowseLaunchProcess_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconApps}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="14"
+                                      Height="14"
+                                      Margin="0,0,6,0" />
+                                <TextBlock FontFamily="{StaticResource AppFontFamily}"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           Text="{DynamicResource L_PickRunning}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_TargetHint}" />
+
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="{DynamicResource L_ArgumentsLabel}" />
+                    <TextBox x:Name="ArgumentsBox"
+                             Style="{StaticResource InputTextBox}"
+                             Tag="{DynamicResource L_ArgPh}" />
+                </StackPanel>
+
+                <StackPanel x:Name="ClosePanel" Margin="0,13,0,0" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_ProcessLabel}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="ProcessBox"
+                                 Style="{StaticResource InputTextBox}"
+                                 Tag="{DynamicResource L_ProcessPh}" />
+                        <Button Grid.Column="1"
+                                Style="{StaticResource SecondaryButton}"
+                                Height="40"
+                                MinWidth="78"
+                                Margin="8,0,0,0"
+                                ToolTip="{DynamicResource L_RunningHint}"
+                                Click="BrowseProcess_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconApps}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="14"
+                                      Height="14"
+                                      Margin="0,0,6,0" />
+                                <TextBlock FontFamily="{StaticResource AppFontFamily}"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           Text="{DynamicResource L_PickRunning}" />
+                            </StackPanel>
+                        </Button>
+                        <Button Grid.Column="2"
+                                Style="{StaticResource SecondaryButton}"
+                                Height="40"
+                                MinWidth="78"
+                                Margin="8,0,0,0"
+                                Click="BrowseProcessFile_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconFolder}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="14"
+                                      Height="14"
+                                      Margin="0,0,6,0" />
+                                <TextBlock FontFamily="{StaticResource AppFontFamily}"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           Text="{DynamicResource L_File}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_ProcessHint}" />
+                </StackPanel>
+
+                <StackPanel x:Name="MusicPanel" Margin="0,13,0,0" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_MusicServiceLabel}" />
+                    <UniformGrid Columns="4">
+                        <RadioButton x:Name="SpotifyChoice"
+                                     GroupName="MusicSource"
+                                     Style="{StaticResource ChoiceCard}"
+                                     Padding="8"
+                                     Margin="0,0,4,0"
+                                     IsChecked="True"
+                                     ToolTip="{DynamicResource L_MusicSpotify}">
+                            <TextBlock Style="{StaticResource TextCaption}"
+                                       Text="{DynamicResource L_MusicSpotify}"
+                                       HorizontalAlignment="Center" />
+                        </RadioButton>
+                        <RadioButton x:Name="YandexMusicChoice"
+                                     GroupName="MusicSource"
+                                     Style="{StaticResource ChoiceCard}"
+                                     Padding="8"
+                                     Margin="2,0,4,0"
+                                     ToolTip="{DynamicResource L_MusicYandex}">
+                            <TextBlock Style="{StaticResource TextCaption}"
+                                       Text="{DynamicResource L_MusicYandex}"
+                                       HorizontalAlignment="Center" />
+                        </RadioButton>
+                        <RadioButton x:Name="SoundCloudChoice"
+                                     GroupName="MusicSource"
+                                     Style="{StaticResource ChoiceCard}"
+                                     Padding="8"
+                                     Margin="2,0,4,0"
+                                     ToolTip="{DynamicResource L_MusicSoundCloud}">
+                            <TextBlock Style="{StaticResource TextCaption}"
+                                       Text="{DynamicResource L_MusicSoundCloud}"
+                                       HorizontalAlignment="Center" />
+                        </RadioButton>
+                        <RadioButton x:Name="YouTubeMusicChoice"
+                                     GroupName="MusicSource"
+                                     Style="{StaticResource ChoiceCard}"
+                                     Padding="8"
+                                     Margin="4,0,0,0"
+                                     ToolTip="{DynamicResource L_MusicYouTube}">
+                            <TextBlock Style="{StaticResource TextCaption}"
+                                       Text="{DynamicResource L_MusicYouTube}"
+                                       HorizontalAlignment="Center" />
+                        </RadioButton>
+                    </UniformGrid>
+
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,13,0,7" Text="{DynamicResource L_MusicTargetLabel}" />
+                    <TextBox x:Name="MusicTargetBox"
+                             Style="{StaticResource InputTextBox}"
+                             Tag="{DynamicResource L_MusicTargetPh}" />
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_MusicHint}" />
+                </StackPanel>
+
+                <StackPanel x:Name="YouTubePanel" Margin="0,13,0,0" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_YouTubeLabel}" />
+                    <TextBox x:Name="YouTubeBox"
+                             Style="{StaticResource InputTextBox}"
+                             Tag="{DynamicResource L_YouTubePh}" />
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_YouTubeHint}" />
+                </StackPanel>
+
+                <StackPanel x:Name="WallpaperPanel" Margin="0,13,0,0" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_WallpaperLabel}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="WallpaperBox"
+                                 Style="{StaticResource InputTextBox}"
+                                 Tag="{DynamicResource L_WallpaperPh}" />
+                        <Button Grid.Column="1"
+                                Style="{StaticResource SecondaryButton}"
+                                Height="40"
+                                MinWidth="86"
+                                Margin="8,0,0,0"
+                                Click="BrowseWallpaper_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Data="{StaticResource IconImage}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="14"
+                                      Height="14"
+                                      Margin="0,0,6,0" />
+                                <TextBlock FontFamily="{StaticResource AppFontFamily}"
+                                           FontSize="12"
+                                           FontWeight="Medium"
+                                           Text="{DynamicResource L_Browse}" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_WallpaperHint}" />
+                </StackPanel>
+
+                <StackPanel x:Name="ThemePanel" Margin="0,13,0,0" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_ThemeLabel}" />
+                    <UniformGrid Columns="2">
+                        <RadioButton x:Name="ThemeLightChoice"
+                                     GroupName="WindowsTheme"
+                                     Style="{StaticResource ChoiceCard}"
+                                     Padding="10"
+                                     Margin="0,0,4,0">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Path Data="{StaticResource IconSun}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="15"
+                                      Height="15"
+                                      Stroke="{DynamicResource TextPrimaryBrush}"
+                                      Margin="0,0,7,0" />
+                                <TextBlock Style="{StaticResource TextValue}"
+                                           FontSize="12"
+                                           Text="{DynamicResource L_ThemeLight}" />
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="ThemeDarkChoice"
+                                     GroupName="WindowsTheme"
+                                     Style="{StaticResource ChoiceCard}"
+                                     Padding="10"
+                                     Margin="4,0,0,0"
+                                     IsChecked="True">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Path Data="{StaticResource IconMoon}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="15"
+                                      Height="15"
+                                      Stroke="{DynamicResource TextPrimaryBrush}"
+                                      Margin="0,0,7,0" />
+                                <TextBlock Style="{StaticResource TextValue}"
+                                           FontSize="12"
+                                           Text="{DynamicResource L_ThemeDark}" />
+                            </StackPanel>
+                        </RadioButton>
+                    </UniformGrid>
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_ThemeHint}" />
+                </StackPanel>
+
+                <Grid Margin="0,15,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="ProcessBox"
-                             Style="{StaticResource InputTextBox}"
-                             Tag="{DynamicResource L_ProcessPh}" />
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_DelayLabel}" />
+                        <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_DelayHint}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBox x:Name="DelayBox"
+                                 Style="{StaticResource InputTextBox}"
+                                 Width="64"
+                                 MaxLength="3"
+                                 Text="0"
+                                 TextAlignment="Center"
+                                 PreviewTextInput="DelayBox_PreviewTextInput" />
+                        <TextBlock Style="{StaticResource TextSecondary}"
+                                   Margin="7,0,0,0"
+                                   Text="{DynamicResource L_Sec}"
+                                   VerticalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+
+                <Border x:Name="ErrorBanner"
+                        Margin="0,13,0,0"
+                        Padding="11,8"
+                        Background="{DynamicResource DangerSoftBrush}"
+                        CornerRadius="0"
+                        Visibility="Collapsed">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Path Data="{StaticResource IconAlert}"
+                              Style="{StaticResource LineIcon}"
+                              Width="14"
+                              Height="14"
+                              Stroke="{DynamicResource DangerBrush}"
+                              VerticalAlignment="Top"
+                              Margin="0,1,7,0" />
+                        <TextBlock x:Name="ErrorText"
+                                   Grid.Column="1"
+                                   FontFamily="{StaticResource AppFontFamily}"
+                                   FontSize="11.5"
+                                   Foreground="{DynamicResource DangerBrush}"
+                                   TextWrapping="Wrap" />
+                    </Grid>
+                </Border>
+
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
                     <Button Grid.Column="1"
                             Style="{StaticResource SecondaryButton}"
-                            Height="40"
-                            MinWidth="86"
-                            Margin="8,0,0,0"
-                            Click="BrowseProcess_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource IconWindow}"
-                                  Style="{StaticResource LineIcon}"
-                                  Width="14"
-                                  Height="14"
-                                  Margin="0,0,6,0" />
-                            <TextBlock FontFamily="{StaticResource AppFontFamily}"
-                                       FontSize="12"
-                                       FontWeight="Medium"
-                                       Text="{DynamicResource L_ProcessPick}" />
-                        </StackPanel>
-                    </Button>
+                            MinWidth="92"
+                            Margin="0,0,8,0"
+                            Content="{DynamicResource L_Cancel}"
+                            Click="Cancel_Click" />
+                    <Button x:Name="SaveButton"
+                            Grid.Column="2"
+                            Style="{StaticResource PrimaryButton}"
+                            Height="38"
+                            MinWidth="118"
+                            Content="{DynamicResource L_Add}"
+                            Click="Save_Click" />
                 </Grid>
-                <TextBlock Style="{StaticResource FormHint}"
-                           Text="{DynamicResource L_ProcessHint}" />
             </StackPanel>
-
-            <Grid Margin="0,15,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel VerticalAlignment="Center">
-                    <TextBlock Style="{StaticResource TextValue}" Text="{DynamicResource L_DelayLabel}" />
-                    <TextBlock Style="{StaticResource TextCaption}" Margin="0,2,0,0" Text="{DynamicResource L_DelayHint}" />
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBox x:Name="DelayBox"
-                             Style="{StaticResource InputTextBox}"
-                             Width="64"
-                             MaxLength="3"
-                             Text="0"
-                             TextAlignment="Center"
-                             PreviewTextInput="DelayBox_PreviewTextInput" />
-                    <TextBlock Style="{StaticResource TextSecondary}"
-                               Margin="7,0,0,0"
-                               Text="{DynamicResource L_Sec}"
-                               VerticalAlignment="Center" />
-                </StackPanel>
-            </Grid>
-
-            <Border x:Name="ErrorBanner"
-                    Margin="0,13,0,0"
-                    Padding="11,8"
-                    Background="{DynamicResource DangerSoftBrush}"
-                    CornerRadius="0"
-                    Visibility="Collapsed">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Path Data="{StaticResource IconAlert}"
-                          Style="{StaticResource LineIcon}"
-                          Width="14"
-                          Height="14"
-                          Stroke="{DynamicResource DangerBrush}"
-                          VerticalAlignment="Top"
-                          Margin="0,1,7,0" />
-                    <TextBlock x:Name="ErrorText"
-                               Grid.Column="1"
-                               FontFamily="{StaticResource AppFontFamily}"
-                               FontSize="11.5"
-                               Foreground="{DynamicResource DangerBrush}"
-                               TextWrapping="Wrap" />
-                </Grid>
-            </Border>
-
-            <Grid Margin="0,18,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="1"
-                        Style="{StaticResource SecondaryButton}"
-                        MinWidth="92"
-                        Margin="0,0,8,0"
-                        Content="{DynamicResource L_Cancel}"
-                        Click="Cancel_Click" />
-                <Button x:Name="SaveButton"
-                        Grid.Column="2"
-                        Style="{StaticResource PrimaryButton}"
-                        Height="38"
-                        MinWidth="118"
-                        Content="{DynamicResource L_Add}"
-                        Click="Save_Click" />
-            </Grid>
-        </StackPanel>
+        </ScrollViewer>
     </Border>
 </UserControl>

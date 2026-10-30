@@ -34,7 +34,10 @@ scenario22/
 │   ├── SettingsService.cs — загрузка/сохранение %APPDATA%\scenario22\settings.json
 │   ├── HotkeyService.cs   — регистрация глобальных горячих клавиш
 │   ├── TrayService.cs     — иконка и меню в системном трее
-│   ├── ThemeService.cs    — светлая/тёмная тема
+│   ├── ThemeService.cs    — светлая/тёмная тема приложения
+│   ├── DesktopService.cs  — обои и светлая/тёмная тема Windows
+│   ├── ProcessService.cs  — список запущенных процессов для выбора
+│   ├── ProcessSafety.cs   — единый список защищённых процессов
 │   ├── StartupService.cs  — автозапуск с Windows
 │   ├── IconService.cs     — извлечение иконок приложений
 │   └── NativeMethods.cs   — Win32 interop
@@ -48,8 +51,10 @@ scenario22/
 
 - `SettingsService` читает и пишет JSON в `%APPDATA%\scenario22\settings.json`; при повреждении файла создаётся резервная копия `settings.json.broken-*`, а состояние сбрасывается на значения по умолчанию.
 - `ScenarioRunner.RunAsync` выполняет только включённые действия по порядку, с задержкой `DelaySeconds` (0–600), и возвращает отчёт об ошибках.
-- Запуск выполняется через `ProcessStartInfo` с `UseShellExecute = true` и поддерживает переменные окружения.
-- Закрытие ищет процессы по имени, сначала пытается `CloseMainWindow()`, затем `Kill(entireProcessTree: true)`. Системные процессы из `ProtectedProcesses` закрывать запрещено — эту защиту не ослаблять.
+- Типы действий (`ActionKind`): `Launch`, `Close`, `Music`, `YouTube`, `Wallpaper`, `Theme`. Новые значения добавлять только в конец enum — старые настройки сериализуются по именам через `JsonStringEnumConverter`.
+- `Music` и `YouTube` открывают ссылки через shell (`UseShellExecute = true`). Для `Music` поисковый запрос превращается в ссылку сервиса, а ссылки `open.spotify.com` конвертируются в `spotify:` URI, чтобы начиналось воспроизведение.
+- `DesktopService` меняет обои через `SPI_SETDESKWALLPAPER` (не-BMP конвертируется в `%LOCALAPPDATA%\scenario22\wallpaper.bmp`) и тему Windows через реестр `Themes\Personalize` + `WM_SETTINGCHANGE`.
+- `ProcessService` отдаёт запущенные процессы для окна выбора (`Sheets/ProcessPickerWindow`), `ProcessSafety` — единый список защищённых процессов. Закрывать системные процессы запрещено — эту защиту не ослаблять.
 - `App` использует мьютекс `scenario22.SingleInstance`; повторный запуск активирует уже открытое окно. Поддерживается запуск в трей с аргументом `--tray`.
 
 ## Правила для агента

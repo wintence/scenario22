@@ -31,6 +31,10 @@
 
     <sys:String x:Key="L_TypeLaunchBadge">LAUNCH</sys:String>
     <sys:String x:Key="L_TypeCloseBadge">CLOSE</sys:String>
+    <sys:String x:Key="L_TypeMusicBadge">MUSIC</sys:String>
+    <sys:String x:Key="L_TypeYouTubeBadge">YOUTUBE</sys:String>
+    <sys:String x:Key="L_TypeWallpaperBadge">WALLPAPER</sys:String>
+    <sys:String x:Key="L_TypeThemeBadge">THEME</sys:String>
     <sys:String x:Key="L_RowUpTT">Move up</sys:String>
     <sys:String x:Key="L_RowDownTT">Move down</sys:String>
     <sys:String x:Key="L_RowDelTT">Delete action</sys:String>
@@ -101,6 +105,10 @@
 
     <sys:String x:Key="L_SubLaunch">Run an app, file or link</sys:String>
     <sys:String x:Key="L_SubClose">Close every process with the given name</sys:String>
+    <sys:String x:Key="L_SubMusic">Play music in your favourite service</sys:String>
+    <sys:String x:Key="L_SubYouTube">Open a YouTube video or search</sys:String>
+    <sys:String x:Key="L_SubWallpaper">Change the Windows desktop background</sys:String>
+    <sys:String x:Key="L_SubTheme">Switch Windows between light and dark mode</sys:String>
 
     <!-- Accent palette names -->
     <sys:String x:Key="L_AccentBlue">Blue</sys:String>
@@ -135,11 +143,26 @@
     <sys:String x:Key="L_KindLaunchS">Start an application</sys:String>
     <sys:String x:Key="L_KindCloseT">Close</sys:String>
     <sys:String x:Key="L_KindCloseS">End a process</sys:String>
+    <sys:String x:Key="L_KindMusicT">Music</sys:String>
+    <sys:String x:Key="L_KindMusicS">Play a track or playlist</sys:String>
+    <sys:String x:Key="L_KindYouTubeT">YouTube</sys:String>
+    <sys:String x:Key="L_KindYouTubeS">Open a video or search</sys:String>
+    <sys:String x:Key="L_KindWallpaperT">Wallpaper</sys:String>
+    <sys:String x:Key="L_KindWallpaperS">Change the desktop background</sys:String>
+    <sys:String x:Key="L_KindThemeT">Theme</sys:String>
+    <sys:String x:Key="L_KindThemeS">Switch Windows light or dark mode</sys:String>
     <sys:String x:Key="L_NamePhSteam">For example, Steam</sys:String>
     <sys:String x:Key="L_NamePhChrome">For example, Chrome</sys:String>
+    <sys:String x:Key="L_NamePhMusic">For example, Nirvana</sys:String>
+    <sys:String x:Key="L_NamePhYouTube">For example, Lofi mix</sys:String>
+    <sys:String x:Key="L_NamePhWallpaper">For example, Sunset</sys:String>
+    <sys:String x:Key="L_NamePhTheme">For example, Night mode</sys:String>
     <sys:String x:Key="L_TargetLabel">Application or file</sys:String>
     <sys:String x:Key="L_TargetPh">C:\Program Files\Steam\steam.exe</sys:String>
     <sys:String x:Key="L_Browse">Browse</sys:String>
+    <sys:String x:Key="L_PickRunning">Running</sys:String>
+    <sys:String x:Key="L_RunningHint">Pick from running processes</sys:String>
+    <sys:String x:Key="L_File">File</sys:String>
     <sys:String x:Key="L_TargetHint">Supports .exe files, shortcuts, documents and links like steam://run/440.</sys:String>
     <sys:String x:Key="L_ArgumentsLabel">Launch arguments</sys:String>
     <sys:String x:Key="L_ArgPh">Optional</sys:String>
@@ -159,6 +182,45 @@
     <sys:String x:Key="L_ErrDelayRange">The delay can be from 0 to 600 seconds.</sys:String>
     <sys:String x:Key="L_ErrProcess">Enter the name of the process to close.</sys:String>
     <sys:String x:Key="L_ErrTarget">Pick an application or enter a path.</sys:String>
+    <sys:String x:Key="L_ErrProtected">This is a protected system process. Pick another one.</sys:String>
+    <sys:String x:Key="L_ErrMusicTarget">Enter a track link or a search query.</sys:String>
+    <sys:String x:Key="L_ErrYouTube">Enter a YouTube link or a search query.</sys:String>
+    <sys:String x:Key="L_ErrWallpaper">Pick an existing PNG, JPG or BMP image.</sys:String>
+    <sys:String x:Key="L_ErrWallpaperFormat">Supported wallpaper formats: PNG, JPG and BMP.</sys:String>
+
+    <!-- Music / YouTube / wallpaper / theme actions -->
+    <sys:String x:Key="L_MusicServiceLabel">Service</sys:String>
+    <sys:String x:Key="L_MusicSpotify">Spotify</sys:String>
+    <sys:String x:Key="L_MusicYandex">Yandex Music</sys:String>
+    <sys:String x:Key="L_MusicSoundCloud">SoundCloud</sys:String>
+    <sys:String x:Key="L_MusicYouTube">YouTube Music</sys:String>
+    <sys:String x:Key="L_MusicTargetLabel">Track, playlist or search</sys:String>
+    <sys:String x:Key="L_MusicTargetPh">Paste a link or type a song name</sys:String>
+    <sys:String x:Key="L_MusicHint">Track and playlist links start playback in the service. A text query opens its search.</sys:String>
+    <sys:String x:Key="L_YouTubeLabel">Video link or search</sys:String>
+    <sys:String x:Key="L_YouTubePh">https://youtube.com/watch?v=… or a search query</sys:String>
+    <sys:String x:Key="L_YouTubeHint">A link opens in the browser. Plain text becomes a YouTube search.</sys:String>
+    <sys:String x:Key="L_WallpaperLabel">Image file</sys:String>
+    <sys:String x:Key="L_WallpaperPh">C:\Pictures\wallpaper.jpg</sys:String>
+    <sys:String x:Key="L_WallpaperHint">PNG, JPG or BMP. Windows will use it as the desktop background.</sys:String>
+    <sys:String x:Key="L_FileDialogWallpaper">Pick a wallpaper image</sys:String>
+    <sys:String x:Key="L_FilterWallpaper">Images (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp</sys:String>
+    <sys:String x:Key="L_ThemeLabel">Windows theme</sys:String>
+    <sys:String x:Key="L_ThemeLight">Light</sys:String>
+    <sys:String x:Key="L_ThemeDark">Dark</sys:String>
+    <sys:String x:Key="L_ThemeHint">Changes Windows apps and system mode. Some windows may update after reopening.</sys:String>
+
+    <!-- Running process picker -->
+    <sys:String x:Key="L_ProcPickerTitle">Choose a running process</sys:String>
+    <sys:String x:Key="L_ProcPickerSub">Pick an app from the list instead of typing its name or path.</sys:String>
+    <sys:String x:Key="L_ProcSearchPh">Search by name, path or window title</sys:String>
+    <sys:String x:Key="L_ProcRefreshTT">Refresh the list</sys:String>
+    <sys:String x:Key="L_ProcLoading">Loading processes…</sys:String>
+    <sys:String x:Key="L_ProcEmpty">No processes match the search</sys:String>
+    <sys:String x:Key="L_ProcProtectedChip">SYSTEM</sys:String>
+    <sys:String x:Key="L_ProcBrowse">Pick an .exe…</sys:String>
+    <sys:String x:Key="L_ProcSelect">Select</sys:String>
+    <sys:String x:Key="L_ProcCountFmt">{0} processes</sys:String>
 
     <!-- Hotkey box -->
     <sys:String x:Key="L_HbPromptPick">Click, then press a combination</sys:String>
@@ -198,6 +260,13 @@
     <sys:String x:Key="L_DelayInFmt">In {0} s</sys:String>
     <sys:String x:Key="L_TypeLaunch">Launch</sys:String>
     <sys:String x:Key="L_TypeClose">Close</sys:String>
+    <sys:String x:Key="L_TypeMusic">Music</sys:String>
+    <sys:String x:Key="L_TypeYoutube">YouTube</sys:String>
+    <sys:String x:Key="L_TypeWallpaper">Wallpaper</sys:String>
+    <sys:String x:Key="L_TypeTheme">Theme</sys:String>
+    <sys:String x:Key="L_NoTrack">No track or link specified</sys:String>
+    <sys:String x:Key="L_NoQuery">No link or query specified</sys:String>
+    <sys:String x:Key="L_NoWallpaper">No image specified</sys:String>
 
     <!-- Runner -->
     <sys:String x:Key="L_RNoPath">No application path</sys:String>
@@ -208,6 +277,14 @@
     <sys:String x:Key="L_RProtected">System process is protected</sys:String>
     <sys:String x:Key="L_RProcListFail">Failed to list processes: </sys:String>
     <sys:String x:Key="L_RCloseFail">Failed to close {0}</sys:String>
+    <sys:String x:Key="L_RNoMusic">No track or link specified</sys:String>
+    <sys:String x:Key="L_RNoYouTube">No link or search query specified</sys:String>
+    <sys:String x:Key="L_RWallpaperMissing">Wallpaper file not found</sys:String>
+    <sys:String x:Key="L_RWallpaperFormat">Supported wallpaper formats: PNG, JPG and BMP</sys:String>
+    <sys:String x:Key="L_RWallpaperFail">Windows could not set the wallpaper</sys:String>
+    <sys:String x:Key="L_RThemeFail">Windows could not change the theme</sys:String>
+    <sys:String x:Key="L_RNoHandler">No installed app can open this link</sys:String>
+    <sys:String x:Key="L_RUnknownAction">Unknown action type</sys:String>
 
     <!-- Toasts -->
     <sys:String x:Key="L_ToastAction1">Running action…</sys:String>

@@ -743,6 +743,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         action.Target = result.Target;
         action.Arguments = result.Arguments;
         action.ProcessName = result.ProcessName;
+        action.MusicSource = result.MusicSource;
+        action.DesktopTheme = result.DesktopTheme;
         action.DelaySeconds = result.DelaySeconds;
         action.IsEnabled = result.IsEnabled;
         action.RefreshIcon();

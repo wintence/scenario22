@@ -11,6 +11,8 @@ public sealed class ScenarioAction : ObservableObject
     private string _target = string.Empty;
     private string _arguments = string.Empty;
     private string _processName = string.Empty;
+    private MusicSource _musicSource = MusicSource.Spotify;
+    private WindowsTheme _desktopTheme = WindowsTheme.Dark;
     private int _delaySeconds;
     private bool _isEnabled = true;
     private ImageSource? _iconSource;
@@ -82,6 +84,36 @@ public sealed class ScenarioAction : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Music service used by <see cref="ActionKind.Music"/> actions.
+    /// </summary>
+    public MusicSource MusicSource
+    {
+        get => _musicSource;
+        set
+        {
+            if (SetProperty(ref _musicSource, value))
+            {
+                OnPropertyChanged(nameof(Subtitle));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Light or dark Windows mode used by <see cref="ActionKind.Theme"/> actions.
+    /// </summary>
+    public WindowsTheme DesktopTheme
+    {
+        get => _desktopTheme;
+        set
+        {
+            if (SetProperty(ref _desktopTheme, value))
+            {
+                OnPropertyChanged(nameof(Subtitle));
+            }
+        }
+    }
+
     public int DelaySeconds
     {
         get => _delaySeconds;
@@ -140,25 +172,51 @@ public sealed class ScenarioAction : ObservableObject
     {
         get
         {
-            if (Kind == ActionKind.Close)
+            switch (Kind)
             {
-                return string.IsNullOrWhiteSpace(ProcessName)
-                    ? Strings.T("L_NoProcessNamed")
-                    : Strings.T("L_ProcessFmt", NormalizeProcessName(ProcessName));
-            }
+                case ActionKind.Close:
+                    return string.IsNullOrWhiteSpace(ProcessName)
+                        ? Strings.T("L_NoProcessNamed")
+                        : Strings.T("L_ProcessFmt", NormalizeProcessName(ProcessName));
 
-            if (string.IsNullOrWhiteSpace(Target))
-            {
-                return Strings.T("L_NoTarget");
-            }
+                case ActionKind.Music:
+                    return string.IsNullOrWhiteSpace(Target)
+                        ? Strings.T("L_NoTrack")
+                        : $"{Strings.T(MusicSource switch
+                        {
+                            MusicSource.Spotify => "L_MusicSpotify",
+                            MusicSource.YandexMusic => "L_MusicYandex",
+                            MusicSource.SoundCloud => "L_MusicSoundCloud",
+                            _ => "L_MusicYouTube"
+                        })} · {Target.Trim()}";
 
-            var target = Target.Trim();
-            if (!string.IsNullOrWhiteSpace(Arguments))
-            {
-                return target + "  " + Arguments.Trim();
-            }
+                case ActionKind.YouTube:
+                    return string.IsNullOrWhiteSpace(Target)
+                        ? Strings.T("L_NoQuery")
+                        : "YouTube · " + Target.Trim();
 
-            return target;
+                case ActionKind.Wallpaper:
+                    return string.IsNullOrWhiteSpace(Target)
+                        ? Strings.T("L_NoWallpaper")
+                        : Target.Trim();
+
+                case ActionKind.Theme:
+                    return Strings.T(DesktopTheme == WindowsTheme.Light ? "L_ThemeLight" : "L_ThemeDark");
+
+                default:
+                    if (string.IsNullOrWhiteSpace(Target))
+                    {
+                        return Strings.T("L_NoTarget");
+                    }
+
+                    var target = Target.Trim();
+                    if (!string.IsNullOrWhiteSpace(Arguments))
+                    {
+                        return target + "  " + Arguments.Trim();
+                    }
+
+                    return target;
+            }
         }
     }
 
@@ -166,7 +224,15 @@ public sealed class ScenarioAction : ObservableObject
     public string DelayLabel => DelaySeconds <= 0 ? Strings.T("L_DelayNow") : Strings.T("L_DelayInFmt", DelaySeconds);
 
     [JsonIgnore]
-    public string TypeLabel => Strings.T(Kind == ActionKind.Launch ? "L_TypeLaunch" : "L_TypeClose");
+    public string TypeLabel => Strings.T(Kind switch
+    {
+        ActionKind.Launch => "L_TypeLaunch",
+        ActionKind.Close => "L_TypeClose",
+        ActionKind.Music => "L_TypeMusic",
+        ActionKind.YouTube => "L_TypeYoutube",
+        ActionKind.Wallpaper => "L_TypeWallpaper",
+        _ => "L_TypeTheme"
+    });
 
     [JsonIgnore]
     public ImageSource? IconSource
@@ -194,17 +260,30 @@ public sealed class ScenarioAction : ObservableObject
 
     public void RefreshIcon()
     {
-        string? path = null;
-        if (!string.IsNullOrWhiteSpace(Target) && File.Exists(Target))
+        ImageSource? icon = null;
+        switch (Kind)
         {
-            path = Target;
-        }
-        else if (Kind == ActionKind.Close && !string.IsNullOrWhiteSpace(ProcessName))
-        {
-            path = IconService.TryFindProcessPath(ProcessName);
+            case ActionKind.Wallpaper:
+                icon = IconService.GetCustomIcon(Target);
+                break;
+
+            case ActionKind.Close:
+            {
+                var path = !string.IsNullOrWhiteSpace(Target) && File.Exists(Target)
+                    ? Target
+                    : IconService.TryFindProcessPath(ProcessName);
+                icon = IconService.GetIcon(path);
+                break;
+            }
+
+            case ActionKind.Launch:
+                icon = !string.IsNullOrWhiteSpace(Target) && File.Exists(Target)
+                    ? IconService.GetIcon(Target)
+                    : null;
+                break;
         }
 
-        IconSource = IconService.GetIcon(path);
+        IconSource = icon;
     }
 
     public ScenarioAction Clone()
@@ -217,6 +296,8 @@ public sealed class ScenarioAction : ObservableObject
             Target = Target,
             Arguments = Arguments,
             ProcessName = ProcessName,
+            MusicSource = MusicSource,
+            DesktopTheme = DesktopTheme,
             DelaySeconds = DelaySeconds,
             IsEnabled = IsEnabled
         };

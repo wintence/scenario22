@@ -21,23 +21,6 @@ public sealed class ScenarioRunResult
 
 public sealed class ScenarioRunner
 {
-    private static readonly HashSet<string> ProtectedProcesses = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "mode22",
-        "explorer",
-        "winlogon",
-        "csrss",
-        "wininit",
-        "services",
-        "lsass",
-        "smss",
-        "dwm",
-        "svchost",
-        "system",
-        "idle",
-        "registry"
-    };
-
     public async Task<ScenarioRunResult> RunAsync(
         Scenario scenario,
         IProgress<ScenarioRunProgress>? progress = null,
@@ -72,15 +55,37 @@ public sealed class ScenarioRunner
                     await Task.Delay(TimeSpan.FromSeconds(action.DelaySeconds), cancellationToken).ConfigureAwait(false);
                 }
 
-                if (action.Kind == ActionKind.Launch)
+                switch (action.Kind)
                 {
-                    await Task.Run(() => Launch(action), cancellationToken).ConfigureAwait(false);
-                    launched++;
-                }
-                else
-                {
-                    var result = await Task.Run(() => Close(action), cancellationToken).ConfigureAwait(false);
-                    closedProcesses += result;
+                    case ActionKind.Launch:
+                        await Task.Run(() => Launch(action), cancellationToken).ConfigureAwait(false);
+                        launched++;
+                        break;
+
+                    case ActionKind.Close:
+                        closedProcesses += await Task.Run(() => Close(action), cancellationToken).ConfigureAwait(false);
+                        break;
+
+                    case ActionKind.Music:
+                        await Task.Run(() => OpenMusic(action), cancellationToken).ConfigureAwait(false);
+                        launched++;
+                        break;
+
+                    case ActionKind.YouTube:
+                        await Task.Run(() => OpenYouTube(action), cancellationToken).ConfigureAwait(false);
+                        launched++;
+                        break;
+
+                    case ActionKind.Wallpaper:
+                        await Task.Run(() => DesktopService.SetWallpaper(action.Target), cancellationToken).ConfigureAwait(false);
+                        break;
+
+                    case ActionKind.Theme:
+                        await Task.Run(() => DesktopService.SetWindowsTheme(action.DesktopTheme), cancellationToken).ConfigureAwait(false);
+                        break;
+
+                    default:
+                        throw new InvalidOperationException(Strings.T("L_RUnknownAction"));
                 }
 
                 completed++;
@@ -152,6 +157,134 @@ public sealed class ScenarioRunner
         process.Dispose();
     }
 
+    private static void OpenMusic(ScenarioAction action)
+    {
+        var target = (action.Target ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(target))
+        {
+            throw new InvalidOperationException(Strings.T("L_RNoMusic"));
+        }
+
+        OpenUrl(BuildMusicUrl(action.MusicSource, target));
+    }
+
+    private static void OpenYouTube(ScenarioAction action)
+    {
+        var target = (action.Target ?? string.Empty).Trim();
+        if (string.IsNullOrWhiteSpace(target))
+        {
+            throw new InvalidOperationException(Strings.T("L_RNoYouTube"));
+        }
+
+        if (IsWebLink(target))
+        {
+            OpenUrl(target);
+            return;
+        }
+
+        if (IsYouTubeVideoId(target))
+        {
+            OpenUrl("https://www.youtube.com/watch?v=" + target);
+            return;
+        }
+
+        OpenUrl("https://www.youtube.com/results?search_query=" + Uri.EscapeDataString(target));
+    }
+
+    private static string BuildMusicUrl(MusicSource source, string target)
+    {
+        if (Uri.TryCreate(target, UriKind.Absolute, out var uri))
+        {
+            if (source == MusicSource.Spotify && TryConvertSpotifyLink(uri, out var deepLink))
+            {
+                return deepLink;
+            }
+
+            if (uri.Scheme is "http" or "https" or "spotify" or "yandexmusic" or "soundcloud" or "youtube")
+            {
+                return target;
+            }
+        }
+
+        var query = Uri.EscapeDataString(target);
+        return source switch
+        {
+            MusicSource.Spotify => "spotify:search:" + query,
+            MusicSource.YandexMusic => "https://music.yandex.ru/search?text=" + query,
+            MusicSource.SoundCloud => "https://soundcloud.com/search?q=" + query,
+            MusicSource.YouTubeMusic => "https://music.youtube.com/search?q=" + query,
+            _ => throw new InvalidOperationException(Strings.T("L_RUnknownAction"))
+        };
+    }
+
+    /// <summary>
+    /// Turns open.spotify.com links into spotify: URIs, which start playback in the desktop app.
+    /// </summary>
+    private static bool TryConvertSpotifyLink(Uri uri, out string deepLink)
+    {
+        deepLink = string.Empty;
+        if (!uri.Host.Equals("open.spotify.com", StringComparison.OrdinalIgnoreCase)
+            && !uri.Host.Equals("play.spotify.com", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var segments = uri.AbsolutePath
+            .Split('/', StringSplitOptions.RemoveEmptyEntries)
+            .Where(x => !x.StartsWith("intl-", StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+
+        if (segments.Length < 2)
+        {
+            return false;
+        }
+
+        var type = segments[0].ToLowerInvariant();
+        if (type is not ("track" or "album" or "playlist" or "artist" or "episode" or "show"))
+        {
+            return false;
+        }
+
+        deepLink = $"spotify:{type}:{segments[1]}";
+        return true;
+    }
+
+    private static bool IsWebLink(string target)
+    {
+        return Uri.TryCreate(target, UriKind.Absolute, out var uri)
+            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
+    }
+
+    private static bool IsYouTubeVideoId(string target)
+    {
+        if (target.Length != 11)
+        {
+            return false;
+        }
+
+        foreach (var ch in target)
+        {
+            if (!char.IsLetterOrDigit(ch) && ch is not ('-' or '_'))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static void OpenUrl(string url)
+    {
+        var info = new ProcessStartInfo
+        {
+            FileName = url,
+            UseShellExecute = true
+        };
+
+        using var process = Process.Start(info)
+            ?? throw new InvalidOperationException(Strings.T("L_RNoStart"));
+    }
+
     private static int Close(ScenarioAction action)
     {
         var name = ScenarioAction.NormalizeProcessName(action.ProcessName);
@@ -160,7 +293,7 @@ public sealed class ScenarioRunner
             throw new InvalidOperationException(Strings.T("L_RNoProcess"));
         }
 
-        if (ProtectedProcesses.Contains(name))
+        if (ProcessSafety.IsProtected(name))
         {
             throw new InvalidOperationException(Strings.T("L_RProtected"));
         }
@@ -235,6 +368,7 @@ public sealed class ScenarioRunner
             {
                 2 => Strings.T("L_RFileNotFound"),
                 5 => Strings.T("L_RNoAccess"),
+                1155 => Strings.T("L_RNoHandler"),
                 _ => win32.Message
             },
             _ => ex.Message

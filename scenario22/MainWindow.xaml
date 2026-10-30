@@ -230,6 +230,22 @@
                     <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconClose}" />
                     <Setter TargetName="FallbackIcon" Property="Stroke" Value="{DynamicResource CloseChipTextBrush}" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static models:ActionKind.Music}">
+                    <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeMusicBadge}" />
+                    <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconMusic}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static models:ActionKind.YouTube}">
+                    <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeYouTubeBadge}" />
+                    <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconYouTube}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static models:ActionKind.Wallpaper}">
+                    <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeWallpaperBadge}" />
+                    <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconImage}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static models:ActionKind.Theme}">
+                    <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeThemeBadge}" />
+                    <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconMoon}" />
+                </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
     </Window.Resources>

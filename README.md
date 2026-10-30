@@ -7,6 +7,10 @@ A Windows WPF desktop app that manages app launch and shutdown scenarios. You bu
 ## Features
 
 - **Scenarios** — a set of actions executed in order: launching apps, shortcuts, documents and URLs (including `steam://…`), closing processes by name.
+- **Music** — start a track or playlist in Spotify, Yandex Music, SoundCloud or YouTube Music; links start playback, plain text opens the service's search.
+- **YouTube** — open a video link or run a YouTube search.
+- **Windows settings** — change the desktop wallpaper (PNG, JPG, BMP) and switch Windows between light and dark mode.
+- **Running-process picker** — choose an open app from a searchable list with icons and paths instead of typing them.
 - **Global hotkeys** — work even when the window is minimized to tray; readiness indicator and hints about conflicting combinations.
 - **Custom scenario icons** — white vector icons from the built-in palette, or your own image (png/jpg/ico/exe/lnk).
 - **Custom colors** — 6 ready-made palettes plus any custom gradient.
@@ -53,7 +57,7 @@ scenario22/
 ├── MainWindow.xaml(.cs)   — main window and core UI logic
 ├── ToastWindow.xaml(.cs)  — toast notifications
 ├── Models/                — Scenario, ScenarioAction, Hotkey, AppState, palettes
-├── Services/              — scenario runner, settings, hotkeys, tray, themes
+├── Services/              — runner, settings, hotkeys, tray, themes, desktop settings, processes
 ├── Sheets/                — action and scenario dialogs
 ├── Controls/HotkeyBox     — hotkey combination input
 └── Themes/                — Dark.xaml, Light.xaml, Styles.xaml, Icons.xaml
