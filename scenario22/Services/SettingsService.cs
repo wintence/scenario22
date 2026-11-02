@@ -185,6 +185,11 @@ public sealed class SettingsService
                 action.ProcessName ??= string.Empty;
                 action.DelaySeconds = Math.Clamp(action.DelaySeconds, 0, 600);
 
+                if (action.Hotkey is { VirtualKey: <= 0 })
+                {
+                    action.Hotkey = null;
+                }
+
                 if (!Enum.IsDefined(action.Kind))
                 {
                     action.Kind = ActionKind.Launch;

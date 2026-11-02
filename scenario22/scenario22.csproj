@@ -12,6 +12,8 @@
     <AssemblyName>Scenario22</AssemblyName>
     <RootNamespace>Scenario22</RootNamespace>
     <Version>1.6.0</Version>
+    <!-- Published builds go to the shared installation folder. -->
+    <PublishDir>E:\Soft\Scenario22\</PublishDir>
     <FileVersion>1.6.0.0</FileVersion>
     <AssemblyVersion>1.6.0.0</AssemblyVersion>
     <Product>Scenario22</Product>

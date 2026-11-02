@@ -35,6 +35,7 @@
     <sys:String x:Key="L_TypeYouTubeBadge">YOUTUBE</sys:String>
     <sys:String x:Key="L_TypeWallpaperBadge">ОБОИ</sys:String>
     <sys:String x:Key="L_TypeThemeBadge">ТЕМА</sys:String>
+    <sys:String x:Key="L_TypeHotkeyBadge">КЛАВИШИ</sys:String>
     <sys:String x:Key="L_RowUpTT">Переместить выше</sys:String>
     <sys:String x:Key="L_RowDownTT">Переместить ниже</sys:String>
     <sys:String x:Key="L_RowDelTT">Удалить действие</sys:String>
@@ -110,6 +111,7 @@
     <sys:String x:Key="L_SubYouTube">Открыть видео или поиск на YouTube</sys:String>
     <sys:String x:Key="L_SubWallpaper">Сменить обои рабочего стола Windows</sys:String>
     <sys:String x:Key="L_SubTheme">Переключить Windows между светлой и тёмной темой</sys:String>
+    <sys:String x:Key="L_SubHotkey">Нажать сочетание клавиш в активном окне</sys:String>
 
     <!-- Accent palette names -->
     <sys:String x:Key="L_AccentBlue">Синий</sys:String>
@@ -139,7 +141,7 @@
     <!-- Action sheet -->
     <sys:String x:Key="L_NewActionTitle">Новое действие</sys:String>
     <sys:String x:Key="L_EditActionTitle">Изменить действие</sys:String>
-    <sys:String x:Key="L_ActionSubtitle">Открыть приложение или закрыть процесс</sys:String>
+    <sys:String x:Key="L_ActionSubtitle">Открыть приложение, закрыть процесс или нажать клавиши</sys:String>
     <sys:String x:Key="L_KindLaunchT">Открыть</sys:String>
     <sys:String x:Key="L_KindLaunchS">Запустить приложение</sys:String>
     <sys:String x:Key="L_KindCloseT">Закрыть</sys:String>
@@ -152,12 +154,15 @@
     <sys:String x:Key="L_KindWallpaperS">Сменить фон рабочего стола</sys:String>
     <sys:String x:Key="L_KindThemeT">Тема</sys:String>
     <sys:String x:Key="L_KindThemeS">Светлая или тёмная тема Windows</sys:String>
+    <sys:String x:Key="L_KindHotkeyT">Клавиши</sys:String>
+    <sys:String x:Key="L_KindHotkeyS">Отправить сочетание клавиш</sys:String>
     <sys:String x:Key="L_NamePhSteam">Например, Steam</sys:String>
     <sys:String x:Key="L_NamePhChrome">Например, Chrome</sys:String>
     <sys:String x:Key="L_NamePhMusic">Например, Nirvana</sys:String>
     <sys:String x:Key="L_NamePhYouTube">Например, Lofi mix</sys:String>
     <sys:String x:Key="L_NamePhWallpaper">Например, Закат</sys:String>
     <sys:String x:Key="L_NamePhTheme">Например, Ночной режим</sys:String>
+    <sys:String x:Key="L_NamePhHotkey">Например, Ctrl + S</sys:String>
     <sys:String x:Key="L_TargetLabel">Приложение или файл</sys:String>
     <sys:String x:Key="L_TargetPh">C:\Program Files\Steam\steam.exe</sys:String>
     <sys:String x:Key="L_Browse">Обзор</sys:String>
@@ -188,6 +193,7 @@
     <sys:String x:Key="L_ErrYouTube">Укажите ссылку на YouTube или поисковый запрос.</sys:String>
     <sys:String x:Key="L_ErrWallpaper">Выберите существующее изображение PNG, JPG или BMP.</sys:String>
     <sys:String x:Key="L_ErrWallpaperFormat">Поддерживаются обои PNG, JPG и BMP.</sys:String>
+    <sys:String x:Key="L_ErrHotkeyAction">Сначала запишите сочетание клавиш.</sys:String>
 
     <!-- Music / YouTube / wallpaper / theme actions -->
     <sys:String x:Key="L_MusicServiceLabel">Сервис</sys:String>
@@ -210,6 +216,8 @@
     <sys:String x:Key="L_ThemeLight">Светлая</sys:String>
     <sys:String x:Key="L_ThemeDark">Тёмная</sys:String>
     <sys:String x:Key="L_ThemeHint">Меняет оформление приложений и системы Windows. Некоторые окна обновятся после повторного открытия.</sys:String>
+    <sys:String x:Key="L_HotkeyActionLabel">Сочетание клавиш</sys:String>
+    <sys:String x:Key="L_HotkeyActionHint">Сочетание будет отправлено активному окну при выполнении сценария.</sys:String>
 
     <!-- Running process picker -->
     <sys:String x:Key="L_ProcPickerTitle">Выберите запущенный процесс</sys:String>
@@ -265,6 +273,8 @@
     <sys:String x:Key="L_TypeYoutube">YouTube</sys:String>
     <sys:String x:Key="L_TypeWallpaper">Обои</sys:String>
     <sys:String x:Key="L_TypeTheme">Тема</sys:String>
+    <sys:String x:Key="L_TypeHotkey">Клавиши</sys:String>
+    <sys:String x:Key="L_NoKeyCombo">Сочетание не задано</sys:String>
     <sys:String x:Key="L_NoTrack">Трек или ссылка не указаны</sys:String>
     <sys:String x:Key="L_NoQuery">Ссылка или запрос не указаны</sys:String>
     <sys:String x:Key="L_NoWallpaper">Изображение не указано</sys:String>
@@ -280,6 +290,8 @@
     <sys:String x:Key="L_RCloseFail">Не удалось закрыть {0}</sys:String>
     <sys:String x:Key="L_RNoMusic">Не указан трек или ссылка</sys:String>
     <sys:String x:Key="L_RNoYouTube">Не указана ссылка или поисковый запрос</sys:String>
+    <sys:String x:Key="L_RNoHotkey">Не указано сочетание клавиш</sys:String>
+    <sys:String x:Key="L_RSendKeysFail">Windows не смогла отправить сочетание клавиш</sys:String>
     <sys:String x:Key="L_RWallpaperMissing">Файл обоев не найден</sys:String>
     <sys:String x:Key="L_RWallpaperFormat">Поддерживаются обои PNG, JPG и BMP</sys:String>
     <sys:String x:Key="L_RWallpaperFail">Windows не смогла сменить обои</sys:String>

@@ -12,6 +12,10 @@ internal static class NativeMethods
     public const int ModWin = 0x0008;
     public const int ModNoRepeat = 0x4000;
 
+    public const uint InputKeyboard = 1;
+    public const uint KeyEventFExtendedKey = 0x0001;
+    public const uint KeyEventFKeyUp = 0x0002;
+
     public const int GwlExStyle = -20;
     public const int WsExNoActivate = 0x08000000;
     public const int WsExToolWindow = 0x00000080;
@@ -39,6 +43,55 @@ internal static class NativeMethods
         public int Bottom;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MouseInput
+    {
+        public int Dx;
+        public int Dy;
+        public uint MouseData;
+        public uint Flags;
+        public uint Time;
+        public IntPtr ExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KeyboardInput
+    {
+        public ushort VirtualKey;
+        public ushort ScanCode;
+        public uint Flags;
+        public uint Time;
+        public IntPtr ExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HardwareInput
+    {
+        public uint Message;
+        public ushort ParamL;
+        public ushort ParamH;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct InputUnion
+    {
+        [FieldOffset(0)]
+        public MouseInput Mouse;
+
+        [FieldOffset(0)]
+        public KeyboardInput Keyboard;
+
+        [FieldOffset(0)]
+        public HardwareInput Hardware;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Input
+    {
+        public uint Type;
+        public InputUnion Data;
+    }
+
     public const int HtLeft = 10;
     public const int HtRight = 11;
     public const int HtTop = 12;
@@ -55,6 +108,9 @@ internal static class NativeMethods
 
     [DllImport("dwmapi.dll")]
     public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attribute, ref int value, int valueSize);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern uint SendInput(uint inputCount, Input[] inputs, int inputSize);
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, uint vk);

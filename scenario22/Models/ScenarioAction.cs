@@ -13,6 +13,7 @@ public sealed class ScenarioAction : ObservableObject
     private string _processName = string.Empty;
     private MusicSource _musicSource = MusicSource.Spotify;
     private WindowsTheme _desktopTheme = WindowsTheme.Dark;
+    private Hotkey? _hotkey;
     private int _delaySeconds;
     private bool _isEnabled = true;
     private ImageSource? _iconSource;
@@ -114,6 +115,21 @@ public sealed class ScenarioAction : ObservableObject
         }
     }
 
+    /// <summary>
+    /// Key combination sent to the active window by <see cref="ActionKind.Hotkey"/> actions.
+    /// </summary>
+    public Hotkey? Hotkey
+    {
+        get => _hotkey;
+        set
+        {
+            if (SetProperty(ref _hotkey, value))
+            {
+                OnManyPropertiesChanged(nameof(DisplayName), nameof(Subtitle));
+            }
+        }
+    }
+
     public int DelaySeconds
     {
         get => _delaySeconds;
@@ -141,6 +157,11 @@ public sealed class ScenarioAction : ObservableObject
             if (!string.IsNullOrWhiteSpace(Name))
             {
                 return Name;
+            }
+
+            if (Kind == ActionKind.Hotkey && Hotkey is { IsEmpty: false })
+            {
+                return Hotkey.Display;
             }
 
             if (!string.IsNullOrWhiteSpace(ProcessName))
@@ -203,6 +224,11 @@ public sealed class ScenarioAction : ObservableObject
                 case ActionKind.Theme:
                     return Strings.T(DesktopTheme == WindowsTheme.Light ? "L_ThemeLight" : "L_ThemeDark");
 
+                case ActionKind.Hotkey:
+                    return Hotkey is { IsEmpty: false }
+                        ? Hotkey.Display
+                        : Strings.T("L_NoKeyCombo");
+
                 default:
                     if (string.IsNullOrWhiteSpace(Target))
                     {
@@ -231,7 +257,8 @@ public sealed class ScenarioAction : ObservableObject
         ActionKind.Music => "L_TypeMusic",
         ActionKind.YouTube => "L_TypeYoutube",
         ActionKind.Wallpaper => "L_TypeWallpaper",
-        _ => "L_TypeTheme"
+        ActionKind.Theme => "L_TypeTheme",
+        _ => "L_TypeHotkey"
     });
 
     [JsonIgnore]
@@ -298,6 +325,7 @@ public sealed class ScenarioAction : ObservableObject
             ProcessName = ProcessName,
             MusicSource = MusicSource,
             DesktopTheme = DesktopTheme,
+            Hotkey = Hotkey?.Clone(),
             DelaySeconds = DelaySeconds,
             IsEnabled = IsEnabled
         };

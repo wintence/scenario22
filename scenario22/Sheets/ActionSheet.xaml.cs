@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Microsoft.Win32;
+using Scenario22.Controls;
 using Scenario22.Models;
 using Scenario22.Services;
 
@@ -19,7 +20,8 @@ public sealed record ActionEditResult(
     int DelaySeconds,
     bool IsEnabled,
     MusicSource MusicSource,
-    WindowsTheme DesktopTheme);
+    WindowsTheme DesktopTheme,
+    Hotkey? Hotkey);
 
 public partial class ActionSheet : UserControl
 {
@@ -42,6 +44,7 @@ public partial class ActionSheet : UserControl
         MusicTargetBox.Text = existing?.Target ?? string.Empty;
         YouTubeBox.Text = existing?.Target ?? string.Empty;
         WallpaperBox.Text = existing?.Target ?? string.Empty;
+        HotkeyInput.Value = existing?.Hotkey?.Clone();
         DelayBox.Text = (existing?.DelaySeconds ?? 0).ToString();
 
         var kind = existing?.Kind ?? ActionKind.Launch;
@@ -51,6 +54,7 @@ public partial class ActionSheet : UserControl
         YouTubeChoice.IsChecked = kind == ActionKind.YouTube;
         WallpaperChoice.IsChecked = kind == ActionKind.Wallpaper;
         ThemeChoice.IsChecked = kind == ActionKind.Theme;
+        HotkeyChoice.IsChecked = kind == ActionKind.Hotkey;
 
         var source = existing?.MusicSource ?? MusicSource.Spotify;
         SpotifyChoice.IsChecked = source == MusicSource.Spotify;
@@ -74,6 +78,7 @@ public partial class ActionSheet : UserControl
             box.TextChanged += (_, _) => HideError();
         }
 
+        HotkeyInput.HotkeyChanged += (_, _) => HideError();
         Loaded += OnLoaded;
     }
 
@@ -109,6 +114,11 @@ public partial class ActionSheet : UserControl
             if (ThemeChoice.IsChecked == true)
             {
                 return ActionKind.Theme;
+            }
+
+            if (HotkeyChoice.IsChecked == true)
+            {
+                return ActionKind.Hotkey;
             }
 
             return ActionKind.Launch;
@@ -176,6 +186,7 @@ public partial class ActionSheet : UserControl
         YouTubePanel.Visibility = kind == ActionKind.YouTube ? Visibility.Visible : Visibility.Collapsed;
         WallpaperPanel.Visibility = kind == ActionKind.Wallpaper ? Visibility.Visible : Visibility.Collapsed;
         ThemePanel.Visibility = kind == ActionKind.Theme ? Visibility.Visible : Visibility.Collapsed;
+        HotkeyPanel.Visibility = kind == ActionKind.Hotkey ? Visibility.Visible : Visibility.Collapsed;
 
         SubtitleText.Text = Strings.T(kind switch
         {
@@ -184,7 +195,8 @@ public partial class ActionSheet : UserControl
             ActionKind.Music => "L_SubMusic",
             ActionKind.YouTube => "L_SubYouTube",
             ActionKind.Wallpaper => "L_SubWallpaper",
-            _ => "L_SubTheme"
+            ActionKind.Theme => "L_SubTheme",
+            _ => "L_SubHotkey"
         });
 
         NameBox.Tag = Strings.T(kind switch
@@ -194,7 +206,8 @@ public partial class ActionSheet : UserControl
             ActionKind.Music => "L_NamePhMusic",
             ActionKind.YouTube => "L_NamePhYouTube",
             ActionKind.Wallpaper => "L_NamePhWallpaper",
-            _ => "L_NamePhTheme"
+            ActionKind.Theme => "L_NamePhTheme",
+            _ => "L_NamePhHotkey"
         });
     }
 
@@ -355,6 +368,10 @@ public partial class ActionSheet : UserControl
                 SaveTheme(delay);
                 break;
 
+            case ActionKind.Hotkey:
+                SaveHotkey(delay);
+                break;
+
             default:
                 SaveLaunch(delay);
                 break;
@@ -510,13 +527,34 @@ public partial class ActionSheet : UserControl
             delay);
     }
 
+    private void SaveHotkey(int delay)
+    {
+        var hotkey = HotkeyInput.Value;
+        if (hotkey is null || hotkey.IsEmpty)
+        {
+            ShowError(Strings.T("L_ErrHotkeyAction"));
+            HotkeyInput.Focus();
+            return;
+        }
+
+        Result = CreateResult(
+            ActionKind.Hotkey,
+            string.IsNullOrWhiteSpace(NameBox.Text) ? hotkey.Display : NameBox.Text.Trim(),
+            string.Empty,
+            string.Empty,
+            string.Empty,
+            delay,
+            hotkey.Clone());
+    }
+
     private ActionEditResult CreateResult(
         ActionKind kind,
         string name,
         string target,
         string arguments,
         string processName,
-        int delay)
+        int delay,
+        Hotkey? hotkey = null)
     {
         return new ActionEditResult(
             _existing?.Id ?? Guid.NewGuid(),
@@ -528,7 +566,8 @@ public partial class ActionSheet : UserControl
             delay,
             _existing?.IsEnabled ?? true,
             SelectedMusicSource,
-            SelectedDesktopTheme);
+            SelectedDesktopTheme,
+            hotkey);
     }
 
     private static string DeriveMusicName(MusicSource source, string target)
@@ -587,6 +626,11 @@ public partial class ActionSheet : UserControl
 
     private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
     {
+        if (Keyboard.FocusedElement is HotkeyBox { IsRecording: true })
+        {
+            return;
+        }
+
         if (e.Key == Key.Escape)
         {
             e.Handled = true;

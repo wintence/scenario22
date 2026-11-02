@@ -745,6 +745,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         action.ProcessName = result.ProcessName;
         action.MusicSource = result.MusicSource;
         action.DesktopTheme = result.DesktopTheme;
+        action.Hotkey = result.Hotkey?.Clone();
         action.DelaySeconds = result.DelaySeconds;
         action.IsEnabled = result.IsEnabled;
         action.RefreshIcon();

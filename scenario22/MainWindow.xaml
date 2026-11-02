@@ -246,6 +246,10 @@
                     <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeThemeBadge}" />
                     <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconMoon}" />
                 </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static models:ActionKind.Hotkey}">
+                    <Setter TargetName="TypeText" Property="Text" Value="{DynamicResource L_TypeHotkeyBadge}" />
+                    <Setter TargetName="FallbackIcon" Property="Data" Value="{StaticResource IconKeyboard}" />
+                </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
     </Window.Resources>

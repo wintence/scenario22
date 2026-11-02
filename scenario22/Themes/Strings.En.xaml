@@ -35,6 +35,7 @@
     <sys:String x:Key="L_TypeYouTubeBadge">YOUTUBE</sys:String>
     <sys:String x:Key="L_TypeWallpaperBadge">WALLPAPER</sys:String>
     <sys:String x:Key="L_TypeThemeBadge">THEME</sys:String>
+    <sys:String x:Key="L_TypeHotkeyBadge">KEYS</sys:String>
     <sys:String x:Key="L_RowUpTT">Move up</sys:String>
     <sys:String x:Key="L_RowDownTT">Move down</sys:String>
     <sys:String x:Key="L_RowDelTT">Delete action</sys:String>
@@ -109,6 +110,7 @@
     <sys:String x:Key="L_SubYouTube">Open a YouTube video or search</sys:String>
     <sys:String x:Key="L_SubWallpaper">Change the Windows desktop background</sys:String>
     <sys:String x:Key="L_SubTheme">Switch Windows between light and dark mode</sys:String>
+    <sys:String x:Key="L_SubHotkey">Press a key combination in the active window</sys:String>
 
     <!-- Accent palette names -->
     <sys:String x:Key="L_AccentBlue">Blue</sys:String>
@@ -138,7 +140,7 @@
     <!-- Action sheet -->
     <sys:String x:Key="L_NewActionTitle">New action</sys:String>
     <sys:String x:Key="L_EditActionTitle">Edit action</sys:String>
-    <sys:String x:Key="L_ActionSubtitle">Launch an app or close a process</sys:String>
+    <sys:String x:Key="L_ActionSubtitle">Launch an app, close a process or press keys</sys:String>
     <sys:String x:Key="L_KindLaunchT">Launch</sys:String>
     <sys:String x:Key="L_KindLaunchS">Start an application</sys:String>
     <sys:String x:Key="L_KindCloseT">Close</sys:String>
@@ -151,12 +153,15 @@
     <sys:String x:Key="L_KindWallpaperS">Change the desktop background</sys:String>
     <sys:String x:Key="L_KindThemeT">Theme</sys:String>
     <sys:String x:Key="L_KindThemeS">Switch Windows light or dark mode</sys:String>
+    <sys:String x:Key="L_KindHotkeyT">Keys</sys:String>
+    <sys:String x:Key="L_KindHotkeyS">Send a key combination</sys:String>
     <sys:String x:Key="L_NamePhSteam">For example, Steam</sys:String>
     <sys:String x:Key="L_NamePhChrome">For example, Chrome</sys:String>
     <sys:String x:Key="L_NamePhMusic">For example, Nirvana</sys:String>
     <sys:String x:Key="L_NamePhYouTube">For example, Lofi mix</sys:String>
     <sys:String x:Key="L_NamePhWallpaper">For example, Sunset</sys:String>
     <sys:String x:Key="L_NamePhTheme">For example, Night mode</sys:String>
+    <sys:String x:Key="L_NamePhHotkey">For example, Ctrl + S</sys:String>
     <sys:String x:Key="L_TargetLabel">Application or file</sys:String>
     <sys:String x:Key="L_TargetPh">C:\Program Files\Steam\steam.exe</sys:String>
     <sys:String x:Key="L_Browse">Browse</sys:String>
@@ -187,6 +192,7 @@
     <sys:String x:Key="L_ErrYouTube">Enter a YouTube link or a search query.</sys:String>
     <sys:String x:Key="L_ErrWallpaper">Pick an existing PNG, JPG or BMP image.</sys:String>
     <sys:String x:Key="L_ErrWallpaperFormat">Supported wallpaper formats: PNG, JPG and BMP.</sys:String>
+    <sys:String x:Key="L_ErrHotkeyAction">Record a key combination first.</sys:String>
 
     <!-- Music / YouTube / wallpaper / theme actions -->
     <sys:String x:Key="L_MusicServiceLabel">Service</sys:String>
@@ -209,6 +215,8 @@
     <sys:String x:Key="L_ThemeLight">Light</sys:String>
     <sys:String x:Key="L_ThemeDark">Dark</sys:String>
     <sys:String x:Key="L_ThemeHint">Changes Windows apps and system mode. Some windows may update after reopening.</sys:String>
+    <sys:String x:Key="L_HotkeyActionLabel">Key combination</sys:String>
+    <sys:String x:Key="L_HotkeyActionHint">The combination is sent to the active window when the scenario runs.</sys:String>
 
     <!-- Running process picker -->
     <sys:String x:Key="L_ProcPickerTitle">Choose a running process</sys:String>
@@ -264,6 +272,8 @@
     <sys:String x:Key="L_TypeYoutube">YouTube</sys:String>
     <sys:String x:Key="L_TypeWallpaper">Wallpaper</sys:String>
     <sys:String x:Key="L_TypeTheme">Theme</sys:String>
+    <sys:String x:Key="L_TypeHotkey">Keys</sys:String>
+    <sys:String x:Key="L_NoKeyCombo">No key combination</sys:String>
     <sys:String x:Key="L_NoTrack">No track or link specified</sys:String>
     <sys:String x:Key="L_NoQuery">No link or query specified</sys:String>
     <sys:String x:Key="L_NoWallpaper">No image specified</sys:String>
@@ -279,6 +289,8 @@
     <sys:String x:Key="L_RCloseFail">Failed to close {0}</sys:String>
     <sys:String x:Key="L_RNoMusic">No track or link specified</sys:String>
     <sys:String x:Key="L_RNoYouTube">No link or search query specified</sys:String>
+    <sys:String x:Key="L_RNoHotkey">No key combination specified</sys:String>
+    <sys:String x:Key="L_RSendKeysFail">Windows could not send the key combination</sys:String>
     <sys:String x:Key="L_RWallpaperMissing">Wallpaper file not found</sys:String>
     <sys:String x:Key="L_RWallpaperFormat">Supported wallpaper formats: PNG, JPG and BMP</sys:String>
     <sys:String x:Key="L_RWallpaperFail">Windows could not set the wallpaper</sys:String>

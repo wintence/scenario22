@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Scenario22.Models;
 
 namespace Scenario22.Services;
@@ -84,6 +85,10 @@ public sealed class ScenarioRunner
                         await Task.Run(() => DesktopService.SetWindowsTheme(action.DesktopTheme), cancellationToken).ConfigureAwait(false);
                         break;
 
+                    case ActionKind.Hotkey:
+                        await Task.Run(() => SendHotkey(action), cancellationToken).ConfigureAwait(false);
+                        break;
+
                     default:
                         throw new InvalidOperationException(Strings.T("L_RUnknownAction"));
                 }
@@ -155,6 +160,75 @@ public sealed class ScenarioRunner
         }
 
         process.Dispose();
+    }
+
+    private static void SendHotkey(ScenarioAction action)
+    {
+        var hotkey = action.Hotkey;
+        if (hotkey is null || hotkey.IsEmpty)
+        {
+            throw new InvalidOperationException(Strings.T("L_RNoHotkey"));
+        }
+
+        const ushort vkControl = 0x11;
+        const ushort vkAlt = 0x12;
+        const ushort vkShift = 0x10;
+        const ushort vkWin = 0x5B;
+
+        var inputs = new List<NativeMethods.Input>(10);
+
+        if (hotkey.Ctrl) AddKeyInput(inputs, vkControl, keyUp: false);
+        if (hotkey.Alt) AddKeyInput(inputs, vkAlt, keyUp: false);
+        if (hotkey.Shift) AddKeyInput(inputs, vkShift, keyUp: false);
+        if (hotkey.Win) AddKeyInput(inputs, vkWin, keyUp: false);
+
+        var virtualKey = (ushort)hotkey.VirtualKey;
+        AddKeyInput(inputs, virtualKey, keyUp: false);
+        AddKeyInput(inputs, virtualKey, keyUp: true);
+
+        if (hotkey.Win) AddKeyInput(inputs, vkWin, keyUp: true);
+        if (hotkey.Shift) AddKeyInput(inputs, vkShift, keyUp: true);
+        if (hotkey.Alt) AddKeyInput(inputs, vkAlt, keyUp: true);
+        if (hotkey.Ctrl) AddKeyInput(inputs, vkControl, keyUp: true);
+
+        var sent = NativeMethods.SendInput(
+            (uint)inputs.Count,
+            inputs.ToArray(),
+            Marshal.SizeOf<NativeMethods.Input>());
+
+        if (sent != inputs.Count)
+        {
+            throw new InvalidOperationException(Strings.T("L_RSendKeysFail"));
+        }
+    }
+
+    private static void AddKeyInput(List<NativeMethods.Input> inputs, ushort virtualKey, bool keyUp)
+    {
+        var flags = keyUp ? NativeMethods.KeyEventFKeyUp : 0u;
+        if (IsExtendedKey(virtualKey))
+        {
+            flags |= NativeMethods.KeyEventFExtendedKey;
+        }
+
+        inputs.Add(new NativeMethods.Input
+        {
+            Type = NativeMethods.InputKeyboard,
+            Data = new NativeMethods.InputUnion
+            {
+                Keyboard = new NativeMethods.KeyboardInput
+                {
+                    VirtualKey = virtualKey,
+                    Flags = flags
+                }
+            }
+        });
+    }
+
+    private static bool IsExtendedKey(ushort virtualKey)
+    {
+        return virtualKey is
+            0x21 or 0x22 or 0x23 or 0x24 or 0x25 or 0x26 or 0x27 or 0x28 or
+            0x2C or 0x2D or 0x2E or 0x5B or 0x5C or 0x5D or 0x6F or 0x90;
     }
 
     private static void OpenMusic(ScenarioAction action)

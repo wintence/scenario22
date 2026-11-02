@@ -15,6 +15,12 @@ public partial class HotkeyBox : UserControl
         typeof(HotkeyBox),
         new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
 
+    public static readonly DependencyProperty AllowSingleKeyProperty = DependencyProperty.Register(
+        nameof(AllowSingleKey),
+        typeof(bool),
+        typeof(HotkeyBox),
+        new PropertyMetadata(false));
+
     private bool _isRecording;
     private bool _suppressFocusLoss;
 
@@ -34,6 +40,16 @@ public partial class HotkeyBox : UserControl
     {
         get => (Hotkey?)GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
+    }
+
+    /// <summary>
+    /// Allows recording a key without Ctrl, Alt, Shift or Win.
+    /// Used by actions that send a single key to the active window.
+    /// </summary>
+    public bool AllowSingleKey
+    {
+        get => (bool)GetValue(AllowSingleKeyProperty);
+        set => SetValue(AllowSingleKeyProperty, value);
     }
 
     private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -125,7 +141,7 @@ public partial class HotkeyBox : UserControl
             return;
         }
 
-        if (Keyboard.Modifiers == ModifierKeys.None && key is Key.Back or Key.Delete)
+        if (!AllowSingleKey && Keyboard.Modifiers == ModifierKeys.None && key is Key.Back or Key.Delete)
         {
             Value = null;
             _isRecording = false;
@@ -142,7 +158,7 @@ public partial class HotkeyBox : UserControl
         var modifiers = Keyboard.Modifiers;
         var hasModifier = modifiers != ModifierKeys.None;
         var isFunctionKey = key is >= Key.F1 and <= Key.F24;
-        if (!hasModifier && !isFunctionKey)
+        if (!hasModifier && !isFunctionKey && !AllowSingleKey)
         {
             PromptText.Text = Strings.T("L_HbNeedMod");
             PromptText.Foreground = (Brush)FindResource("DangerBrush");

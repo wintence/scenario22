@@ -7,5 +7,6 @@ public enum ActionKind
     Music,
     YouTube,
     Wallpaper,
-    Theme
+    Theme,
+    Hotkey
 }

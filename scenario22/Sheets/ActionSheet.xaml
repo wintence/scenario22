@@ -1,6 +1,7 @@
 <UserControl x:Class="Scenario22.Sheets.ActionSheet"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Scenario22.Controls"
              PreviewKeyDown="UserControl_PreviewKeyDown">
     <Border Width="540"
             Background="{DynamicResource SurfaceBrush}"
@@ -46,6 +47,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
@@ -215,6 +217,34 @@
                                        Style="{StaticResource TextValue}"
                                        FontSize="12"
                                        Text="{DynamicResource L_KindThemeT}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="HotkeyChoice"
+                                 Grid.Row="2"
+                                 Grid.Column="0"
+                                 GroupName="ActionKind"
+                                 Style="{StaticResource ChoiceCard}"
+                                 Padding="10"
+                                 Margin="0,4,4,0"
+                                 ToolTip="{DynamicResource L_KindHotkeyS}"
+                                 Checked="ActionKind_Checked">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="26"
+                                    Height="26"
+                                    CornerRadius="0"
+                                    Background="{DynamicResource LaunchChipBgBrush}">
+                                <Path Data="{StaticResource IconKeyboard}"
+                                      Style="{StaticResource LineIcon}"
+                                      Width="13"
+                                      Height="13"
+                                      Stroke="{DynamicResource LaunchChipTextBrush}" />
+                            </Border>
+                            <TextBlock Margin="8,0,0,0"
+                                       Style="{StaticResource TextValue}"
+                                       FontSize="12"
+                                       Text="{DynamicResource L_KindHotkeyT}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
                     </RadioButton>
@@ -474,6 +504,13 @@
                     </UniformGrid>
                     <TextBlock Style="{StaticResource FormHint}"
                                Text="{DynamicResource L_ThemeHint}" />
+                </StackPanel>
+
+                <StackPanel x:Name="HotkeyPanel" Margin="0,13,0,0" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource FormLabel}" Margin="0,0,0,7" Text="{DynamicResource L_HotkeyActionLabel}" />
+                    <controls:HotkeyBox x:Name="HotkeyInput" AllowSingleKey="True" />
+                    <TextBlock Style="{StaticResource FormHint}"
+                               Text="{DynamicResource L_HotkeyActionHint}" />
                 </StackPanel>
 
                 <Grid Margin="0,15,0,0">

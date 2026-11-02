@@ -19,6 +19,8 @@ dotnet run --project scenario22\scenario22.csproj
 dotnet publish scenario22\scenario22.csproj -c Release -r win-x64 --self-contained false
 ```
 
+Публикация по умолчанию складывается в `E:\Soft\Scenario22` — путь задан свойством `PublishDir` в `scenario22\scenario22.csproj`.
+
 Тестов в проекте нет. После изменений обязательно проверять сборку.
 
 ## Структура
@@ -51,7 +53,7 @@ scenario22/
 
 - `SettingsService` читает и пишет JSON в `%APPDATA%\scenario22\settings.json`; при повреждении файла создаётся резервная копия `settings.json.broken-*`, а состояние сбрасывается на значения по умолчанию.
 - `ScenarioRunner.RunAsync` выполняет только включённые действия по порядку, с задержкой `DelaySeconds` (0–600), и возвращает отчёт об ошибках.
-- Типы действий (`ActionKind`): `Launch`, `Close`, `Music`, `YouTube`, `Wallpaper`, `Theme`. Новые значения добавлять только в конец enum — старые настройки сериализуются по именам через `JsonStringEnumConverter`.
+- Типы действий (`ActionKind`): `Launch`, `Close`, `Music`, `YouTube`, `Wallpaper`, `Theme`, `Hotkey`. Новые значения добавлять только в конец enum — старые настройки сериализуются по именам через `JsonStringEnumConverter`.
 - `Music` и `YouTube` открывают ссылки через shell (`UseShellExecute = true`). Для `Music` поисковый запрос превращается в ссылку сервиса, а ссылки `open.spotify.com` конвертируются в `spotify:` URI, чтобы начиналось воспроизведение.
 - `DesktopService` меняет обои через `SPI_SETDESKWALLPAPER` (не-BMP конвертируется в `%LOCALAPPDATA%\scenario22\wallpaper.bmp`) и тему Windows через реестр `Themes\Personalize` + `WM_SETTINGCHANGE`.
 - `ProcessService` отдаёт запущенные процессы для окна выбора (`Sheets/ProcessPickerWindow`), `ProcessSafety` — единый список защищённых процессов. Закрывать системные процессы запрещено — эту защиту не ослаблять.
@@ -66,3 +68,4 @@ scenario22/
 - При изменении моделей учитывай сериализацию: вычисляемые свойства помечены `[JsonIgnore]`, `Scenario.Actions` требует подписки на изменения.
 - Не добавляй сторонние пакеты без необходимости.
 - После правок собирай проект и сообщай результат сборки.
+- Новую версию публикуй в `E:\Soft\Scenario22`; это путь публикации по умолчанию из `scenario22.csproj`.
