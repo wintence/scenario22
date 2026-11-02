@@ -7,6 +7,7 @@ A Windows WPF desktop app that manages app launch and shutdown scenarios. You bu
 ## Features
 
 - **Scenarios** — a set of actions executed in order: launching apps, shortcuts, documents and URLs (including `steam://…`), closing processes by name.
+- **Key sequences** — record a key combination and send it to the active window; supports system shortcuts such as `Win + E` and `Alt + Tab`.
 - **Music** — start a track or playlist in Spotify, Yandex Music, SoundCloud or YouTube Music; links start playback, plain text opens the service's search.
 - **YouTube** — open a video link or run a YouTube search.
 - **Windows settings** — change the desktop wallpaper (PNG, JPG, BMP) and switch Windows between light and dark mode.
