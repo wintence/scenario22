@@ -248,7 +248,7 @@
     <sys:String x:Key="L_HsScenario1">scenario</sys:String>
     <sys:String x:Key="L_HsScenarioN">scenarios</sys:String>
     <sys:String x:Key="L_HkDup">This combination is already used by another scenario</sys:String>
-    <sys:String x:Key="L_HkBusy">This combination is taken by another program</sys:String>
+    <sys:String x:Key="L_HkBusy">Windows or another program already uses this combination</sys:String>
     <sys:String x:Key="L_NoHotkey">No hotkey</sys:String>
     <sys:String x:Key="L_HbUnknownKey">Unknown key</sys:String>
     <sys:String x:Key="L_FallbackScenarioName">Scenario</sys:String>

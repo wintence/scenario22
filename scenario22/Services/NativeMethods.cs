@@ -16,6 +16,12 @@ internal static class NativeMethods
     public const uint KeyEventFExtendedKey = 0x0001;
     public const uint KeyEventFKeyUp = 0x0002;
 
+    public const int WhKeyboardLl = 13;
+    public const int WmKeyDown = 0x0100;
+    public const int WmKeyUp = 0x0101;
+    public const int WmSysKeyDown = 0x0104;
+    public const int WmSysKeyUp = 0x0105;
+
     public const int GwlExStyle = -20;
     public const int WsExNoActivate = 0x08000000;
     public const int WsExToolWindow = 0x00000080;
@@ -92,6 +98,18 @@ internal static class NativeMethods
         public InputUnion Data;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KbdLlHookStruct
+    {
+        public uint VirtualKeyCode;
+        public uint ScanCode;
+        public uint Flags;
+        public uint Time;
+        public IntPtr ExtraInfo;
+    }
+
+    public delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+
     public const int HtLeft = 10;
     public const int HtRight = 11;
     public const int HtTop = 12;
@@ -111,6 +129,19 @@ internal static class NativeMethods
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern uint SendInput(uint inputCount, Input[] inputs, int inputSize);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr SetWindowsHookEx(
+        int hookId,
+        LowLevelKeyboardProc callback,
+        IntPtr module,
+        uint threadId);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool UnhookWindowsHookEx(IntPtr hook);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr CallNextHookEx(IntPtr hook, int code, IntPtr wParam, IntPtr lParam);
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, uint vk);

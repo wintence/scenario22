@@ -22,6 +22,17 @@ public sealed class ScenarioRunResult
 
 public sealed class ScenarioRunner
 {
+    /// <summary>
+    /// Raised before key input is sent, so globally registered hotkeys can be paused
+    /// and the combination reaches the active window instead of being intercepted.
+    /// </summary>
+    public event EventHandler? HotkeySendStarting;
+
+    /// <summary>
+    /// Raised after key input has been sent, so global hotkeys can be registered again.
+    /// </summary>
+    public event EventHandler? HotkeySendCompleted;
+
     public async Task<ScenarioRunResult> RunAsync(
         Scenario scenario,
         IProgress<ScenarioRunProgress>? progress = null,
@@ -86,7 +97,18 @@ public sealed class ScenarioRunner
                         break;
 
                     case ActionKind.Hotkey:
-                        await Task.Run(() => SendHotkey(action), cancellationToken).ConfigureAwait(false);
+                        await Task.Run(() =>
+                        {
+                            HotkeySendStarting?.Invoke(this, EventArgs.Empty);
+                            try
+                            {
+                                SendHotkey(action);
+                            }
+                            finally
+                            {
+                                HotkeySendCompleted?.Invoke(this, EventArgs.Empty);
+                            }
+                        }, cancellationToken).ConfigureAwait(false);
                         break;
 
                     default:
@@ -175,21 +197,34 @@ public sealed class ScenarioRunner
         const ushort vkShift = 0x10;
         const ushort vkWin = 0x5B;
 
-        var inputs = new List<NativeMethods.Input>(10);
-
-        if (hotkey.Ctrl) AddKeyInput(inputs, vkControl, keyUp: false);
-        if (hotkey.Alt) AddKeyInput(inputs, vkAlt, keyUp: false);
-        if (hotkey.Shift) AddKeyInput(inputs, vkShift, keyUp: false);
-        if (hotkey.Win) AddKeyInput(inputs, vkWin, keyUp: false);
-
         var virtualKey = (ushort)hotkey.VirtualKey;
-        AddKeyInput(inputs, virtualKey, keyUp: false);
-        AddKeyInput(inputs, virtualKey, keyUp: true);
 
-        if (hotkey.Win) AddKeyInput(inputs, vkWin, keyUp: true);
-        if (hotkey.Shift) AddKeyInput(inputs, vkShift, keyUp: true);
-        if (hotkey.Alt) AddKeyInput(inputs, vkAlt, keyUp: true);
-        if (hotkey.Ctrl) AddKeyInput(inputs, vkControl, keyUp: true);
+        var downInputs = new List<NativeMethods.Input>(5);
+        if (hotkey.Ctrl) AddKeyInput(downInputs, vkControl, keyUp: false);
+        if (hotkey.Alt) AddKeyInput(downInputs, vkAlt, keyUp: false);
+        if (hotkey.Shift) AddKeyInput(downInputs, vkShift, keyUp: false);
+        if (hotkey.Win) AddKeyInput(downInputs, vkWin, keyUp: false);
+        AddKeyInput(downInputs, virtualKey, keyUp: false);
+
+        SendKeyBatch(downInputs);
+        Thread.Sleep(35);
+
+        var upInputs = new List<NativeMethods.Input>(5);
+        AddKeyInput(upInputs, virtualKey, keyUp: true);
+        if (hotkey.Win) AddKeyInput(upInputs, vkWin, keyUp: true);
+        if (hotkey.Shift) AddKeyInput(upInputs, vkShift, keyUp: true);
+        if (hotkey.Alt) AddKeyInput(upInputs, vkAlt, keyUp: true);
+        if (hotkey.Ctrl) AddKeyInput(upInputs, vkControl, keyUp: true);
+
+        SendKeyBatch(upInputs);
+    }
+
+    private static void SendKeyBatch(List<NativeMethods.Input> inputs)
+    {
+        if (inputs.Count == 0)
+        {
+            return;
+        }
 
         var sent = NativeMethods.SendInput(
             (uint)inputs.Count,

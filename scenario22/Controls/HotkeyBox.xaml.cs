@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,14 +22,24 @@ public partial class HotkeyBox : UserControl
         typeof(HotkeyBox),
         new PropertyMetadata(false));
 
+    private const int VkBack = 0x08;
+    private const int VkEscape = 0x1B;
+    private const int VkDelete = 0x2E;
+
     private bool _isRecording;
     private bool _suppressFocusLoss;
+    private bool _captured;
+    private IntPtr _hookHandle;
+    private NativeMethods.LowLevelKeyboardProc? _hookProc;
+    private ModifierKeys _hookModifiers;
+    private readonly HashSet<int> _pressedKeys = new();
 
     public HotkeyBox()
     {
         InitializeComponent();
         PreviewKeyDown += OnPreviewKeyDown;
         LostKeyboardFocus += OnLostKeyboardFocus;
+        Unloaded += (_, _) => CancelRecording();
         Loaded += (_, _) => RefreshDisplay();
     }
 
@@ -75,6 +86,11 @@ public partial class HotkeyBox : UserControl
     private void BeginRecording()
     {
         _isRecording = true;
+        _captured = false;
+        _hookModifiers = ModifierKeys.None;
+        _pressedKeys.Clear();
+        InstallHook();
+
         ActionHint.Text = Strings.T("L_HbEscHint");
         PromptText.Text = Strings.T("L_HbPress");
         PromptText.Foreground = (Brush)FindResource("TextSecondaryBrush");
@@ -94,13 +110,206 @@ public partial class HotkeyBox : UserControl
         }
 
         _isRecording = false;
+        _captured = false;
         if (!keepValue)
         {
             Value = null;
         }
 
+        UninstallHook();
         RefreshDisplay();
     }
+
+    private void CancelRecording()
+    {
+        _isRecording = false;
+        _captured = false;
+        _hookModifiers = ModifierKeys.None;
+        _pressedKeys.Clear();
+        UninstallHook();
+        if (RootBorder is not null)
+        {
+            RefreshDisplay();
+        }
+    }
+
+    private void InstallHook()
+    {
+        if (_hookHandle != IntPtr.Zero)
+        {
+            return;
+        }
+
+        _hookProc ??= KeyboardHookCallback;
+        _hookHandle = NativeMethods.SetWindowsHookEx(
+            NativeMethods.WhKeyboardLl,
+            _hookProc,
+            IntPtr.Zero,
+            0);
+    }
+
+    private void UninstallHook()
+    {
+        if (_hookHandle == IntPtr.Zero)
+        {
+            return;
+        }
+
+        NativeMethods.UnhookWindowsHookEx(_hookHandle);
+        _hookHandle = IntPtr.Zero;
+    }
+
+    private IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+    {
+        if (nCode < 0)
+        {
+            return NativeMethods.CallNextHookEx(_hookHandle, nCode, wParam, lParam);
+        }
+
+        var message = wParam.ToInt32();
+        var isDown = message is NativeMethods.WmKeyDown or NativeMethods.WmSysKeyDown;
+        var isUp = message is NativeMethods.WmKeyUp or NativeMethods.WmSysKeyUp;
+        if (!isDown && !isUp)
+        {
+            return NativeMethods.CallNextHookEx(_hookHandle, nCode, wParam, lParam);
+        }
+
+        var info = Marshal.PtrToStructure<NativeMethods.KbdLlHookStruct>(lParam);
+        var virtualKey = (int)info.VirtualKeyCode;
+
+        if (isDown)
+        {
+            _pressedKeys.Add(virtualKey);
+
+            if (_captured)
+            {
+                return new IntPtr(1);
+            }
+
+            if (TryGetModifier(virtualKey, out var modifier))
+            {
+                _hookModifiers |= modifier;
+                UpdateRecordingPrompt();
+                return new IntPtr(1);
+            }
+
+            if (virtualKey == VkEscape)
+            {
+                CompleteRecording(null, keepValue: true);
+                return new IntPtr(1);
+            }
+
+            if (!AllowSingleKey
+                && _hookModifiers == ModifierKeys.None
+                && virtualKey is VkBack or VkDelete)
+            {
+                CompleteRecording(null, keepValue: false);
+                return new IntPtr(1);
+            }
+
+            if (!AllowSingleKey
+                && _hookModifiers == ModifierKeys.None
+                && !IsFunctionKey(virtualKey))
+            {
+                ShowNeedModifier();
+                return new IntPtr(1);
+            }
+
+            CompleteRecording(Hotkey.Create(_hookModifiers, virtualKey), keepValue: true);
+            return new IntPtr(1);
+        }
+
+        _pressedKeys.Remove(virtualKey);
+        if (TryGetModifier(virtualKey, out var released))
+        {
+            _hookModifiers &= ~released;
+        }
+
+        if (_captured && _pressedKeys.Count == 0)
+        {
+            _captured = false;
+            UninstallHook();
+        }
+        else if (_isRecording)
+        {
+            UpdateRecordingPrompt();
+        }
+
+        return new IntPtr(1);
+    }
+
+    private void CompleteRecording(Hotkey? hotkey, bool keepValue)
+    {
+        if (keepValue)
+        {
+            if (hotkey is not null)
+            {
+                Value = hotkey;
+            }
+        }
+        else
+        {
+            Value = null;
+        }
+
+        _isRecording = false;
+        _captured = true;
+        RefreshDisplay();
+    }
+
+    private void UpdateRecordingPrompt()
+    {
+        if (!_isRecording)
+        {
+            return;
+        }
+
+        var parts = new List<string>(4);
+        if (_hookModifiers.HasFlag(ModifierKeys.Control)) parts.Add("Ctrl");
+        if (_hookModifiers.HasFlag(ModifierKeys.Alt)) parts.Add("Alt");
+        if (_hookModifiers.HasFlag(ModifierKeys.Shift)) parts.Add("Shift");
+        if (_hookModifiers.HasFlag(ModifierKeys.Windows)) parts.Add("Win");
+
+        ActionHint.Text = Strings.T("L_HbEscHint");
+        PromptText.Foreground = (Brush)FindResource("TextSecondaryBrush");
+        PromptText.Text = parts.Count > 0
+            ? string.Join(" + ", parts) + " + …"
+            : Strings.T("L_HbPress");
+    }
+
+    private void ShowNeedModifier()
+    {
+        PromptText.Text = Strings.T("L_HbNeedMod");
+        PromptText.Foreground = (Brush)FindResource("DangerBrush");
+    }
+
+    private static bool TryGetModifier(int virtualKey, out ModifierKeys modifier)
+    {
+        switch (virtualKey)
+        {
+            case 0x11 or 0xA2 or 0xA3:
+                modifier = ModifierKeys.Control;
+                return true;
+
+            case 0x12 or 0xA4 or 0xA5:
+                modifier = ModifierKeys.Alt;
+                return true;
+
+            case 0x10 or 0xA0 or 0xA1:
+                modifier = ModifierKeys.Shift;
+                return true;
+
+            case 0x5B or 0x5C:
+                modifier = ModifierKeys.Windows;
+                return true;
+
+            default:
+                modifier = ModifierKeys.None;
+                return false;
+        }
+    }
+
+    private static bool IsFunctionKey(int virtualKey) => virtualKey is >= 0x70 and <= 0x87;
 
     private void OnPreviewKeyDown(object sender, KeyEventArgs e)
     {
@@ -183,8 +392,7 @@ public partial class HotkeyBox : UserControl
         e.Handled = true;
         _suppressFocusLoss = true;
         Value = null;
-        _isRecording = false;
-        RefreshDisplay();
+        CancelRecording();
         _suppressFocusLoss = false;
     }
 

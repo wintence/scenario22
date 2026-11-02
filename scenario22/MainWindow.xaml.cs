@@ -53,6 +53,9 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         _tray = new TrayService();
         _toasts = new ToastService();
 
+        _runner.HotkeySendStarting += (_, _) => Dispatcher.Invoke(_hotkeys.UnregisterAll);
+        _runner.HotkeySendCompleted += (_, _) => Dispatcher.Invoke(RegisterHotkeys);
+
         _saveTimer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(650)

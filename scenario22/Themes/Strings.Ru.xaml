@@ -249,7 +249,7 @@
     <sys:String x:Key="L_HsScenario1">сценарий</sys:String>
     <sys:String x:Key="L_HsScenarioN">сценария</sys:String>
     <sys:String x:Key="L_HkDup">Сочетание уже используется другим сценарием</sys:String>
-    <sys:String x:Key="L_HkBusy">Сочетание занято другой программой</sys:String>
+    <sys:String x:Key="L_HkBusy">Это сочетание уже занято Windows или другой программой</sys:String>
     <sys:String x:Key="L_NoHotkey">Без клавиши</sys:String>
     <sys:String x:Key="L_HbUnknownKey">Клавиша</sys:String>
     <sys:String x:Key="L_FallbackScenarioName">Сценарий</sys:String>
