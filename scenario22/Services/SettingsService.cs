@@ -62,6 +62,7 @@ public sealed class SettingsService
             var state = JsonSerializer.Deserialize<AppState>(json, JsonOptions) ?? new AppState();
             Normalize(state);
             NormalizeLanguage(state);
+            NormalizeTheme(state);
             return state;
         }
         catch (Exception ex)
@@ -117,6 +118,25 @@ public sealed class SettingsService
 
         state.Preferences.Language = language;
         LanguageService.Apply(language);
+    }
+
+    /// <summary>
+    /// Resolves the interface theme. Empty or unknown keys fall back to the
+    /// legacy dark/light flag, keeping pre-1.7.1 settings intact.
+    /// </summary>
+    private static void NormalizeTheme(AppState state)
+    {
+        var preferences = state.Preferences;
+        var requested = preferences.Theme?.Trim();
+        var resolved = ThemeService.Resolve(requested);
+
+        if (!string.Equals(resolved.Key, requested, StringComparison.OrdinalIgnoreCase))
+        {
+            resolved = ThemeService.Resolve(preferences.UseDarkTheme ? "dark" : "light");
+        }
+
+        preferences.Theme = resolved.Key;
+        preferences.UseDarkTheme = resolved.IsDark;
     }
 
     private static void Normalize(AppState state)

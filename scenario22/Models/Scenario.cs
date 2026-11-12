@@ -19,6 +19,7 @@ public sealed class Scenario : ObservableObject
     private string _iconKey = ScenarioIcons.Default.Key;
     private string? _customIconPath;
     private Hotkey? _hotkey;
+    private bool _hotkeyPassthrough;
     private bool _isEnabled = true;
     private bool _isRunning;
     private DateTimeOffset? _lastRun;
@@ -171,6 +172,16 @@ public sealed class Scenario : ObservableObject
         }
     }
 
+    /// <summary>
+    /// When true the hotkey is observed passively and the key combination is not
+    /// blocked, so other applications (for example MyDockFinder) keep receiving it.
+    /// </summary>
+    public bool HotkeyPassthrough
+    {
+        get => _hotkeyPassthrough;
+        set => SetProperty(ref _hotkeyPassthrough, value);
+    }
+
     public bool IsEnabled
     {
         get => _isEnabled;
@@ -320,6 +331,12 @@ public sealed class Scenario : ObservableObject
 
     [JsonIgnore]
     public Color AccentColor => FromColor;
+
+    /// <summary>
+    /// Second gradient stop of the accent, used by the ambient background glow.
+    /// </summary>
+    [JsonIgnore]
+    public Color AccentColor2 => ToColor;
 
     [JsonIgnore]
     public Brush AccentGradient => AccentPalette.CreateGradient(FromColor, ToColor);

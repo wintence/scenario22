@@ -2,7 +2,6 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Threading;
 using Microsoft.Win32;
 using Scenario22.Controls;
@@ -20,7 +19,8 @@ public sealed record ScenarioEditResult(
     string AccentKey,
     string? CustomAccentFrom,
     string? CustomAccentTo,
-    Hotkey? Hotkey);
+    Hotkey? Hotkey,
+    bool HotkeyPassthrough);
 
 public partial class ScenarioSheet : UserControl
 {
@@ -64,9 +64,15 @@ public partial class ScenarioSheet : UserControl
         NameBox.Text = existing?.Name ?? Strings.T("L_NewScenario");
         DescriptionBox.Text = existing?.Description ?? string.Empty;
         HotkeyInput.Value = existing?.Hotkey ?? FindFreeHotkey();
+        PassthroughToggle.IsChecked = existing?.HotkeyPassthrough ?? false;
+        UpdatePassthroughState();
 
         Loaded += OnLoaded;
-        HotkeyInput.HotkeyChanged += (_, _) => HideError();
+        HotkeyInput.HotkeyChanged += (_, _) =>
+        {
+            HideError();
+            UpdatePassthroughState();
+        };
         NameBox.TextChanged += (_, _) => HideError();
         UpdatePreview();
     }
@@ -111,6 +117,24 @@ public partial class ScenarioSheet : UserControl
         }
 
         return null;
+    }
+
+    private void Passthrough_Changed(object sender, RoutedEventArgs e)
+    {
+        UpdatePassthroughState();
+    }
+
+    /// <summary>
+    /// The pass-through option only makes sense together with a hotkey.
+    /// </summary>
+    private void UpdatePassthroughState()
+    {
+        if (PassthroughToggle is null)
+        {
+            return;
+        }
+
+        PassthroughToggle.IsEnabled = HotkeyInput.Value is { IsEmpty: false };
     }
 
     private void Selection_Changed(object sender, SelectionChangedEventArgs e)
@@ -171,26 +195,25 @@ public partial class ScenarioSheet : UserControl
     private void PickCustomColors()
     {
         _pickingAccent = true;
-        string? from;
-        string? to;
         try
         {
-            from = PickColor(_customFrom);
-            if (from is null)
+            var from = AccentPalette.TryParseColor(_customFrom, out var parsedFrom)
+                ? parsedFrom
+                : AccentPalette.PlaceholderFrom;
+            var to = AccentPalette.TryParseColor(_customTo, out var parsedTo) ? parsedTo : from;
+
+            var owner = Window.GetWindow(this);
+            var picker = owner is null
+                ? new ColorPickerWindow(from, to)
+                : new ColorPickerWindow(from, to) { Owner = owner };
+            if (picker.ShowDialog() != true)
             {
                 AccentListBox.SelectedItem = _lastAccentOption;
                 return;
             }
 
-            to = PickColor(_customTo ?? from);
-            if (to is null)
-            {
-                AccentListBox.SelectedItem = _lastAccentOption;
-                return;
-            }
-
-            _customFrom = from;
-            _customTo = to;
+            _customFrom = picker.FromHex;
+            _customTo = picker.ToHex;
         }
         finally
         {
@@ -201,39 +224,6 @@ public partial class ScenarioSheet : UserControl
         AccentListBox.SelectedItem = AccentPalette.CreateCustom(_customFrom, _customTo);
         UpdatePreview();
         HideError();
-    }
-
-    private string? PickColor(string? initialHex)
-    {
-        using var dialog = new System.Windows.Forms.ColorDialog
-        {
-            FullOpen = true
-        };
-        dialog.Color = AccentPalette.TryParseColor(initialHex, out var initial)
-            ? System.Drawing.Color.FromArgb(initial.A, initial.R, initial.G, initial.B)
-            : System.Drawing.Color.FromArgb(0x4C, 0x82, 0xFF);
-
-        var owner = Window.GetWindow(this);
-        var ownerHandle = owner is null ? IntPtr.Zero : new WindowInteropHelper(owner).Handle;
-        var dialogOwner = ownerHandle == IntPtr.Zero ? null : new HandleOwner(ownerHandle);
-
-        if (dialog.ShowDialog(dialogOwner) != System.Windows.Forms.DialogResult.OK)
-        {
-            return null;
-        }
-
-        var picked = dialog.Color;
-        return $"#{picked.R:X2}{picked.G:X2}{picked.B:X2}";
-    }
-
-    private sealed class HandleOwner : System.Windows.Forms.IWin32Window
-    {
-        public HandleOwner(IntPtr handle)
-        {
-            Handle = handle;
-        }
-
-        public IntPtr Handle { get; }
     }
 
     private void CustomIcon_Click(object sender, RoutedEventArgs e)
@@ -331,6 +321,7 @@ public partial class ScenarioSheet : UserControl
         var isCustomAccent = AccentPalette.IsCustom(accent.Key) && _customFrom is not null;
         var selectedIcon = IconListBox.SelectedItem as ScenarioIcon;
         var iconKey = selectedIcon?.Key ?? ScenarioIcons.Get(_existing?.IconKey).Key;
+        var passthrough = hotkey is { IsEmpty: false } && PassthroughToggle.IsChecked == true;
         Result = new ScenarioEditResult(
             _scenarioId,
             name,
@@ -340,7 +331,8 @@ public partial class ScenarioSheet : UserControl
             isCustomAccent ? AccentPalette.CustomKey : accent.Key,
             isCustomAccent ? _customFrom : null,
             isCustomAccent ? _customTo : null,
-            hotkey);
+            hotkey,
+            passthrough);
         Saved?.Invoke(this, EventArgs.Empty);
     }
 

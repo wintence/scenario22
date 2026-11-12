@@ -38,7 +38,9 @@ public partial class App : Application
         var settingsService = new SettingsService();
         var state = settingsService.Load();
         StartupService.CleanupLegacy();
-        ThemeService.Apply(state.Preferences.UseDarkTheme);
+        ThemeService.Apply(state.Preferences.Theme);
+        state.Preferences.Theme = ThemeService.CurrentKey;
+        state.Preferences.UseDarkTheme = ThemeService.IsDark;
 
         if (state.Preferences.StartWithWindows)
         {

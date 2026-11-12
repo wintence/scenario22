@@ -62,9 +62,13 @@
     <sys:String x:Key="L_SetHotkeysTT">Enable global hotkeys</sys:String>
 
     <sys:String x:Key="L_SectAppearance">APPEARANCE</sys:String>
-    <sys:String x:Key="L_SetDarkTitle">Dark theme</sys:String>
-    <sys:String x:Key="L_SetDarkDesc">A soft dark interface for evening work.</sys:String>
-    <sys:String x:Key="L_SetDarkTT">Dark theme</sys:String>
+    <sys:String x:Key="L_SetThemeTitle">Interface theme</sys:String>
+    <sys:String x:Key="L_SetThemeDesc">Pick a light, dark or colored look.</sys:String>
+    <sys:String x:Key="L_ThemeUiLight">Light</sys:String>
+    <sys:String x:Key="L_ThemeUiDark">Dark</sys:String>
+    <sys:String x:Key="L_ThemeUiMidnight">Midnight</sys:String>
+    <sys:String x:Key="L_ThemeUiNord">Nord</sys:String>
+    <sys:String x:Key="L_ThemeUiCream">Cream</sys:String>
 
     <sys:String x:Key="L_SectLanguage">LANGUAGE</sys:String>
     <sys:String x:Key="L_SetLangTitle">Interface language</sys:String>
@@ -90,8 +94,14 @@
     <sys:String x:Key="L_Color">Scenario color</sys:String>
     <sys:String x:Key="L_CustomColor">Custom color…</sys:String>
     <sys:String x:Key="L_CustomColorTT">Set the two colors of your custom gradient</sys:String>
+    <sys:String x:Key="L_PickTitle">Custom colors</sys:String>
+    <sys:String x:Key="L_PickFrom">First color</sys:String>
+    <sys:String x:Key="L_PickTo">Second color</sys:String>
+    <sys:String x:Key="L_PickHexTT">#RRGGBB format, for example #4C82FF</sys:String>
     <sys:String x:Key="L_HotkeyLabel">Hotkey</sys:String>
     <sys:String x:Key="L_HotkeyHint">Works in any app, even while scenario22 is in the tray.</sys:String>
+    <sys:String x:Key="L_HkPassLabel">Pass through</sys:String>
+    <sys:String x:Key="L_HkPassTT">The combination is not blocked and keeps working in other apps (for example MyDockFinder): their action and this scenario run at the same time.</sys:String>
     <sys:String x:Key="L_Cancel">Cancel</sys:String>
     <sys:String x:Key="L_Save">Save</sys:String>
     <sys:String x:Key="L_Delete">Delete</sys:String>
@@ -118,6 +128,9 @@
     <sys:String x:Key="L_AccentPink">Pink</sys:String>
     <sys:String x:Key="L_AccentAmber">Amber</sys:String>
     <sys:String x:Key="L_AccentMint">Mint</sys:String>
+    <sys:String x:Key="L_AccentAurora">Aurora</sys:String>
+    <sys:String x:Key="L_AccentOcean">Ocean</sys:String>
+    <sys:String x:Key="L_AccentSunset">Sunset</sys:String>
     <sys:String x:Key="L_AccentGraphite">Graphite</sys:String>
     <sys:String x:Key="L_AccentCustom">Custom color</sys:String>
 

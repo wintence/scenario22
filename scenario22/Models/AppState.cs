@@ -19,6 +19,7 @@ public sealed class AppPreferences : ObservableObject
     private bool _useDarkTheme;
     private bool _trayHintShown;
     private string _language = "en";
+    private string _theme = string.Empty;
 
     public bool StartWithWindows
     {
@@ -48,6 +49,16 @@ public sealed class AppPreferences : ObservableObject
     {
         get => _useDarkTheme;
         set => SetProperty(ref _useDarkTheme, value);
+    }
+
+    /// <summary>
+    /// Interface theme key from ThemeService.Themes. Empty means the value has not
+    /// been chosen yet and is derived from the legacy UseDarkTheme flag on load.
+    /// </summary>
+    public string Theme
+    {
+        get => _theme;
+        set => SetProperty(ref _theme, value ?? string.Empty);
     }
 
     public bool TrayHintShown

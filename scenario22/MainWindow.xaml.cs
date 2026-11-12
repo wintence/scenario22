@@ -39,6 +39,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
     private bool _suppressPreferenceEvents;
     private int _sheetGeneration;
     private string? _pendingWarning;
+    private int _ambientGeneration;
 
     public MainWindow(AppState state, SettingsService settings, bool startHidden)
     {
@@ -55,6 +56,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         _runner.HotkeySendStarting += (_, _) => Dispatcher.Invoke(_hotkeys.UnregisterAll);
         _runner.HotkeySendCompleted += (_, _) => Dispatcher.Invoke(RegisterHotkeys);
+        _hotkeys.HotkeyListened += (_, scenario) => Dispatch(() => _ = RunScenarioAsync(scenario));
 
         _saveTimer = new DispatcherTimer
         {
@@ -99,6 +101,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
     public AppPreferences Preferences => _state.Preferences;
 
+    public IReadOnlyList<ThemeInfo> ThemeOptions => ThemeService.Themes;
+
     public Scenario? SelectedScenario
     {
         get => _selectedScenario;
@@ -118,6 +122,8 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             _state.SelectedScenarioId = value?.Id;
             OnPropertyChanged();
             QueueSave();
+            ScheduleAmbientRefresh();
+            AnimateScenarioContentIn();
         }
     }
 
@@ -251,6 +257,10 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         UpdateHotkeyStatus();
         UpdateTray();
         ShowPendingWarning();
+
+        ApplyAmbientFills();
+        StartAmbientAnimations();
+        ScheduleAmbientRefresh();
 
         if (_startHidden)
         {
@@ -680,6 +690,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
             scenario.CustomAccentFrom = result.CustomAccentFrom;
             scenario.CustomAccentTo = result.CustomAccentTo;
             scenario.Hotkey = result.Hotkey?.Clone();
+            scenario.HotkeyPassthrough = result.HotkeyPassthrough;
         }
         finally
         {
@@ -696,6 +707,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         RegisterHotkeys();
         QueueSave();
         UpdateTray();
+        ScheduleAmbientRefresh();
     }
 
     private void DeleteScenario(Scenario scenario)
@@ -892,8 +904,12 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         switch (e.PropertyName)
         {
             case nameof(Scenario.Hotkey):
+            case nameof(Scenario.HotkeyPassthrough):
             case nameof(Scenario.IsEnabled):
                 RegisterHotkeys();
+                break;
+            case nameof(Scenario.AccentColor):
+                ScheduleAmbientRefresh();
                 break;
             case nameof(Scenario.IsRunning):
             case nameof(Scenario.Name):
@@ -938,10 +954,15 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         switch (e.PropertyName)
         {
-            case nameof(AppPreferences.UseDarkTheme):
-                ThemeService.Apply(Preferences.UseDarkTheme);
-                ApplyWindowAppearance();
-                OnPropertyChanged(nameof(HotkeyStatusBrush));
+            case nameof(AppPreferences.Theme):
+                if (!string.IsNullOrWhiteSpace(Preferences.Theme))
+                {
+                    ThemeService.Apply(Preferences.Theme);
+                    ApplyWindowAppearance();
+                    ScheduleAmbientRefresh();
+                    OnPropertyChanged(nameof(HotkeyStatusBrush));
+                }
+
                 break;
             case nameof(AppPreferences.Language):
                 LanguageService.Apply(Preferences.Language);
@@ -994,6 +1015,183 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         UpdateTray();
     }
 
+    /// <summary>
+    /// Crossfades the ambient background glow to the selected scenario's accent colors.
+    /// </summary>
+    private void ScheduleAmbientRefresh()
+    {
+        if (_cleanedUp || AmbientLayer is null)
+        {
+            return;
+        }
+
+        var generation = ++_ambientGeneration;
+        var current = AmbientLayer.Opacity;
+        var fadeOut = new DoubleAnimation(current, 0, TimeSpan.FromMilliseconds(150))
+        {
+            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+        };
+        fadeOut.Completed += (_, _) =>
+        {
+            if (generation != _ambientGeneration || _cleanedUp)
+            {
+                return;
+            }
+
+            ApplyAmbientFills();
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(380))
+            {
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            };
+            AmbientLayer.BeginAnimation(OpacityProperty, fadeIn);
+        };
+        AmbientLayer.BeginAnimation(OpacityProperty, fadeOut);
+    }
+
+    private void ApplyAmbientFills()
+    {
+        var scenario = SelectedScenario;
+        var from = scenario?.AccentColor ?? Color.FromRgb(0x6B, 0x97, 0xFF);
+        var to = scenario?.AccentColor2 ?? from;
+        AmbientGlowA.Fill = CreateAmbientGlowBrush(from);
+        AmbientGlowB.Fill = CreateAmbientGlowBrush(to);
+        UpdateTrafficLights(scenario);
+    }
+
+    private static RadialGradientBrush CreateAmbientGlowBrush(Color color)
+    {
+        // Light themes need stronger alpha, otherwise the glow washes out on white.
+        var peak = ThemeService.IsDark ? (byte)0x66 : (byte)0x96;
+        var mid = ThemeService.IsDark ? (byte)0x30 : (byte)0x52;
+
+        var brush = new RadialGradientBrush
+        {
+            GradientOrigin = new Point(0.5, 0.5),
+            Center = new Point(0.5, 0.5)
+        };
+        brush.GradientStops.Add(new GradientStop(Color.FromArgb(peak, color.R, color.G, color.B), 0));
+        brush.GradientStops.Add(new GradientStop(Color.FromArgb(mid, color.R, color.G, color.B), 0.45));
+        brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, color.R, color.G, color.B), 1));
+        brush.Freeze();
+        return brush;
+    }
+
+    /// <summary>
+    /// Tints the three traffic-light buttons with the scenario accent colors.
+    /// Falls back to the classic macOS palette when no scenario is selected.
+    /// </summary>
+    private void UpdateTrafficLights(Scenario? scenario)
+    {
+        if (scenario is null)
+        {
+            SetTrafficLightBrush(TrafficClose, Color.FromRgb(0xFF, 0x5F, 0x57));
+            SetTrafficLightBrush(TrafficMinimize, Color.FromRgb(0xFE, 0xBC, 0x2E));
+            SetTrafficLightBrush(TrafficMaximize, Color.FromRgb(0x28, 0xC8, 0x40));
+            return;
+        }
+
+        var from = scenario.AccentColor;
+        var to = scenario.AccentColor2;
+        var blend = Color.FromRgb(
+            (byte)((from.R + to.R) / 2),
+            (byte)((from.G + to.G) / 2),
+            (byte)((from.B + to.B) / 2));
+
+        SetTrafficLightBrush(TrafficClose, from);
+        SetTrafficLightBrush(TrafficMinimize, blend);
+        SetTrafficLightBrush(TrafficMaximize, to);
+    }
+
+    private static void SetTrafficLightBrush(System.Windows.Controls.Button button, Color target)
+    {
+        if (button.Background is SolidColorBrush existing
+            && !existing.IsFrozen
+            && existing.Color != target)
+        {
+            var animation = new ColorAnimation(existing.Color, target, TimeSpan.FromMilliseconds(300))
+            {
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            };
+            existing.BeginAnimation(SolidColorBrush.ColorProperty, animation);
+            return;
+        }
+
+        button.Background = new SolidColorBrush(target);
+    }
+
+    /// <summary>
+    /// Slow breathing pulse and drift so the ambient glow feels alive.
+    /// </summary>
+    private void StartAmbientAnimations()
+    {
+        if (_cleanedUp)
+        {
+            return;
+        }
+
+        var pulseA = new DoubleAnimation(0.45, 0.78, TimeSpan.FromMilliseconds(4200))
+        {
+            AutoReverse = true,
+            RepeatBehavior = RepeatBehavior.Forever,
+            EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
+        };
+        AmbientGlowA.BeginAnimation(OpacityProperty, pulseA);
+
+        var pulseB = new DoubleAnimation(0.3, 0.62, TimeSpan.FromMilliseconds(5600))
+        {
+            AutoReverse = true,
+            RepeatBehavior = RepeatBehavior.Forever,
+            EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
+        };
+        AmbientGlowB.BeginAnimation(OpacityProperty, pulseB);
+
+        AmbientGlowATransform.BeginAnimation(
+            TranslateTransform.XProperty,
+            CreateDriftAnimation(-16, 16, 9000));
+        AmbientGlowATransform.BeginAnimation(
+            TranslateTransform.YProperty,
+            CreateDriftAnimation(-10, 12, 11200));
+        AmbientGlowBTransform.BeginAnimation(
+            TranslateTransform.XProperty,
+            CreateDriftAnimation(14, -14, 10400));
+        AmbientGlowBTransform.BeginAnimation(
+            TranslateTransform.YProperty,
+            CreateDriftAnimation(10, -10, 8600));
+    }
+
+    private static DoubleAnimation CreateDriftAnimation(double from, double to, int milliseconds)
+    {
+        return new DoubleAnimation(from, to, TimeSpan.FromMilliseconds(milliseconds))
+        {
+            AutoReverse = true,
+            RepeatBehavior = RepeatBehavior.Forever,
+            EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut }
+        };
+    }
+
+    /// <summary>
+    /// Slides and fades the scenario page in when another scenario is selected.
+    /// </summary>
+    private void AnimateScenarioContentIn()
+    {
+        if (_cleanedUp || ContentTranslate is null || ScenarioPageContent is null)
+        {
+            return;
+        }
+
+        var fade = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(220))
+        {
+            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+        };
+        var slide = new DoubleAnimation(10, 0, TimeSpan.FromMilliseconds(280))
+        {
+            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+        };
+
+        ScenarioPageContent.BeginAnimation(OpacityProperty, fade);
+        ContentTranslate.BeginAnimation(TranslateTransform.YProperty, slide);
+    }
+
     private void UpdateHotkeyStatus()
     {
         OnPropertyChanged(nameof(HotkeyStatusLabel));
@@ -1005,6 +1203,14 @@ public partial class MainWindow : Window, INotifyPropertyChanged
         foreach (var scenario in Scenarios)
         {
             scenario.RefreshLanguageDependent();
+        }
+
+        if (ThemeList is not null)
+        {
+            // Regenerate containers so localized theme names update; clearing
+            // ItemsSource would write null into the selected value binding
+            // and reset the theme to the default one.
+            ThemeList.Items.Refresh();
         }
     }
 
@@ -1116,7 +1322,7 @@ public partial class MainWindow : Window, INotifyPropertyChanged
 
         try
         {
-            var dark = Preferences.UseDarkTheme ? 1 : 0;
+            var dark = ThemeService.IsDark ? 1 : 0;
             NativeMethods.DwmSetWindowAttribute(
                 handle,
                 NativeMethods.DwmUseImmersiveDarkMode,

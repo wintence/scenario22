@@ -27,6 +27,9 @@ public static class AccentPalette
         Create("pink", "L_AccentPink", "#F65C9D", "#FF8560"),
         Create("orange", "L_AccentAmber", "#F59E0B", "#F97316"),
         Create("green", "L_AccentMint", "#10B981", "#14B8A6"),
+        Create("aurora", "L_AccentAurora", "#00F5A0", "#00D9F5"),
+        Create("ocean", "L_AccentOcean", "#0093E9", "#6DD5C7"),
+        Create("sunset", "L_AccentSunset", "#FF512F", "#DD2476"),
         Create("graphite", "L_AccentGraphite", "#4B5563", "#767C8A")
     };
 

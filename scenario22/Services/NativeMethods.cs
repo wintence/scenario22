@@ -17,6 +17,7 @@ internal static class NativeMethods
     public const uint KeyEventFKeyUp = 0x0002;
 
     public const int WhKeyboardLl = 13;
+    public const uint LlkhfInjected = 0x10;
     public const int WmKeyDown = 0x0100;
     public const int WmKeyUp = 0x0101;
     public const int WmSysKeyDown = 0x0104;

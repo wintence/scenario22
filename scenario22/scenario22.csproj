@@ -11,11 +11,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AssemblyName>Scenario22</AssemblyName>
     <RootNamespace>Scenario22</RootNamespace>
-    <Version>1.7.0</Version>
+    <Version>1.7.1</Version>
     <!-- Published builds go to the shared installation folder. -->
     <PublishDir>E:\Soft\Scenario22\</PublishDir>
-    <FileVersion>1.7.0.0</FileVersion>
-    <AssemblyVersion>1.7.0.0</AssemblyVersion>
+    <FileVersion>1.7.1.0</FileVersion>
+    <AssemblyVersion>1.7.1.0</AssemblyVersion>
     <Product>Scenario22</Product>
     <Description>Сценарии запуска приложений одним нажатием</Description>
     <Company>Scenario22</Company>

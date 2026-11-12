@@ -11,3 +11,6 @@ publish/
 
 # Local tooling config
 opencode.json
+
+# Release staging
+release/

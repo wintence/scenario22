@@ -62,9 +62,13 @@
     <sys:String x:Key="L_SetHotkeysTT">Включить глобальные горячие клавиши</sys:String>
 
     <sys:String x:Key="L_SectAppearance">ОФОРМЛЕНИЕ</sys:String>
-    <sys:String x:Key="L_SetDarkTitle">Тёмное оформление</sys:String>
-    <sys:String x:Key="L_SetDarkDesc">Мягкий тёмный интерфейс для вечерней работы.</sys:String>
-    <sys:String x:Key="L_SetDarkTT">Тёмная тема</sys:String>
+    <sys:String x:Key="L_SetThemeTitle">Тема интерфейса</sys:String>
+    <sys:String x:Key="L_SetThemeDesc">Выберите светлое, тёмное или цветное оформление.</sys:String>
+    <sys:String x:Key="L_ThemeUiLight">Светлая</sys:String>
+    <sys:String x:Key="L_ThemeUiDark">Тёмная</sys:String>
+    <sys:String x:Key="L_ThemeUiMidnight">Полночь</sys:String>
+    <sys:String x:Key="L_ThemeUiNord">Норд</sys:String>
+    <sys:String x:Key="L_ThemeUiCream">Сливки</sys:String>
 
     <sys:String x:Key="L_SectLanguage">ЯЗЫК</sys:String>
     <sys:String x:Key="L_SetLangTitle">Язык интерфейса</sys:String>
@@ -91,8 +95,14 @@
     <sys:String x:Key="L_Color">Цвет сценария</sys:String>
     <sys:String x:Key="L_CustomColor">Свой цвет…</sys:String>
     <sys:String x:Key="L_CustomColorTT">Задать первый и второй цвет своего градиента</sys:String>
+    <sys:String x:Key="L_PickTitle">Свои цвета</sys:String>
+    <sys:String x:Key="L_PickFrom">Первый цвет</sys:String>
+    <sys:String x:Key="L_PickTo">Второй цвет</sys:String>
+    <sys:String x:Key="L_PickHexTT">Формат #RRGGBB, например #4C82FF</sys:String>
     <sys:String x:Key="L_HotkeyLabel">Горячая клавиша</sys:String>
     <sys:String x:Key="L_HotkeyHint">Работает в любом приложении, даже если scenario22 свёрнут в трей.</sys:String>
+    <sys:String x:Key="L_HkPassLabel">Не перехватывать</sys:String>
+    <sys:String x:Key="L_HkPassTT">Сочетание не блокируется и продолжает работать в других приложениях (например, в MyDockFinder): их действие и этот сценарий сработают одновременно.</sys:String>
     <sys:String x:Key="L_Cancel">Отмена</sys:String>
     <sys:String x:Key="L_Save">Сохранить</sys:String>
     <sys:String x:Key="L_Delete">Удалить</sys:String>
@@ -119,6 +129,9 @@
     <sys:String x:Key="L_AccentPink">Розовый</sys:String>
     <sys:String x:Key="L_AccentAmber">Янтарный</sys:String>
     <sys:String x:Key="L_AccentMint">Мятный</sys:String>
+    <sys:String x:Key="L_AccentAurora">Аврора</sys:String>
+    <sys:String x:Key="L_AccentOcean">Океан</sys:String>
+    <sys:String x:Key="L_AccentSunset">Закат</sys:String>
     <sys:String x:Key="L_AccentGraphite">Графит</sys:String>
     <sys:String x:Key="L_AccentCustom">Свой цвет</sys:String>
 
